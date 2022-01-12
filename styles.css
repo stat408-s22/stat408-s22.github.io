@@ -1,0 +1,31 @@
+h1 {
+  font-size: 24px;
+}
+h1.title {
+  font-size: 24px;
+}
+h2 {
+  font-size: 18px;
+}
+h3 {
+  font-size: 14px;
+}
+h4 {
+  font-size: 12px;
+}
+h5 {
+  font-size: 12px;
+}
+h6 {
+  font-size: 12px;
+}
+body {
+  font-size: 12px;
+}
+img {
+    display: block;
+    margin: auto;
+}
+img-circle {
+    border-radius: 50%;
+}

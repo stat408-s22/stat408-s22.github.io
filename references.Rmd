@@ -1,0 +1,145 @@
+---
+title: "References and Resources for Learning and Teaching Statistical Computing"
+output: 
+    html_document:
+        toc: TRUE
+        toc_float: TRUE
+---
+
+![](https://imgs.xkcd.com/comics/code_quality.png)
+Image source: [xkcd.com/1513/](https://xkcd.com/1513/)
+
+## General
+
+### Books
+* [Modern Dive: Statistical Inference via Data Science](https://moderndive.com/) - book by Chester Ismay and Albert Kim
+
+### College Courses
+* [STAT 545 at UBC - Data wrangling, exploration, and analysis with R](https://stat545.com/) - Jenny Bryan
+* [Introduction to Data Science @ Duke](https://www.introds.org/) - Mine Centenkaya-Rundel
+
+---
+
+## R, RStudio, and R Markdown
+
+### *Downloading*
+
+1. Download [R](https://www.r-project.org/).
+2. Download [RStudio](https://www.rstudio.com/).
+
+### *Use R and RStudio Online*
+
+* [RStudio Cloud](https://rstudio.cloud/)
+
+### *References*
+
+* [R for Data Science](https://r4ds.had.co.nz/index.html) - book by Hadley Wickham & Garrett Grolemund
+* [Getting Used to R, RStudio, and R Markdown](https://ismayc.github.io/rbasics-book/) - book by Ismay and Kennedy
+* [Advanced R](https://adv-r.hadley.nz/) - book by Wickham
+* Springer's [Use R!](https://link.springer.com/bookseries/6991) series
+* Software Carpentry's [R for Reproducible Scientific Analysis](http://swcarpentry.github.io/r-novice-gapminder/) tutorial
+* John's Hopkins [Foundations Using R](https://www.coursera.org/specializations/data-science-foundations-r) specialization through Coursera
+
+#### R Markdown
+* [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) - book by Yihui Xie, J. J. Allaire, Garrett Grolemund
+* [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) - book by Yihui Xie, Christophe Dervieux, Emily Riederer
+* [Getting Started with R Markdown](https://ourcodingclub.github.io/tutorials/rmarkdown/) - Tutorial
+* [Pimp my RMD: a few tips for R Markdown](https://holtzy.github.io/Pimp-my-rmd/) - a list of tips I use on a regular basis
+
+
+#### Creating Websites in R
+* [Creating websites in R](https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html)
+* [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/) - book by Yihui Xie, Amber Tomas, Alison Hill
+  - [Up & running with blogdown in 2021](https://www.apreshill.com/blog/2020-12-new-year-new-blogdown/) - more up to date
+* [R Markdown: Websites](https://garrettgman.github.io/rmarkdown/rmarkdown_websites.html)
+
+
+#### Data Visualization
+
+* [A ggplot2 tutorial for beautiful plotting in R](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) - tutorial
+* [R Graphics Cookbook](https://r-graphics.org/index.html) - book by Winston Chang
+
+#### Cheatsheets
+* [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/) - scroll to the bottom to see contributed cheatsheets
+* [R Graphics for Intro Stats](https://ds4stats.github.io/uscots2017/assets/refcard/m107-EDA-refcard.pdf) - Adam Loy
+* [Beautiful plotting in R: A `ggplot2` cheatsheet](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/) - Zev Ross
+
+
+---
+
+## Git and Github
+
+### *Downloading*
+
+1. Download [Git](https://git-scm.com/downloads)
+2. Create [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) account to host your repositories
+3. Optional: download [GitHub Desktop](https://desktop.github.com/) or [Sourcetree](https://www.sourcetreeapp.com/) GUI
+
+### *References*
+* [Happy Git and GitHub for the useR](https://happygitwithr.com/index.html) - book by Jenny Bryan
+* Udacity's free course [Version Control with Git](https://www.udacity.com/course/version-control-with-git--ud123)
+* Software Carpentry's [Version Control with Git](http://swcarpentry.github.io/git-novice/) tutorial
+
+
+---
+
+## SAS
+
+### *Use SAS online*
+* [SAS OnDemand](https://support.sas.com/en/software/ondemand-for-academics-support.html#instructors)
+
+### *References*
+* [Free SAS e-books](https://support.sas.com/en/books/free-books.html)
+  - [SAS Programming for R Users](https://support.sas.com/content/dam/SAS/support/en/books/free-books/sas-programming-for-r-users.pdf) and corresponding [course](https://support.sas.com/edu/schedules.html?crs=SP4R&ctry=US)
+* Recommended books for purchase:
+  - [Getting Started with SAS Programming](Getting Started with SAS Programming)
+  - [The Little SAS Book: A Primer](https://sasinstitute.redshelf.com/book/1830656)
+
+---
+
+## Python
+
+### *Downloading*
+
+* Download [Anaconda Distribution](https://www.anaconda.com/distribution/) to install Python and Jupyter Notebook
+
+### *References*
+
+* [IPython Cookbook](https://ipython-books.github.io/) - book by Cyrille Rossant
+* [Jupyter Notebook documentation](https://jupyter.readthedocs.io/en/latest/running.html#running)
+* Software Carpentry's [Programming with Python](http://swcarpentry.github.io/python-novice-inflammation/) tutorial
+* Udacity's free course [Introduction to Python Programming](https://www.udacity.com/course/introduction-to-python--ud1110)
+* [More links to Python resources for beginners](https://www.mapcon.com/us-en/software-engineering-python)...
+
+---
+
+## LaTeX
+
+### *Downloading*
+
+* Download a full [TeX distribution](https://www.latex-project.org/get/) (e.g., MacTeX for MacOS or MiKTeX for Windows)
+
+### *Use LaTeX Online*
+
+* [Overleaf](https://www.overleaf.com/) - online, collaborative LaTeX editor
+
+### *References*
+
+* [The Not So Short Introduction to LaTeX](http://mirrors.rit.edu/CTAN/info/lshort/english/lshort.pdf) - book by Oetiker, Partl, Hyna and Schlegl
+* [List of LaTeX mathematical symbols](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols)
+
+---
+
+## Teaching Computing
+* [Designing the Data Science Classroom](https://rstudio-conf-2020.github.io/design-ds-classroom/)
+* [Data Science in a Box](https://datasciencebox.org/index.html)
+* [teach-r Online Workshops](https://mine-cetinkaya-rundel.github.io/teach-r-online/)
+  - Workshop 1: Teaching R online with RStudio Cloud
+  - Workshop 2: Building interactive tutorials in R
+  - Workshop 3: Teaching computing with Git and Github
+
+### Journal Articles
+* [Special issue of JSDSE on computing in the statistics and DS curriculum](https://www.tandfonline.com/toc/ujse21/29/sup1)
+  - [Implementing Version Control With Git and GitHub as a Learning Objective in Statistics and Data Science Courses](https://www.tandfonline.com/doi/full/10.1080/10691898.2020.1848485) - Beckman, Centinkaya-Rundel, Horton, Rundel, Sullivan & Tackett, JSDSE Vol 29, 2021
+* [Infrastructure and Tools for Teaching Computing Throughout the Statistical Curriculum](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1397549?journalCode=utas20) - Centinkaya-Rundel & Rundel, TAS Vol 72, 2018
+
