@@ -5,8 +5,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "References"
-      href: references.html
+    - text: "Calendar"
+      href: calendar.html
   right: 
     - icon: fa-envelope fa-lg
       href: mailto:<stacey.hancock@montana.edu>
