@@ -1,4 +1,225 @@
 ---
 title: "Statistical Computing and Graphical Analysis"
 subtitle: "Spring 2022"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+
+library(RColorBrewer)
+library(tidyverse)
+
+pal <- brewer.pal(4, 'Pastel1')
+```
+
+# Course description
+
+Introduction to statistical packages R and SAS, including data importation, cleaning, graphing, and basic programming. Emphasis on use of graphical displays to explore, understand, and present data, and on organization of code.
+
+## Learning outcomes
+
+At the completion of this course, students will:
+
+1. Be literate in statistical programming using R and SAS,
+2. Effectively communicate through visual presentation of data, and
+3. Understand and imitate good programming practices, including version control and reproducible research.
+
+
+---
+
+# Time and location
+
+TR 12:15-1:30pm  
+Wilson Hall 1-143
+
+---
+
+# Instructors
+
+## Lead Instructor
+
+[**Dr. Stacey Hancock**](http://www.math.montana.edu/shancock/){target="_blank"}  
+email: stacey.hancock@montana.edu  
+Office: Wilson 2-195  
+Phone: (406) 994-5350  
+
+### **Office Hours**:
+
+* Virtual (see D2L for Zoom link): Mondays 3:10-4:00pm
+* In person (Wilson 2-195): Tuesdays and Thursdays 3:10-4:00pm
+* By appointment --- Please feel free to email me to schedule an appointment outside of office hours.
+
+## Teaching Assistant
+
+Elijah Meyer  
+email: elijah.meyer@montana.edu  
+Office: Wilson 1-xxx
+
+### **Office Hours**:
+
+* TBD
+
+---
+
+# Prerequisites
+
+One of: STAT 217, STAT 332, STAT 401, or equivalent.
+
+
+---
+ 
+# Course materials
+
+## Textbooks / Resources (Optional)
+
+The process of statistical computing often involves a combination of Google searches, Stack Overflow posts, and various online textbooks, tutorials, and blog posts. As such, there is no _one_ textbook for this course. However, there are a few resources we will consult regularly:
+
+1. _Modern Dive: Statistical Inference via Data Science_  by Chester Ismay and Albert Kim --- free at [https://moderndive.com/](https://moderndive.com/)
+1. _R for Data Science_ by Hadley Wickham and Garrett Grolemund --- free at [https://r4ds.had.co.nz/index.html](https://r4ds.had.co.nz/index.html)
+1. _Happy Git and GitHub for the useR_ by Jenny Bryan --- free at [https://happygitwithr.com/](https://happygitwithr.com/)
+1. R cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
+1. Optional textbooks for purchase:
+    - [_Visualize This: The FlowingData Guide to Design, Visualization, and Statistics_](https://flowingdata.com/visualize-this/) by Nathan Yau (Wiley, 2011) --- check out his blog at [https://flowingdata.com/](https://flowingdata.com/)
+    - [_The Art of R Programming_](https://nostarch.com/artofr.htm) by Norman Matloff (No Starch Press, 2011)
+    - [_The Little SAS Book: A Primer_](https://redshelf.com/app/ecom/book/1830656/the-little-sas-book-1830656-9781642953435-lora-d-delwiche-susan-j-slaughter) by Lora D. Delwiche and Susan J. Slaugher, 6th edition (SAS, 2019) --- a free excerpt is available on [sas.com](https://www.sas.com/storefront/aux/en/splsb/73044_excerpt.pdf)
+
+Explore my list of [statistical computing resources](https://staceyhancock.github.io/computing/) for an extended list. 
+
+## Computing
+
+In this course, we will be using the statistical software:
+
+* [**R**](https://www.r-project.org/) through the IDE [**RStudio**](https://rstudio.com/products/rstudio/), and
+* SAS via [**SAS OnDemand**](https://www.sas.com/en_us/software/on-demand-for-academics.html)
+
+In addition, we will use [**Git**](https://git-scm.com/downloads)
+and [**GitHub**](https://github.com/) for version control and group assignments.
+
+For announcements, grades, discussion forums, and turning in individual assignments,
+see our [**D2L**](https://ecat1.montana.edu/) page.
+
+* Make sure you are receiving email notifications for any D2L activity. In D2L, click on your name, then Notifications. Check that D2L is using an email address that you regularly check; you have the option of registering a mobile number. Check the boxes to get notifications for announcements, content, discussions, and grades.
+* If you have a question about the course materials, computing, or logistics, please post your question to your **D2L discussion board** instead of emailing your instructors. This ensures all students can benefit from the responses. Other students are encouraged to respond. 
+  
+ 
+---
+
+# Course assessment
+
+Your grade in STAT 408 will be comprised of the following components.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="75%"}
+grades <- tribble(
+  ~category,  ~percent,
+  "Homework", 20,
+  "Labs", 20,
+  "Exams", 40,
+  "Project", 20,
+)
+grades$category <- fct_relevel(grades$category, "Homework", "Labs", "Exams", "Project")
+grades$location <- rep(1, 4)
+grades %>% ggplot(aes(x=location, y=percent)) +
+  geom_col(aes(fill=category), col='black') + 
+  guides(fill=FALSE) + 
+  geom_text(aes(x=rep(1, 4), 
+                label=c("Homework (20%)",
+                        "Labs (20%)",
+                        "Exams (40%)",
+                        "Project (20%)"), 
+                y=c(90,70,40,10),
+                size=18)) + 
+  labs(x='', y='Cumulative percent') + 
+  theme(axis.text.x = element_blank(), 
+        text = element_text(size = 15),
+        legend.position = "none") +
+  scale_fill_manual(values=pal)
+```
+
+1. **Homework** (20%): Homework will be posted on the course calendar (hosted in our class GitHub organization). Homework assignments will be turned in individually through D2L. 
+
+\vspace{10mm}
+
+2. **Labs** (20%): Weekly Thursday labs will have a large computational element and will be designed to be completed in 75 minutes; however, there may be times that labs need to be finished outside of class time. Lab assignments will be turned in as a group in GitHub.
+
+3. **Exams** (40%): There will be two midterm exams and one final exam. Each exam will have both an in-class and a take-home component. 
+
+4. **Project** (20%): A data storytelling project will be completed in groups.
+
+Letter grades generally follow the typical scale:
+
+93-100 = A  
+90-92 = A-  
+88-89 = B+  
+83-87 = B  
+80-82 = B-  
+etc.
+
+These cutoffs may be adjusted down (never up!) at the end of the semester, depending on the grade distribution in the course. Thus, a 93% will guarantee an A, a 90% will guarantee an A-, etc.
+
+ 
+---
+ 
+# Course policies
+
+## COVID-19-related expectations
+
+### **Face mask requirement**
+
+Face coverings that cover both your nose and mouth are required in all indoor spaces on the Bozeman campus, with the exception of the fitness center. 
+MSU requires the wearing of masks in physical classrooms to help mitigate the transmission of SARS-CoV-2, which causes COVID-19.  The MSU community views the adoption of these practices as a mark of good citizenship and respectful care of fellow classmates, faculty, and staff.
+
+Compliance with the face-covering protocol is expected. If a you do not comply with a classroom rule, you may be requested to leave class.  Section 460.00 of the [MSU Code of Student Conduct](https://www.montana.edu/policy/student_conduct/#460) covers “disruptive student behavior.” 
+
+The complete details about MSU’s mask requirement can be found at [https://www.montana.edu/health/coronavirus/index.html](https://www.montana.edu/health/coronavirus/index.html). 
+
+
+### **Accommodations for not wearing a mask**
+Individuals whose unique and individual circumstances require an exception to the face covering requirement, as indicated by a medical professional, may request one in accordance with the campus ADA policies. Students should contact the Office of Disability Services at 994-2824 or drv@montana.edu to receive written permission from the Office of Disability Services at MSU. It is strongly recommended that students make contact prior to arriving on campus in order to provide adequate time for their request to be evaluated.
+
+### **Health-related class absences**
+Please evaluate your own health status regularly and refrain from attending class and other on-campus events if you are ill.  MSU students who miss class due to illness will be given opportunities to access course materials online. You are encouraged to seek appropriate medical attention for treatment of illness.  In the event of contagious illness, please do not come to class or to campus to turn in work. Instead notify us by email about your absence as soon as practical, so that accommodations can be made.  Please note that documentation (a Doctor’s note) for medical excuses is not required.  MSU University Health Partners--as part their commitment to maintain patient confidentiality, to encourage more appropriate use of healthcare resources, and to support meaningful dialogue between instructors and students--does not provide such documentation.
+
+
+
+
+
+## Policy on collaboration and academic misconduct
+
+In STAT 408, at a minimum, any act of academic dishonesty, which includes but is not limited to plagiarism, cheating, multiple submissions, or facilitating others’ misconduct, will result in a score of zero on the assignment/quiz/exam in question and notification of department and university officials. Further action may be taken as warranted. If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.
+
+### **Collaboration on individual assignments**
+
+_After attempting to complete homework problems on your own_, you are permitted to collaborate on homework in a constructive manner for all involved---each individual in the collaboration needs to ensure they understand and could explain the process of solving each problem. While I encourage you to talk through problems with fellow students, the work you turn in must be your own and must be written in your own words (unless the assignment specifically states otherwise). 
+
+**Each homework will require a "citations" page where you cite all sources (including web forums such as Stack Overflow) and individuals used to complete that homework assignment.** Paraphrasing or quoting another’s work without citing the source is a form of academic dishonesty. Even inadvertent or unintentional misuse or appropriation of another's work (such as relying heavily on source material that is not expressly acknowledged) is considered plagiarism.  Homework assignments that do not cite sources or individuals, or assignments where answers are copied directly from another student, will be considered and treated as plagiarism, and will receive a zero grade. If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.  
+
+
+
+### **MSU policy**
+
+Students in an academic setting are responsible for approaching all assignments with rigor, integrity, and in compliance with the University Code of Student Conduct. This responsibility includes:
+
+1. consulting and analyzing sources that are relevant to the topic of inquiry;
+2. clearly acknowledging when they draw from the ideas or the phrasing of those sources in their own writing;
+3. learning and using appropriate citation conventions within the field in which they are studying; and
+4. asking their instructor for guidance when they are uncertain of how to acknowledge the contributions of others in their thinking and writing.
+
+[More information about Academic Misconduct from the Dean of Students](https://www.montana.edu/deanofstudents/academicmisconduct/academicmisconduct.html)
+
+
+## Diversity and inclusivity statements
+
+**Respect for Diversity**: It is our intent that students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength and benefit. It is our intent to present materials and activities that are respectful of diversity: gender identity, sexual orientation, disability, age, socioeconomic status, ethnicity, race, religion, culture, perspective, and other background characteristics. Your suggestions about how to improve the value of diversity in this course are encouraged and appreciated. Please let us know ways to improve the effectiveness of the course for you personally or for other students or student groups.
+
+In addition, in scheduling exams, we have attempted to avoid conflicts with major religious holidays. If, however, we have inadvertently scheduled an exam or major deadline that creates a conflict with your religious observances, please let us know as soon as possible so that we can make other arrangements. 
+
+**Support for Inclusivity**: We support an inclusive learning environment where diversity and individual differences are understood, respected, appreciated, and recognized as a source of strength. We expect that students, faculty, administrators and staff at MSU will respect differences and demonstrate diligence in understanding how other peoples' perspectives, behaviors, and worldviews may be different from their own.
+

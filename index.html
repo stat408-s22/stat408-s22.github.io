@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -279,10 +355,170 @@ $(document).ready(function () {
 </div>
 
 
+<div id="course-description" class="section level1">
+<h1>Course description</h1>
+<p>Introduction to statistical packages R and SAS, including data importation, cleaning, graphing, and basic programming. Emphasis on use of graphical displays to explore, understand, and present data, and on organization of code.</p>
+<div id="learning-outcomes" class="section level2">
+<h2>Learning outcomes</h2>
+<p>At the completion of this course, students will:</p>
+<ol style="list-style-type: decimal">
+<li>Be literate in statistical programming using R and SAS,</li>
+<li>Effectively communicate through visual presentation of data, and</li>
+<li>Understand and imitate good programming practices, including version control and reproducible research.</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="time-and-location" class="section level1">
+<h1>Time and location</h1>
+<p>TR 12:15-1:30pm<br />
+Wilson Hall 1-143</p>
+<hr />
+</div>
+<div id="instructors" class="section level1">
+<h1>Instructors</h1>
+<div id="lead-instructor" class="section level2">
+<h2>Lead Instructor</h2>
+<p><a href="http://www.math.montana.edu/shancock/" target="_blank"><strong>Dr. Stacey Hancock</strong></a><br />
+email: <a href="mailto:stacey.hancock@montana.edu" class="email">stacey.hancock@montana.edu</a><br />
+Office: Wilson 2-195<br />
+Phone: (406) 994-5350</p>
+<div id="office-hours" class="section level3">
+<h3><strong>Office Hours</strong>:</h3>
+<ul>
+<li>Virtual (see D2L for Zoom link): Mondays 3:10-4:00pm</li>
+<li>In person (Wilson 2-195): Tuesdays and Thursdays 3:10-4:00pm</li>
+<li>By appointment — Please feel free to email me to schedule an appointment outside of office hours.</li>
+</ul>
+</div>
+</div>
+<div id="teaching-assistant" class="section level2">
+<h2>Teaching Assistant</h2>
+<p>Elijah Meyer<br />
+email: <a href="mailto:elijah.meyer@montana.edu" class="email">elijah.meyer@montana.edu</a><br />
+Office: Wilson 1-xxx</p>
+<div id="office-hours-1" class="section level3">
+<h3><strong>Office Hours</strong>:</h3>
+<ul>
+<li>TBD</li>
+</ul>
+<hr />
+</div>
+</div>
+</div>
+<div id="prerequisites" class="section level1">
+<h1>Prerequisites</h1>
+<p>One of: STAT 217, STAT 332, STAT 401, or equivalent.</p>
+<hr />
+</div>
+<div id="course-materials" class="section level1">
+<h1>Course materials</h1>
+<div id="textbooks-resources-optional" class="section level2">
+<h2>Textbooks / Resources (Optional)</h2>
+<p>The process of statistical computing often involves a combination of Google searches, Stack Overflow posts, and various online textbooks, tutorials, and blog posts. As such, there is no <em>one</em> textbook for this course. However, there are a few resources we will consult regularly:</p>
+<ol style="list-style-type: decimal">
+<li><em>Modern Dive: Statistical Inference via Data Science</em> by Chester Ismay and Albert Kim — free at <a href="https://moderndive.com/">https://moderndive.com/</a></li>
+<li><em>R for Data Science</em> by Hadley Wickham and Garrett Grolemund — free at <a href="https://r4ds.had.co.nz/index.html">https://r4ds.had.co.nz/index.html</a></li>
+<li><em>Happy Git and GitHub for the useR</em> by Jenny Bryan — free at <a href="https://happygitwithr.com/">https://happygitwithr.com/</a></li>
+<li>R cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/">https://www.rstudio.com/resources/cheatsheets/</a></li>
+<li>Optional textbooks for purchase:
+<ul>
+<li><a href="https://flowingdata.com/visualize-this/"><em>Visualize This: The FlowingData Guide to Design, Visualization, and Statistics</em></a> by Nathan Yau (Wiley, 2011) — check out his blog at <a href="https://flowingdata.com/">https://flowingdata.com/</a></li>
+<li><a href="https://nostarch.com/artofr.htm"><em>The Art of R Programming</em></a> by Norman Matloff (No Starch Press, 2011)</li>
+<li><a href="https://redshelf.com/app/ecom/book/1830656/the-little-sas-book-1830656-9781642953435-lora-d-delwiche-susan-j-slaughter"><em>The Little SAS Book: A Primer</em></a> by Lora D. Delwiche and Susan J. Slaugher, 6th edition (SAS, 2019) — a free excerpt is available on <a href="https://www.sas.com/storefront/aux/en/splsb/73044_excerpt.pdf">sas.com</a></li>
+</ul></li>
+</ol>
+<p>Explore my list of <a href="https://staceyhancock.github.io/computing/">statistical computing resources</a> for an extended list.</p>
+</div>
+<div id="computing" class="section level2">
+<h2>Computing</h2>
+<p>In this course, we will be using the statistical software:</p>
+<ul>
+<li><a href="https://www.r-project.org/"><strong>R</strong></a> through the IDE <a href="https://rstudio.com/products/rstudio/"><strong>RStudio</strong></a>, and</li>
+<li>SAS via <a href="https://www.sas.com/en_us/software/on-demand-for-academics.html"><strong>SAS OnDemand</strong></a></li>
+</ul>
+<p>In addition, we will use <a href="https://git-scm.com/downloads"><strong>Git</strong></a> and <a href="https://github.com/"><strong>GitHub</strong></a> for version control and group assignments.</p>
+<p>For announcements, grades, discussion forums, and turning in individual assignments, see our <a href="https://ecat1.montana.edu/"><strong>D2L</strong></a> page.</p>
+<ul>
+<li>Make sure you are receiving email notifications for any D2L activity. In D2L, click on your name, then Notifications. Check that D2L is using an email address that you regularly check; you have the option of registering a mobile number. Check the boxes to get notifications for announcements, content, discussions, and grades.</li>
+<li>If you have a question about the course materials, computing, or logistics, please post your question to your <strong>D2L discussion board</strong> instead of emailing your instructors. This ensures all students can benefit from the responses. Other students are encouraged to respond.</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="course-assessment" class="section level1">
+<h1>Course assessment</h1>
+<p>Your grade in STAT 408 will be comprised of the following components.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="75%" /></p>
+<ol style="list-style-type: decimal">
+<li><strong>Homework</strong> (20%): Homework will be posted on the course calendar (hosted in our class GitHub organization). Homework assignments will be turned in individually through D2L.</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li><p><strong>Labs</strong> (20%): Weekly Thursday labs will have a large computational element and will be designed to be completed in 75 minutes; however, there may be times that labs need to be finished outside of class time. Lab assignments will be turned in as a group in GitHub.</p></li>
+<li><p><strong>Exams</strong> (40%): There will be two midterm exams and one final exam. Each exam will have both an in-class and a take-home component.</p></li>
+<li><p><strong>Project</strong> (20%): A data storytelling project will be completed in groups.</p></li>
+</ol>
+<p>Letter grades generally follow the typical scale:</p>
+<p>93-100 = A<br />
+90-92 = A-<br />
+88-89 = B+<br />
+83-87 = B<br />
+80-82 = B-<br />
+etc.</p>
+<p>These cutoffs may be adjusted down (never up!) at the end of the semester, depending on the grade distribution in the course. Thus, a 93% will guarantee an A, a 90% will guarantee an A-, etc.</p>
+<hr />
+</div>
+<div id="course-policies" class="section level1">
+<h1>Course policies</h1>
+<div id="covid-19-related-expectations" class="section level2">
+<h2>COVID-19-related expectations</h2>
+<div id="face-mask-requirement" class="section level3">
+<h3><strong>Face mask requirement</strong></h3>
+<p>Face coverings that cover both your nose and mouth are required in all indoor spaces on the Bozeman campus, with the exception of the fitness center. MSU requires the wearing of masks in physical classrooms to help mitigate the transmission of SARS-CoV-2, which causes COVID-19. The MSU community views the adoption of these practices as a mark of good citizenship and respectful care of fellow classmates, faculty, and staff.</p>
+<p>Compliance with the face-covering protocol is expected. If a you do not comply with a classroom rule, you may be requested to leave class. Section 460.00 of the <a href="https://www.montana.edu/policy/student_conduct/#460">MSU Code of Student Conduct</a> covers “disruptive student behavior.”</p>
+<p>The complete details about MSU’s mask requirement can be found at <a href="https://www.montana.edu/health/coronavirus/index.html">https://www.montana.edu/health/coronavirus/index.html</a>.</p>
+</div>
+<div id="accommodations-for-not-wearing-a-mask" class="section level3">
+<h3><strong>Accommodations for not wearing a mask</strong></h3>
+<p>Individuals whose unique and individual circumstances require an exception to the face covering requirement, as indicated by a medical professional, may request one in accordance with the campus ADA policies. Students should contact the Office of Disability Services at 994-2824 or <a href="mailto:drv@montana.edu" class="email">drv@montana.edu</a> to receive written permission from the Office of Disability Services at MSU. It is strongly recommended that students make contact prior to arriving on campus in order to provide adequate time for their request to be evaluated.</p>
+</div>
+<div id="health-related-class-absences" class="section level3">
+<h3><strong>Health-related class absences</strong></h3>
+<p>Please evaluate your own health status regularly and refrain from attending class and other on-campus events if you are ill. MSU students who miss class due to illness will be given opportunities to access course materials online. You are encouraged to seek appropriate medical attention for treatment of illness. In the event of contagious illness, please do not come to class or to campus to turn in work. Instead notify us by email about your absence as soon as practical, so that accommodations can be made. Please note that documentation (a Doctor’s note) for medical excuses is not required. MSU University Health Partners–as part their commitment to maintain patient confidentiality, to encourage more appropriate use of healthcare resources, and to support meaningful dialogue between instructors and students–does not provide such documentation.</p>
+</div>
+</div>
+<div id="policy-on-collaboration-and-academic-misconduct" class="section level2">
+<h2>Policy on collaboration and academic misconduct</h2>
+<p>In STAT 408, at a minimum, any act of academic dishonesty, which includes but is not limited to plagiarism, cheating, multiple submissions, or facilitating others’ misconduct, will result in a score of zero on the assignment/quiz/exam in question and notification of department and university officials. Further action may be taken as warranted. If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.</p>
+<div id="collaboration-on-individual-assignments" class="section level3">
+<h3><strong>Collaboration on individual assignments</strong></h3>
+<p><em>After attempting to complete homework problems on your own</em>, you are permitted to collaborate on homework in a constructive manner for all involved—each individual in the collaboration needs to ensure they understand and could explain the process of solving each problem. While I encourage you to talk through problems with fellow students, the work you turn in must be your own and must be written in your own words (unless the assignment specifically states otherwise).</p>
+<p><strong>Each homework will require a “citations” page where you cite all sources (including web forums such as Stack Overflow) and individuals used to complete that homework assignment.</strong> Paraphrasing or quoting another’s work without citing the source is a form of academic dishonesty. Even inadvertent or unintentional misuse or appropriation of another’s work (such as relying heavily on source material that is not expressly acknowledged) is considered plagiarism. Homework assignments that do not cite sources or individuals, or assignments where answers are copied directly from another student, will be considered and treated as plagiarism, and will receive a zero grade. If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.</p>
+</div>
+<div id="msu-policy" class="section level3">
+<h3><strong>MSU policy</strong></h3>
+<p>Students in an academic setting are responsible for approaching all assignments with rigor, integrity, and in compliance with the University Code of Student Conduct. This responsibility includes:</p>
+<ol style="list-style-type: decimal">
+<li>consulting and analyzing sources that are relevant to the topic of inquiry;</li>
+<li>clearly acknowledging when they draw from the ideas or the phrasing of those sources in their own writing;</li>
+<li>learning and using appropriate citation conventions within the field in which they are studying; and</li>
+<li>asking their instructor for guidance when they are uncertain of how to acknowledge the contributions of others in their thinking and writing.</li>
+</ol>
+<p><a href="https://www.montana.edu/deanofstudents/academicmisconduct/academicmisconduct.html">More information about Academic Misconduct from the Dean of Students</a></p>
+</div>
+</div>
+<div id="diversity-and-inclusivity-statements" class="section level2">
+<h2>Diversity and inclusivity statements</h2>
+<p><strong>Respect for Diversity</strong>: It is our intent that students from all diverse backgrounds and perspectives be well-served by this course, that students’ learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength and benefit. It is our intent to present materials and activities that are respectful of diversity: gender identity, sexual orientation, disability, age, socioeconomic status, ethnicity, race, religion, culture, perspective, and other background characteristics. Your suggestions about how to improve the value of diversity in this course are encouraged and appreciated. Please let us know ways to improve the effectiveness of the course for you personally or for other students or student groups.</p>
+<p>In addition, in scheduling exams, we have attempted to avoid conflicts with major religious holidays. If, however, we have inadvertently scheduled an exam or major deadline that creates a conflict with your religious observances, please let us know as soon as possible so that we can make other arrangements.</p>
+<p><strong>Support for Inclusivity</strong>: We support an inclusive learning environment where diversity and individual differences are understood, respected, appreciated, and recognized as a source of strength. We expect that students, faculty, administrators and staff at MSU will respect differences and demonstrate diligence in understanding how other peoples’ perspectives, behaviors, and worldviews may be different from their own.</p>
+</div>
+</div>
 
 
 
-
+</div>
+</div>
 
 </div>
 
@@ -315,6 +551,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

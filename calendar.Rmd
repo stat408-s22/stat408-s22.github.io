@@ -1,0 +1,329 @@
+---
+title: "Course Calendar and Materials"
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. You should bring your laptop with you to every class period.
+
+
+---
+
+## Week 1 (Jan 19--21): Course Overview
+
+---
+
+__Weekly Overview:__ 
+
+1. Discuss course structure and expectations.
+2. Install R and RStudio.
+3. Provide a brief introduction to R.
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+- Intro to R:
+  * [Modern Dive Ch. 1](https://moderndive.com/1-getting-started.html)
+  * [R 4 DS Ch. 1](https://r4ds.had.co.nz/introduction.html)
+- R Installation Resources: 
+  * [Guide from Earth Lab](https://www.earthdatascience.org/courses/earth-analytics/document-your-science/setup-r-rstudio/)
+  * [Guide from DataCamp](https://www.datacamp.com/community/tutorials/installing-R-windows-mac-ubuntu)
+- R Markdown: 
+  * [R Markdown Overview](https://rmarkdown.rstudio.com/lesson-1.html)
+
+
+
+---
+
+## Week 2 (Jan 24--28): 
+
+---
+
+__Weekly Overview:__ 
+
+1. Create a Github account.
+2. Install Git.
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+---
+
+## Week 3 (Jan 31--Feb 4): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 4 (Feb 7--11): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 5 (Feb 14--18): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 6 (Feb 21--25): 
+
+---
+
+__Weekly Overview:__ 
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 7 (Feb 28--Mar 4): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+
+---
+
+## Week 8 (Mar 7--11): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+
+---
+
+## Week 9 (Mar 21--25): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+
+---
+
+## Week 10 (Mar 28--Apr 1): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 11 (Apr 4--8): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+
+---
+
+## Week 12 (Apr 11--15): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Week 13 (Apr 18--22): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+---
+
+## Week 14 (Apr 25--29): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+---
+
+## Week 15 (May 2--6): 
+
+---
+
+__Weekly Overview:__ 
+
+
+
+__Virtual Materials:__
+
+  
+__Reading and Online Resources:__ 
+
+
+__In Class Lab:__
+
+
+
+---
+
+## Final Exam 
+
+---
+
+Tuesday, May 10 12:00--1:50pm
