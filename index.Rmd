@@ -2,9 +2,6 @@
 title: "Statistical Computing and Graphical Analysis"
 subtitle: "Spring 2022"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     toc: yes
     toc_depth: 2

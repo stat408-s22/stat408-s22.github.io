@@ -1,8 +1,6 @@
 ---
 title: "Course Calendar and Materials"
 output:
-  pdf_document:
-    toc: no
   html_document:
     toc: no
 ---
