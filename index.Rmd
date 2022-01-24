@@ -145,7 +145,7 @@ grades %>% ggplot(aes(x=location, y=percent)) +
   scale_fill_manual(values=pal)
 ```
 
-1. **Homework** (20%): Homework will be posted on the course calendar (hosted in our class GitHub organization). Homework assignments will be turned in individually through D2L. 
+1. **Homework** (20%): Homework will be posted on the [course calendar](calendar.html). Homework assignments will be turned in individually through D2L. 
 
 \vspace{10mm}
 
@@ -201,7 +201,20 @@ In STAT 408, at a minimum, any act of academic dishonesty, which includes but is
 
 _After attempting to complete homework problems on your own_, you are permitted to collaborate on homework in a constructive manner for all involved---each individual in the collaboration needs to ensure they understand and could explain the process of solving each problem. While I encourage you to talk through problems with fellow students, the work you turn in must be your own and must be written in your own words (unless the assignment specifically states otherwise). 
 
-**Each homework will require a "citations" page where you cite all sources (including web forums such as Stack Overflow) and individuals used to complete that homework assignment.** Paraphrasing or quoting another’s work without citing the source is a form of academic dishonesty. Even inadvertent or unintentional misuse or appropriation of another's work (such as relying heavily on source material that is not expressly acknowledged) is considered plagiarism.  Homework assignments that do not cite sources or individuals, or assignments where answers are copied directly from another student, will be considered and treated as plagiarism, and will receive a zero grade. If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.  
+**Each homework will require a "citations" page where you cite all sources (including web forums such as Stack Overflow) and individuals used to complete that homework assignment.** Paraphrasing or quoting another’s work without citing the source is a form of academic dishonesty. Even inadvertent or unintentional misuse or appropriation of another's work (such as relying heavily on source material that is not expressly acknowledged) is considered plagiarism.  Homework assignments that do not cite sources or individuals, or assignments where answers are copied directly from another student, will be considered and treated as plagiarism, and will receive a zero grade. 
+
+_Guidance on Citing Sources:_
+
+* You do not need to include in-text citations---only a reference list at the end of your assignment.
+* The citation style you choose is up to you, but each entry should include enough information for someone to find the source on their own. This includes the author's name (could be an organization), date of publication (if not known, then state "n.d."), title of source, location and name of publisher (if applicable), and the URL where the source was retrieved.
+* I typically use APA style. [Mendeley](https://www.mendeley.com/guides/apa-citation-guide/) has a nice reference webpage for how to cite different sources in APA style.
+* If one of your sources on your homework assignment is another student in the class or a tutor, your citation needs only to state their name, e.g., "Direct correspondence with Jane Doe."
+* You do not need to cite any assigned readings, notes, or material made available on our course website, nor do you need to cite asking questions of your instructor or teaching assistant.
+* If you did not use any external sources on your assignment, please state, "No external sources used."
+
+
+
+If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.  
 
 
 

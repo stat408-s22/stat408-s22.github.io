@@ -5,7 +5,12 @@ output:
     toc: no
 ---
 
-Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. You should bring your laptop with you to every class period.
+Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. 
+
+* **You should bring your laptop with you to every class period.**
+* Assigned readings for the week should be completed prior to Thursday's lab. Whether you learn better by reading prior to lecture, or hearing a lecture prior to reading is up to you.
+* Weekly labs will be due the following **Monday** in GitHub by 5pm.
+* Weekly homework assignments will be due the following **Tuesday** in D2L by 5pm.
 
 
 ---
@@ -20,10 +25,6 @@ __Weekly Overview:__
 2. Install R and RStudio.
 3. Provide a brief introduction to R.
 
-
-__Virtual Materials:__
-
-  
 __Reading and Online Resources:__ 
 
 - Intro to R:
@@ -35,11 +36,14 @@ __Reading and Online Resources:__
 - R Markdown: 
   * [R Markdown Overview](https://rmarkdown.rstudio.com/lesson-1.html)
 
+__In-class Materials:__
+
+- [Week 1 slides](https://github.com/stat408-s22/lectures/blob/main/week1/week1-slides.pdf)
 
 
 ---
 
-## Week 2 (Jan 24--28): 
+## Week 2 (Jan 24--28): Version Control with Git
 
 ---
 
@@ -47,136 +51,167 @@ __Weekly Overview:__
 
 1. Create a Github account.
 2. Install Git.
-
-__Virtual Materials:__
+3. Connect RStudio to Git and GitHub.
+4. Provide a brief introduction to version control with Git.
 
   
 __Reading and Online Resources:__ 
 
+- Happy Git with R
+  * [Ch. 1](https://happygitwithr.com/big-picture.html) - Big picture
+  * [Ch. 4](https://happygitwithr.com/github-acct.html) - Create a GitHub account
+  * [Ch. 6](https://happygitwithr.com/install-git.html) - Install Git
+  * [Ch. 7](https://happygitwithr.com/hello-git.html), [Ch. 9](https://happygitwithr.com/https-pat.html), [Ch. 11](https://happygitwithr.com/push-pull-github.html), [Ch. 12](https://happygitwithr.com/rstudio-git-github.html) - Configure Git, GitHub, and RStudio
 
-__In Class Lab:__
+__In-class Materials:__
 
+- Week 2 slides
+
+__In-class Lab:__
+
+- Lab 1 - Due Monday, Jan 31
+
+__Homework:__
+
+- Homework 1 - Due Tuesday, Feb 1
 
 ---
 
-## Week 3 (Jan 31--Feb 4): 
+## Week 3 (Jan 31--Feb 4): Tidyverse Overview
 
 ---
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
 
 
+__In-class Materials:__
+
+ 
+__Homework:__
 
 ---
 
-## Week 4 (Feb 7--11): 
+## Week 4 (Feb 7--11): Data Visualization with ggplot2
 
 ---
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
 ---
 
-## Week 5 (Feb 14--18): 
+## Week 5 (Feb 14--18): R Overview and Style
 
 ---
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
 ---
 
-## Week 6 (Feb 21--25): 
+## Week 6 (Feb 21--25): Data Wrangling 1 - Tidy Data and Relational Data
 
 ---
 
 __Weekly Overview:__ 
 
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
 ---
 
-## Week 7 (Feb 28--Mar 4): 
+## Week 7 (Feb 28--Mar 4): Data Wrangling 2 - Strings, Factors, Date/Time
+
 
 ---
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
 
 ---
 
-## Week 8 (Mar 7--11): 
+## Week 8 (Mar 7--11): Data Visualization Principles + R Shiny
 
 ---
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
 
 
+__In-class Materials:__
 
+ 
+__Homework:__
+
+---
+
+## Spring Break (Mar 14--18)
+
+---
+
+- No class
 
 ---
 
@@ -186,15 +221,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
@@ -207,15 +244,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
@@ -227,15 +266,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
@@ -248,15 +289,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 
@@ -268,15 +311,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 ---
@@ -287,15 +332,17 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
+
+
+__In-class Materials:__
+
+ 
+__Homework:__
 
 
 ---
@@ -306,16 +353,16 @@ __In Class Lab:__
 
 __Weekly Overview:__ 
 
-
-
-__Virtual Materials:__
-
-  
+ 
 __Reading and Online Resources:__ 
 
 
-__In Class Lab:__
+__In-class Lab:__
 
+
+__In-class Materials:__
+
+ 
 
 
 ---
@@ -324,4 +371,6 @@ __In Class Lab:__
 
 ---
 
-Tuesday, May 10 12:00--1:50pm
+**In Class portion:** Tuesday, May 10 12:00--1:50pm
+
+**Take Home portion:** Due Monday, May 9 by 5:00pm
