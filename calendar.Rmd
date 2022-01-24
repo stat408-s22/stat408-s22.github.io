@@ -65,7 +65,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- Week 2 slides
+- Week 2 slides ([PDF](https://github.com/stat408-s22/lectures/blob/main/week2/week2-slides.pdf)) ([Rmd](https://github.com/stat408-s22/lectures/blob/main/week2/week2-slides.Rmd))
 
 __In-class Lab:__
 
