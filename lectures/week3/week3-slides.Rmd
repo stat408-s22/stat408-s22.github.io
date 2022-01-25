@@ -1,0 +1,84 @@
+---
+title: "STAT 408: Week 3"
+subtitle: "Collaboration in Git + GitHub"
+date: "1/25/2022"
+output: 
+  beamer_presentation:
+    includes:
+      in_header: ../preamble.tex
+    theme: "Rochester"
+    colortheme: "seahorse"
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+---
+
+## Reproducibility
+
+> Research is **reproducible** when the _exact results_
+can be reproduced if given access to the original data,
+software, and code.
+
+---
+
+### Reproducibility checklist
+
+Goal: Train new analysts whose only workflow is a reproducible one.
+
+1. Are the tables and figures reproducible from the code and data?
+1. Does the code actually do what you think it does?
+1. In addition to what was done, is it clear _why_ it was done?
+1. Can the code by used for other data?
+1. Can you extend the code to do other things?
+
+---
+
+## How to produce reproducible research?
+
+We need an environment where
+
+* data, analysis, and reporting results are tightly connected, or better yet, inseparable
+* the original data remain untouched
+* all data manipulations and analyses are inherently documented
+* documentation is human readable and syntax is minimal
+
+---
+
+## Roadmap
+
+1. Scriptability $\rightarrow$ R
+2. Literate programming $\rightarrow$ R Markdown
+3. Version control $\rightarrow$ Git + GitHub
+    - Lots of mistakes along the way, need ability to revert!
+    - Removes barriers to well-documented collaboration
+    - Transparent commit history = accountability
+    - Mastery takes time, earlier start the better = marketability
+
+---
+
+## Your turn!
+
+* If you don't have a GitHub account, create one now at [**github.com**](https://github.com/).
+* If you do, confirm you know your username and password by logging in at [**github.com**](https://github.com/).
+* Then, enter your name and GitHub username in D2L -> Course Resources -> Survey -> GitHub User Information.
+
+---
+
+## Basic workflow
+
+
+
+---
+
+## Prior to Thursday lab...
+
+1. Read Happy Git with R chapters listed on course calendar.
+    - Create a GitHub account.
+    - Install Git.
+    - Configure Git, GitHub, and RStudio.
+2. Go to our D2L page and click on "Surveys" in the "Course Resources" drop-down menu. Fill out the "GitHub User Information" survey.

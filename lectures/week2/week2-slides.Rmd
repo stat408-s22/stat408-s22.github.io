@@ -1,0 +1,413 @@
+---
+title: "STAT 408: Week 2"
+subtitle: "Reproducible workflows: R Markdown, Git, GitHub"
+date: "1/25/2022"
+classoption: "aspectratio=169"
+urlcolor: blue
+output: 
+  beamer_presentation:
+    includes:
+      in_header: ../preamble.tex
+    theme: "Berkeley"
+    colortheme: "seahorse"
+    slide_level: 2
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+```
+
+
+# Reproducibility
+
+> Research is **reproducible** when the _exact results_
+can be reproduced if given access to the original data,
+software, and code.
+
+---
+
+### Reproducibility checklist
+
+Goal: Train new analysts whose only workflow is a reproducible one.
+
+1. Are the tables and figures reproducible from the code and data?
+1. Does the code actually do what you think it does?
+1. In addition to what was done, is it clear _why_ it was done?
+1. Can the code by used for other data?
+1. Can you extend the code to do other things?
+
+---
+
+## How to produce reproducible research?
+
+We need an environment where
+
+* data, analysis, and reporting results are tightly connected, or better yet, inseparable
+* the original data remain untouched
+* all data manipulations and analyses are inherently documented
+* documentation is human readable and syntax is minimal
+
+---
+
+## Roadmap
+
+1. Scriptability $\rightarrow$ R
+2. Literate programming $\rightarrow$ R Markdown
+3. Version control $\rightarrow$ Git + GitHub
+    - Lots of mistakes along the way, need ability to revert!
+    - Removes barriers to well-documented collaboration
+    - Transparent commit history = accountability
+    - Mastery takes time, earlier start the better = marketability
+
+
+# .R and .Rmd
+
+## R script files: .R
+
+R demo - create your first R script file!
+
+- make an object assignment (`<-`)
+- then inspect it
+- include a comment (`#`)
+- do some basic arithmetic
+- call an R function:
+    ```{r, eval=FALSE}
+    functionName(arg1 = val1, arg2 = val2, and so on)
+    ```
+
+
+---
+
+## R Markdown setup
+
+Do this once:
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+```
+(or install from Packages tab)
+
+---
+
+## R Markdown files: .Rmd
+
+[R Markdown overview](https://rmarkdown.rstudio.com/lesson-1.html)
+
+---
+
+R Markdown demo - create your first R Markdown file!
+
+- headers
+- italics and bold
+- R chunks
+
+
+
+
+# Git and GitHub
+
+## Basic Git workflow
+
+### Setup
+
+1. Create new repository ('repo') in Github
+1. `clone` to a local directory
+
+---
+
+### Useage
+
+1. `pull` - **Always pull first!** The importance of this first step will become apparent when we start collaborating with others in the same repo.
+1. Make your local changes.
+1. `commit` - Include a short message to remind you what changes you just made. Advice: _Commit early and often!_
+1. `push` - "Pushes" your changes to the central repo
+
+---
+
+## More on commit message subject lines
+
+
+```{r xkcd_commit_messages, echo=FALSE, out.width="40%", fig.align="center"}
+download.file(url = "https://imgs.xkcd.com/comics/git_commit.png",
+          destfile = "image.png",
+          mode = 'wb')
+knitr::include_graphics("image.png")
+```
+
+- Use the imperative mood: complete the sentence, "If applied, this commit will..."
+- Limit 50 characters
+- Capitalize
+- Do not end with a period
+
+Examples: "Add link to textbook", "Update calendar for week 7"
+
+
+---
+
+## Basic Git workflow with RStudio
+
+1. Create new repository ('repo') in Github
+1. In RStudio, File -> New project...Version control -> Git -> 
+    - Repository URL: [enter https link to repo] 
+    - Project directory name: [typical to use repo name here]
+    - Create project as subdirectory of: [local path for repo directory]
+1. "Git" tab buttons: Diff, Commit, Pull, Push
+
+---
+
+
+
+## Your turn!
+
+* If you don't have a GitHub account, create one now at [**github.com**](https://github.com/)
+* If you do, confirm you know your username and password by logging in at [**github.com**](https://github.com/)
+* Then, enter your name and GitHub username in D2L -> Course Resources -> Survey -> GitHub User Information
+
+
+---
+
+## Prior to Thursday lab...
+
+Read Happy Git with R chapters listed on course calendar and use them to...
+
+1. create a GitHub account and enter your name and GitHub username in D2L -> Course Resources -> Survey -> GitHub User Information (*should have done today!*)
+1. install Git
+1. configure Git, GitHub, and RStudio
+
+
+
+# Data Structures in R
+
+
+
+## Reading data files
+
+The ability to read datasets into R is an essential skill. For this class, most of the files will be on a webpage and can be directly downloaded using `read.csv` (or `read_csv` in the `tidyverse`). 
+
+Consider a dataset available at: [http://math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv](http://math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv)
+
+```{r read.data, mysize=TRUE, size = '\\scriptsize'}
+Seattle <- read.csv(
+  'http://math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv',
+  stringsAsFactors = F)
+```
+
+## Viewing data files
+A common function that we will use is `head()`, which shows the first few rows of a data frame.
+
+```{r, mysize=TRUE, size = '\\scriptsize'}
+head(Seattle, 3)
+```
+
+## Viewing data files
+Other useful functions to examine a data file: `tail()`, `names()`, `dim()`
+
+```{r, mysize=TRUE, size = '\\scriptsize'}
+tail(Seattle, 2)
+names(Seattle)
+dim(Seattle)
+```
+
+## Data structure overview
+R has four common types of data structures:
+
+- Vectors
+- Matrices (and Arrays)
+- Lists
+- Data Frames
+
+## Data structure overview
+The base data structures in R can be organized by dimensionality and whether they are homogenous.
+
+Dimension     | Homogenous     | Heterogenous
+------------- | -------------  | -------------
+1d            | Vector         | List
+2d            | Matrix         | Data Frame
+no d          | Array          |
+
+
+## Vector types
+There are four common types of vectors: logical, integer, double (or numeric), and character. The `c()` function is used for combining elements into a vector
+
+```{r vectors}
+dbl <- c(1,2.5,pi)
+int <- c(1L,4L,10L)
+log <- c(TRUE,FALSE,F,T)
+char <- c('this is','a character string')
+```
+
+## Vector types
+The type of vector can be identified using the `typeof()` (or `class()`) function. Note that only a single data type is allowed.
+```{r vector.type}
+  typeof(dbl)
+  comb <- c(char,dbl)
+  typeof(comb)
+  comb
+```
+
+
+## Exercise: Vectors
+
+Create a vector with your first, middle, and last names.
+
+
+
+
+## Solution: Vectors
+
+Create a vector with your first, middle, and last names.
+```{r}
+my.names <- c("Stacey","Allayne","Hancock")
+my.names
+```
+
+
+## Data frame overview
+
+- the most common way of storing data in R
+- like a matrix with rows-and-column structure; however, unlike a matrix each column may have a different type
+- in a technical sense, a data frame is a list of equal-length vectors
+
+```{r df}
+df <- data.frame(x = 1:3, y = c('a','b','c'))
+kable(df)
+```
+
+# Subsetting
+
+## Vector subsetting: by indices
+Subsetting allows you to extract certain elements from a data frame or vector (or matrix, array, list). We take subsets of vectors, matrices, and arrays by using square brackets of the appropriate dimension: `[ ]`, `[ , ]`, `[ , ,]`
+
+```{r subset,mysize=TRUE,size = '\\small'}
+num.vec <- seq(from = 1, to = 9, by = 1); num.vec
+num.vec[1:3]
+num.vec[c(1,5,8)]
+num.vec[-5]
+```
+
+## Vector subsetting: by logical
+Subsetting also works with logical values or expressions.
+```{r subset2}
+num.vec[num.vec > 5]
+num.vec[num.vec != 6]
+num.vec[rep(c(TRUE,FALSE,TRUE),each=3)]
+```
+
+## Data Frame Subsetting: by indices
+The same ideas apply to data frames, but the indices now constitute rows and columns of the data frame.
+```{r subset.df}
+df <- data.frame(x=1:3, y=3:1, z=c('a','b','c'))
+df[,1]
+df[-1,c(2:3)]
+```
+
+## Data Frame Subsetting: by `$` or `subset()`
+There are also a couple built in functions in R for subsetting data frames.
+```{r subset.df2}
+df$x
+new.df <- subset(df, x >1); new.df
+```
+
+## Exercise: Subsetting
+
+Adding to the .Rmd file you created earlier:
+
+1. Read in the `Seattle` data set:
+```{r, mysize=TRUE, size = '\\scriptsize', eval=FALSE}
+Seattle <- read.csv(
+  'http://math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv',
+  stringsAsFactors = F)
+```
+
+1. Create a new data frame that only includes houses worth more than $1,000,000.
+
+1. (bonus) From this new data frame, what is the average living square footage of houses. Hint columns in a data.frame can be indexed by `Seattle$sqft_living`.
+
+
+## Exercise: Subsetting - Solutions
+1. Create a new data frame that only includes houses worth more than $1,000,000.
+```{r, size= 'tiny'}
+expensive.houses <- subset(Seattle, price > 1000000) # or
+expensive.houses <- Seattle[Seattle$price > 1000000,]
+```
+
+2. (bonus) From this new data frame what is the average living square footage of houses. Hint columns in a data.frame can be indexed by `Seattle$sqft_living`
+```{r}
+mean(expensive.houses$sqft_living)
+```
+
+
+
+# Base R Graphics
+
+## Scatterplot
+Later in the course, we will spend considerable time on graphics. For now, let's consider some of the basic functionality in R.
+
+```{r plot,fig.align='center',fig.width=3.5, fig.height=3}
+plot(Seattle$price ~ Seattle$sqft_living)
+```
+
+## Add labels: `xlab`, `ylab`
+```{r plot2,fig.align='center',fig.width=3.5, fig.height=3}
+plot(Seattle$price ~ Seattle$sqft_living,
+     ylab='Price', xlab='Living Sqft')
+```
+
+## Specify point character: `pch`
+```{r plot3,fig.align='center',fig.width=3.5, fig.height=3, mysize=TRUE, size = '\\small'}
+plot(Seattle$price ~ Seattle$sqft_living,
+     ylab='Price', xlab='Living Sqft', pch=16)
+```
+
+## Specify color: `col`
+```{r plot3b,fig.align='center',fig.width=3.5, fig.height=3, echo=T, mysize=TRUE, size = '\\small'}
+plot(Seattle$price ~ Seattle$sqft_living,
+     ylab='Price', xlab='Living Sqft', pch=16, col=rgb(0,0,.3,.3))
+```
+
+
+## Add title: `main`
+```{r plot4,fig.align='center',fig.width=3.25, fig.height=2.75, mysize=TRUE, size = '\\footnotesize'}
+plot(Seattle$price~Seattle$sqft_living,
+     ylab='Price', xlab='Living Sqft', pch=16, col=rgb(0,0,.3,.3),
+     main='Price vs. Living Sqft')
+```
+
+## Histogram
+```{r plot5,fig.align='center',fig.width=3.5, fig.height=3, mysize=TRUE, size = '\\footnotesize'}
+hist(Seattle$price, xlab='Price', breaks='FD')
+```
+
+## Boxplot
+```{r plot6,fig.align='center',fig.width=3.25, fig.height=2.75, mysize=TRUE, size = '\\footnotesize'}
+boxplot(Seattle$price ~ Seattle$bedrooms,
+        ylab='Price', xlab='bedrooms', col='red',
+        main='Price by Bedrooms for Seattle')
+```
+
+## Exercise: Basic Plot
+
+- Using only the subset of homes worth more than a million dollars, create a graphic.
+
+## Solution: Basic Plot
+
+```{r fig.align='center',fig.width=3.5, fig.height=3,echo=FALSE}
+boxplot(expensive.houses$price ~ expensive.houses$bedrooms,ylab='Price', col='red',
+        xlab='bedrooms',main='Price by Bedrooms for Seattle',
+        sub='For homes worth more than $1,000,000')
+```
+
+## Solution: Basic Plot --- Code
+
+```{r fig.align='center',fig.width=4, fig.height=3.25,echo=T, eval=F}
+boxplot(expensive.houses$price ~ expensive.houses$bedrooms,
+        ylab='Price', xlab='bedrooms', col='red',
+        main='Price by Bedrooms for Seattle',
+        sub='For homes worth more than $1,000,000')
+```
