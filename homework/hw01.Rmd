@@ -27,14 +27,14 @@ Answer the following questions to help me get to know you and better tailor the 
 1. What is your major?
 1. When do you anticipate graduating?
 1. What do you hope to do after graduating from MSU?
-1. Which statistics courses (at MSU or elsewhere) have you taken?
-1. Why are you taking this class?
+1. Which statistics and/or programming courses (at MSU or elsewhere) have you taken?
 1. What do you hope to get out of this class?
 1. On a scale of 1 to 5, where 1 = very poor and 5 = very strong, rate your ability in... 
     * R/RStudio:
     * R Markdown:
     * Git/GitHub:
     * SAS:
+1. Is there anything else you would like your instructors to know about your background or goals for this course?
 
 ## Q2. Practice in R.
 
