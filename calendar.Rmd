@@ -69,11 +69,11 @@ __In-class Materials:__
 
 __In-class Lab:__
 
-- Lab 1 - Due Monday, Jan 31
+- Lab 1 - Due Monday, Jan 31 by 5pm in GitHub
 
 __Homework:__
 
-- Homework 1 - Due Tuesday, Feb 1
+- [Homework 1](homework/hw01.html) ([Rmd](homework/hw01.Rmd)) - Due Tuesday, Feb 1 by 5pm in D2L
 
 ---
 
