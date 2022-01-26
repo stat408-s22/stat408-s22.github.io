@@ -1,0 +1,76 @@
+---
+title: "Homework 1"
+author: "your name here"
+date: "Due February 1, 2022 at 5:00 PM in D2L"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+Use this .Rmd file as a template for your homework. Please use D2L to turn in both the PDF output and your R Markdown file in. Your .Rmd file should compile on its own if it is downloaded by your instructor.
+
+
+## Q1. Getting to know each other.
+
+### Q1a.
+Make at least one post in our D2L Discussion boards. If you don't have any questions to post, post something that may be of interest to the class, or just write a note introducing yourself!
+
+### Q1b. 
+Answer the following questions to help me get to know you and better tailor the course to your background and goals:
+
+1. What is your major?
+1. When do you anticipate graduating?
+1. What do you hope to do after graduating from MSU?
+1. Which statistics courses (at MSU or elsewhere) have you taken?
+1. Why are you taking this class?
+1. What do you hope to get out of this class?
+1. On a scale of 1 to 5, where 1 = very poor and 5 = very strong, rate your ability in... 
+    * R/RStudio:
+    * R Markdown:
+    * Git/GitHub:
+    * SAS:
+
+## Q2. Practice in R.
+
+Evaluate each of the following R code chunks below and provide a written explanation about what each piece of code does. Note that the R code chunk `eval` option is set to `FALSE`. Change this option to `TRUE` when you compile your pdf.
+
+### Q2a.
+```{r, eval=FALSE}
+ski <- data.frame(ski.hill = c('Bridger Bowl','Big Sky','Red Lodge Mtn'), 
+                  new.snow = c(TRUE,FALSE,TRUE),
+                  acres = c(2000, 5800, 1600))
+```
+Explanation:
+
+### Q2b.
+```{r, eval=FALSE}
+ski[1, 3]
+```
+Explanation:
+
+### Q2c.
+
+```{r, eval=FALSE}
+subset(ski, new.snow == TRUE)
+```
+Explanation:
+
+### Q2d.
+
+```{r, eval=FALSE}
+max(ski$acres)
+```
+Explanation:
+
+### Q2e.
+
+```{r, eval=FALSE}
+sum(ski$new.snow)
+```
+Explanation:
