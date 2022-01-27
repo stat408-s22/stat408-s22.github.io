@@ -69,7 +69,7 @@ __In-class Materials:__
 
 __In-class Lab:__
 
-- Lab 1 - Due Monday, Jan 31 by 5pm in GitHub
+- [Lab 1](labs/lab-01/lab-01-hello-r.html) ([Rmd](labs/lab-01/lab-01-hello-r.Rmd)) - Due Monday, Jan 31 by 5pm in GitHub
 
 __Homework:__
 
