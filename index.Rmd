@@ -171,6 +171,41 @@ These cutoffs may be adjusted down (never up!) at the end of the semester, depen
  
 # Course policies
 
+## Classroom community
+
+All members of the classroom community (instructor, students, visitors) are expected to treat each other with courtesy and respect. Our comments to others should be factual, constructive, and free from harassing statements. You are encouraged to disagree with others, but such disagreements need to be based upon facts and documentation (rather than prejudices and personalities). It is the instructor’s goal to promote an atmosphere of mutual respect in the classroom.
+
+The success of all students in this course depends on all members of the classroom community agreeing to:
+
+* Show up and be present
+* Listen
+* Contribute
+* Build on other's ideas
+* Speak clearly and loudly enough for all to hear
+
+Please contact the instructor if you have suggestions for improving the classroom environment.
+
+
+## Absences, illnesses, and late work policy
+
+If you find yourself under extenuating circumstances that are preventing you from keeping up with coursework, please speak to your instructor as soon as possible so I can work with you to figure out a plan for succeeding in this course.
+
+### **Homework**
+
+It is expected that students turn in homework by the posted deadline, but understood that life sometimes prevents us from meeting a deadline. Thus, each student gets one "free late pass" for the semester, where you may turn in your homework up until the point when homework solutions are released (usually around 3--5 days after the homework submission deadline). Once your free pass is used, no late homework will be accepted. 
+
+### **Labs**
+
+Labs are designed to be finished during class under the guidance of your instructors. All labs except for the first lab of the semester will be completed in teams that are assigned by the instructor. You will work with the same team throughout the semester, but please contact your instructor as soon as possible if any issues arise! We will reassign teams if needed.
+
+Since labs are intended to be completed within a team, **if you miss class on lab day, you will be removed from your team's GitHub repo, an individual repo will be set up for you, and you will need to complete the lab assignment on your own**. However, if you are able to attend class virtually, please let your teammates and your instructor know prior to lab day, and if possible, we can set you up to attend and work with your teammates virtually.
+
+
+### **Exams**
+
+If you are ill or have other extenuating circumstances that arise that prevent you from taking the exam on the scheduled day, please email your instructor as soon as possible so other arrangements can be made. Students who miss an exam without contacting the instructor prior to the exam will receive a zero on that exam.
+
+
 ## COVID-19-related expectations
 
 ### **Face mask requirement**
@@ -211,8 +246,6 @@ _Guidance on Citing Sources:_
 * If one of your sources on your homework assignment is another student in the class or a tutor, your citation needs only to state their name, e.g., "Direct correspondence with Jane Doe."
 * You do not need to cite any assigned readings, notes, or material made available on our course website, nor do you need to cite asking questions of your instructor or teaching assistant.
 * If you did not use any external sources on your assignment, please state, "No external sources used."
-
-
 
 If you have any questions about the limits of collaboration or about using and citing sources, you are expected to ask for clarification.  
 
