@@ -75,6 +75,11 @@ __Homework:__
 
 - [Homework 1](homework/hw01.html) ([Rmd](homework/hw01.Rmd)) - Due Tuesday, Feb 1 by 5pm in D2L
 
+_Note_: In order for RStudio to compile to a PDF document, you need some version of TeX installed on your system. An easy way to install the TeX required for R Markdown compilation to PDF files is through the `tinytex` package.
+
+- [Video instructions for installing TeX through `tinytex`](https://www.youtube.com/watch?v=HwzE2okhq-M)
+- [`tinytex` R package website](https://yihui.org/tinytex/)
+
 ---
 
 ## Week 3 (Jan 31--Feb 4): Data Visualization with ggplot2
