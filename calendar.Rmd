@@ -22,8 +22,8 @@ Each week, Tuesdays will be primarily lecture and class discussion or short acti
 __Weekly Overview:__ 
 
 1. Discuss course structure and expectations.
-2. Install R and RStudio.
-3. Provide a brief introduction to R.
+1. Install R and RStudio.
+1. Provide a brief introduction to R.
 
 __Reading and Online Resources:__ 
 
@@ -50,14 +50,14 @@ __In-class Materials:__
 __Weekly Overview:__ 
 
 1. Create a Github account.
-2. Install Git.
-3. Connect RStudio to Git and GitHub.
-4. Provide a brief introduction to version control with Git.
+1. Install Git.
+1. Connect RStudio to Git and GitHub.
+1. Provide a brief introduction to version control with Git.
 
   
 __Reading and Online Resources:__ 
 
-- Happy Git with R
+- Happy Git with R:
   * [Ch. 1](https://happygitwithr.com/big-picture.html) - Big picture
   * [Ch. 4](https://happygitwithr.com/github-acct.html) - Create a GitHub account
   * [Ch. 6](https://happygitwithr.com/install-git.html) - Install Git
@@ -77,15 +77,21 @@ __Homework:__
 
 ---
 
-## Week 3 (Jan 31--Feb 4): Tidyverse Overview
+## Week 3 (Jan 31--Feb 4): Data Visualization with ggplot2
 
 ---
 
 __Weekly Overview:__ 
 
+1. Understand R data structures and basic "base R" graphics functions.
+1. Describe the "grammar of graphics".
+1. Visualize data with the `ggplot2` package.
  
 __Reading and Online Resources:__ 
 
+- Data visualization with ggplot:
+    * [Modern Dive Ch. 2](https://moderndive.com/2-viz.html)
+    * [R 4 DS Ch. 3](https://r4ds.had.co.nz/data-visualisation.html)
 
 __In-class Lab:__
 
@@ -97,16 +103,20 @@ __Homework:__
 
 ---
 
-## Week 4 (Feb 7--11): Data Visualization with ggplot2
+## Week 4 (Feb 7--11): Tidyverse Overview 
 
 ---
 
 __Weekly Overview:__ 
 
+1. Practice wrangling data with the tidyverse "verbs": `filter()`, `arrange()`, `select()`, `mutate()`, `summarise()`, `group_by()`
  
 __Reading and Online Resources:__ 
 
 
+- [Modern Dive Ch. 3](https://moderndive.com/3-wrangling.html)
+- [R 4 DS Ch. 5](https://r4ds.had.co.nz/transform.html)
+    
 __In-class Lab:__
 
 
@@ -128,6 +138,10 @@ __Weekly Overview:__
  
 __Reading and Online Resources:__ 
 
+- [R 4 DS Ch. 4](https://r4ds.had.co.nz/workflow-basics.html)
+- [R style guide](http://adv-r.had.co.nz/Style.html)
+- [Google's R style guide](https://google.github.io/styleguide/Rguide.html)
+- Browse through Chapters 1--5 of [The tidyverse style guide](https://style.tidyverse.org/index.html)
 
 __In-class Lab:__
 
