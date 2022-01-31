@@ -89,16 +89,18 @@ __Weekly Overview:__
  
 __Reading and Online Resources:__ 
 
-- Data visualization with ggplot:
-    * [Modern Dive Ch. 2](https://moderndive.com/2-viz.html)
-    * [R 4 DS Ch. 3](https://r4ds.had.co.nz/data-visualisation.html)
+* [Modern Dive Ch. 2](https://moderndive.com/2-viz.html)
+* [R 4 DS Ch. 3](https://r4ds.had.co.nz/data-visualisation.html)
+* [`ggplot2` website + cheatsheet](https://ggplot2.tidyverse.org/)
+* [Data Carpentry `ggplot2` tutorial](https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html)
+
+__In-class Materials:__
+
+- Week 3 slides ([PDF](lectures/week3/week3-slides.pdf)) ([Rmd](https://raw.githubusercontent.com/stat408-s22/stat408-s22.github.io/main/lectures/week3/week3-slides.Rmd))
 
 __In-class Lab:__
 
 
-__In-class Materials:__
-
- 
 __Homework:__
 
 ---
@@ -117,11 +119,11 @@ __Reading and Online Resources:__
 - [Modern Dive Ch. 3](https://moderndive.com/3-wrangling.html)
 - [R 4 DS Ch. 5](https://r4ds.had.co.nz/transform.html)
     
-__In-class Lab:__
-
 
 __In-class Materials:__
 
+
+__In-class Lab:__
  
 __Homework:__
 
@@ -143,10 +145,11 @@ __Reading and Online Resources:__
 - [Google's R style guide](https://google.github.io/styleguide/Rguide.html)
 - Browse through Chapters 1--5 of [The tidyverse style guide](https://style.tidyverse.org/index.html)
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -165,10 +168,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -188,10 +192,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -211,10 +216,10 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
-
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -239,10 +244,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -262,10 +268,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -284,10 +291,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -307,10 +315,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -329,10 +338,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -350,10 +360,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 __Homework:__
@@ -371,10 +382,11 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 
-__In-class Lab:__
-
 
 __In-class Materials:__
+
+
+__In-class Lab:__
 
  
 

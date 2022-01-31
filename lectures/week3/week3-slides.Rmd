@@ -1,84 +1,332 @@
 ---
 title: "STAT 408: Week 3"
-subtitle: "Collaboration in Git + GitHub"
-date: "1/25/2022"
+subtitle: "Data Visualization with ggplot"
+date: "2/1/2022"
+urlcolor: blue
 output: 
   beamer_presentation:
     includes:
       in_header: ../preamble.tex
-    theme: "Rochester"
+    theme: "Berkeley"
     colortheme: "seahorse"
+    slide_level: 2
   ioslides_presentation:
     widescreen: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
 ```
 
----
 
-## Reproducibility
+# Tidyverse Overview
 
-> Research is **reproducible** when the _exact results_
-can be reproduced if given access to the original data,
-software, and code.
+## Tidyverse overview
 
----
+- The `tidyverse` contains `dplyr`, `ggplot2` and a set of other useful R packages. 
+ 
+- Most of the packages in the tidyverse were created by Hadley Wickham.
 
-### Reproducibility checklist
-
-Goal: Train new analysts whose only workflow is a reproducible one.
-
-1. Are the tables and figures reproducible from the code and data?
-1. Does the code actually do what you think it does?
-1. In addition to what was done, is it clear _why_ it was done?
-1. Can the code by used for other data?
-1. Can you extend the code to do other things?
-
----
-
-## How to produce reproducible research?
-
-We need an environment where
-
-* data, analysis, and reporting results are tightly connected, or better yet, inseparable
-* the original data remain untouched
-* all data manipulations and analyses are inherently documented
-* documentation is human readable and syntax is minimal
-
----
-
-## Roadmap
-
-1. Scriptability $\rightarrow$ R
-2. Literate programming $\rightarrow$ R Markdown
-3. Version control $\rightarrow$ Git + GitHub
-    - Lots of mistakes along the way, need ability to revert!
-    - Removes barriers to well-documented collaboration
-    - Transparent commit history = accountability
-    - Mastery takes time, earlier start the better = marketability
-
----
-
-## Your turn!
-
-* If you don't have a GitHub account, create one now at [**github.com**](https://github.com/).
-* If you do, confirm you know your username and password by logging in at [**github.com**](https://github.com/).
-* Then, enter your name and GitHub username in D2L -> Course Resources -> Survey -> GitHub User Information.
-
----
-
-## Basic workflow
+- The tidyverse is a modern way to express R code for data wrangling, storage, and visualization.
 
 
+## Installing and loading packages
 
----
+There are two steps for using packages: installation and loading.
 
-## Prior to Thursday lab...
+```{r, eval = FALSE}
+install.packages('tidyverse')
+library(tidyverse)
+```
 
-1. Read Happy Git with R chapters listed on course calendar.
-    - Create a GitHub account.
-    - Install Git.
-    - Configure Git, GitHub, and RStudio.
-2. Go to our D2L page and click on "Surveys" in the "Course Resources" drop-down menu. Fill out the "GitHub User Information" survey.
+```{r, echo=FALSE, out.width="70%"}
+ include_graphics("img/RInstallvsLibrary.jpeg")
+```
+
+
+## Reading data into R with `readr`
+
+The [readr](https://readr.tidyverse.org) package is very useful for reading data into R.
+
+
+```{r, mysize=TRUE, size = '\\footnotesize'}
+okcupid <- 
+  read_csv('https://math.montana.edu/shancock/data/OKCupid_profiles_clean.csv')
+```
+
+
+## Data manipulation with `dplyr`
+
+[dplyr](https://dplyr.tidyverse.org) is useful for data manipulation and can be characterized by a set of verbs:
+
+  - select
+  - filter
+  - group_by
+  - mutate
+  - sample...
+
+
+```{r, mysize=TRUE, size = '\\scriptsize'}
+sample_n(okcupid, 2)
+```
+
+
+## Piping with `%>%`
+
+The symbol %>% is a piping operator that can be used to connect commands.
+
+```{r, mysize=TRUE, size = '\\small'}
+okcupid %>% group_by(sex) %>% summarize(average_age = mean(age))
+```
+
+
+## Graphics with `ggplot2`
+
+- [ggplot](https://ggplot2.tidyverse.org) stands for the grammar of graphics and can be used to create figures in R.
+
+- Layers of ggplot components are layered on top of each other using the `+` operator.
+
+```{r, eval = FALSE, mysize=TRUE, size = '\\small'}
+okcupid %>% 
+  filter(sex == 'm') %>% 
+  ggplot(aes(x = body_type, y = height)) + 
+  geom_violin() + 
+  ggtitle("Male Heights by Self-Reported Body Type") + 
+  xlab('Self Reported Body Type') + 
+  ylab('Height (inches)') + 
+  geom_jitter(alpha = .01)
+```
+
+## Graphics with `ggplot2`
+
+```{r, echo = F}
+okcupid %>% filter(sex == 'm') %>% ggplot(aes(x = body_type, y = height)) + geom_violin() + ggtitle("Male Heights by Self-Reported Body Type") + xlab('Self Reported Body Type') + ylab('Height (inches)') + geom_jitter(alpha = .01)
+```
+
+
+
+# `ggplot2` Overview
+
+## Why `ggplot2`?
+
+- consistent underlying grammar of graphics (Wilkinson, 2005)
+- plot specification at a high level of abstraction
+- very flexible
+- theme system for polishing plot appearance
+
+
+## Grammar of graphics
+
+The basic idea: independently specify plot building blocks and combine them to create just about any kind of graphical display you want.
+
+Building blocks of a graph include:
+
+- data
+- aesthetic mapping
+- geometric object
+- statistical transformations
+- faceting
+
+## `ggplot2` VS base R graphics
+
+Compared to base graphics, ggplot2
+
+- is more verbose for simple / canned graphics
+- is less verbose for complex / custom graphics
+- does not have methods (data should always be in a data.frame)
+- uses a different system for adding plot elements
+
+## Aesthetic mapping
+
+Aesthetics are things that you can see. Examples include:
+
+- position (i.e., on the x and y axes)
+- color ("outside" color)
+- fill ("inside" color)
+- shape (of points)
+- linetype
+- size
+
+Aesthetic mappings are set with the `aes()` function.
+
+## Geometric objects (geom)
+
+Geometric objects are the actual marks we put on a plot. Examples include:
+
+- points (`geom_point`)
+- lines (`geom_line`)
+- boxplot (`geom_boxplot`)
+
+A plot must have at least one geom; there is no upper limit. You can add a geom to a plot using the `+` operator.
+
+# Example: NCAA Basketball Data
+
+## NCAA basketball data
+
+We will use data from the NCAA basketball tournament from 2011--2016.
+
+```{r, message = F, mysize=TRUE, size='\\scriptsize'}
+hoops <- read_csv('https://math.montana.edu/shancock/data/TourneyDetailedResults.csv')
+hoops_2011 <- hoops %>% filter(Season >= 2011)
+hoops_2011
+```
+
+
+## Graphical primitives: `ggplot()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a <- ggplot(data = hoops_2011, aes(Lfgm,Wfgm))
+graph.a
+```
+
+## Adding geoms: `geom_point()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_point()
+```
+
+## Adding geoms: `geom_smooth()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_point() +
+  geom_smooth(method = 'loess', formula = 'y ~ x')
+```
+
+## Adding geoms: `geom_rug()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_point() +
+  geom_smooth(method = 'loess', formula = 'y ~ x') +
+  geom_rug()
+```
+
+## Adding geoms: `geom_density2d()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_point() +
+  geom_smooth(method = 'loess', formula = 'y ~ x') +
+  geom_rug() + geom_density2d()
+```
+
+## Adding geoms: `geom_jitter()`
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_rug() + geom_density2d() + geom_jitter()
+```
+
+## Adding geoms: `labs()`
+```{r, fig.align='center', fig.height=2.65}
+graph.a  + geom_rug() + geom_density2d() +
+ geom_jitter() +
+  labs(x='Losing Team Field Goals Made',
+       y = 'Winning Team Field Goals Made')
+```
+
+## Scales: `xlim()` and `ylim()`
+
+```{r, fig.align='center', warning=FALSE, fig.height=2.6}
+graph.a + geom_rug() + geom_density2d() +
+ geom_jitter() +
+  labs(x='Losing Team Field Goals Made',
+       y = 'Winning Team Field Goals Made') +
+  xlim(c(0,max(hoops_2011$Wfgm))) + ylim(c(0,max(hoops_2011$Wfgm)))
+```
+
+# Themes
+
+## Themes
+
+There are a wide range of themes available in ggplot: [theme overview](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+```{r,fig.align='center', fig.height=2.75, echo = F}
+graph.a + geom_point() + theme_light() + labs(x='Losing Team Field Goals Made', y = 'Winning Team Field Goals Made')
+```
+
+# More on `aes`
+
+## More about aes
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_jitter(col = 'firebrick4')
+```
+
+## More about aes
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_jitter(aes(col = as.factor(Season)))
+```
+
+## More about aes
+```{r, fig.align='center', fig.height=2.75}
+graph.a + geom_jitter(aes(col = as.factor(Season)), 
+                      size=3, alpha=.4)
+```
+
+## More about aes
+```{r, echo = FALSE, fig.align='center', fig.height=2.75}
+graph.a + geom_jitter(aes(shape = as.factor(Season) ,col=Wscore), 
+                      size=3, alpha=.4)
+```
+
+## More about aes: code
+```{r, eval = FALSE, fig.align='center', fig.height=2.75}
+graph.a +
+  geom_jitter(aes(shape = as.factor(Season), col=Wscore),
+              size=3, alpha=.4)
+```
+
+# Faceting
+
+## Faceting
+```{r, echo = F}
+graph.a + geom_point() + facet_wrap(~Season)
+```
+
+## Faceting: code
+```{r, eval = F}
+graph.a + geom_point() + facet_wrap(~Season)
+```
+
+## Faceting
+```{r, mysize=TRUE, eval=T, size='\\tiny',fig.align='center', fig.height=2.75}
+graph.a + facet_wrap(~Season) +
+  geom_jitter(alpha=.5, aes(color=Wfgm3))
+```
+
+# Your Turn: Seattle Housing Data
+
+## Seattle Housing Data Set
+
+Use the Seattle Housing Data Set [https://math.montana.edu/shancock/data/SeattleHousing.csv](https://math.montana.edu/shancock/data/SeattleHousing.csv) to create an interesting graphic, include informative titles, labels, and add an annotation.
+
+```{r, warning=FALSE, results='hide', mysize=TRUE, size='\\scriptsize'}
+seattle_in <- 
+read_csv('https://math.montana.edu/shancock/data/SeattleHousing.csv')
+```
+
+
+## Example solution
+```{r,fig.align='center',echo=FALSE,warning=FALSE,error=FALSE,message=FALSE,results='hide',fig.height=4.5}
+seattle_in$zipcode <- as.factor(seattle_in$zipcode)
+graph.a <- ggplot(data = seattle_in, aes(sqft_living,price))
+graph.a + geom_jitter(aes(col = zipcode))+ theme(plot.title = element_text(size=20), text = element_text(size=16)) + geom_smooth(method='loess')+ggtitle('Seattle Housing Sales: Price vs. Square Footage Living Space') + ylab('Sales Price (million dollars)') + xlab('Living Space (square foot)')+scale_y_continuous(breaks=c(seq(0,7000000,by=1000000)), labels=as.character(0:7)) +  annotate('text',3500,6000000, label = 'Housing price depends on zipcode', size=6) +annotate("rect", xmin = 0, xmax = 7250, ymin = 5500000, ymax = 6500000, alpha = .6) + geom_segment(aes(x=3500, xend=3500, y=5500000, yend=3000000),
+                           arrow = arrow(length = unit(0.5, "cm")))
+```
+
+## Example solution
+```{r, eval = F, mysize=TRUE, size='\\scriptsize'}
+seattle_in$zipcode <- as.factor(seattle_in$zipcode)
+graph.a <- ggplot(data = seattle_in, aes(sqft_living,price))
+graph.a + geom_jitter(aes(col = zipcode))+
+  theme(plot.title = element_text(size=20),
+        text = element_text(size=16)) + geom_smooth(method='loess')+
+  ggtitle('Seattle Housing Sales: 
+          Price vs. Square Footage Living Space') +
+  ylab('Sales Price (million dollars)') +
+  xlab('Living Space (square foot)')+
+  scale_y_continuous(breaks=c(seq(0,7000000,by=1000000)),
+                     labels=as.character(0:7)) +
+  annotate('text',3500,6000000,
+           label = 'Housing price depends on zipcode', size=6) +
+  annotate("rect", xmin = 0, xmax = 7250, 
+           ymin = 5500000, ymax = 6500000, alpha = .6) +
+  geom_segment(aes(x=3500, xend=3500, y=5500000, yend=3000000),
+               arrow = arrow(length = unit(0.5, "cm")))
+```
