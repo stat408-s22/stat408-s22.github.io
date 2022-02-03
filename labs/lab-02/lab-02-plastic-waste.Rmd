@@ -30,14 +30,19 @@ communication contest on plastic waste as seen [here](https://www.nationalgeogra
 
 # Getting started
 
+```{marginfigure}
+**IMPORTANT:** If there is no GitHub repo created for you for this lab, it means I didn't have your GitHub username as of when I assigned the lab. Please let me know your GitHub username asap, and I can create your repo.
+```
+
+
+Go to the course GitHub organization and locate
+your assignment repo, which should be named `lab-02-plastic-waste-YOUR_GITHUB_USERNAME`.
+If you're in the right place, it should similar to the following.
 
 ```{marginfigure}
 **NOTE:** The GitHub screenshots in this lab are taken from another course with GitHub organization name "ids-s1-20" and instructor GitHub username "mine-cetinkaya-rundel". Your screen should display our organization name "stat408-s22" in the repo path and your instructor's GitHub username "staceyhancock" as the one who made the last commit.
 ```
 
-Go to the course GitHub organization and locate
-your assignment repo, which should be named `lab-02-plastic-waste-YOUR_GITHUB_USERNAME`.
-If you're in the right place, it should similar to the following.
 
 ```{r echo=FALSE, eval=TRUE}
 knitr::include_graphics("img/repo-begin.png")
