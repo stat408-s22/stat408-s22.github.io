@@ -73,7 +73,7 @@ __In-class Lab:__
 
 __Homework:__
 
-- [Homework 1](homework/hw01.html) ([Rmd](homework/hw01.Rmd)) - Due Tuesday, Feb 1 by 5pm in D2L
+- [Homework 1](homework/hw-01/hw01.html) ([Rmd](homework/hw-01/hw01.Rmd)) - Due Tuesday, Feb 1 by 5pm in D2L
 
 _Note_: In order for RStudio to compile to a PDF document, you need some version of TeX installed on your system. An easy way to install the TeX required for R Markdown compilation to PDF files is through the `tinytex` package.
 
@@ -108,6 +108,8 @@ __In-class Lab:__
 - [Lab 2](labs/lab-02/lab-02-plastic-waste.html) - Due Monday, Feb 7 by 5pm in GitHub
 
 __Homework:__
+
+- [Homework 2](homework/hw-02/hw-02-airbnb-edi.html) ([Rmd](homework/hw-02/hw-02.Rmd)) - Due Tuesday, Feb 8 by 5pm in D2L
 
 ---
 

@@ -4,14 +4,12 @@ subtitle: "Data Visualization with ggplot"
 date: "2/1/2022"
 urlcolor: blue
 output: 
+  ioslides_presentation:
+    widescreen: true
   beamer_presentation:
-    includes:
-      in_header: ../preamble.tex
     theme: "Berkeley"
     colortheme: "seahorse"
     slide_level: 2
-  ioslides_presentation:
-    widescreen: true
 ---
 
 ```{r setup, include=FALSE}

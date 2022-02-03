@@ -1,0 +1,148 @@
+---
+title: "HW 02 - Airbnb listings in Edinburgh"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  eval = FALSE,
+  out.width = "80%",
+  fig.asp = 0.618,
+  fig.width = 6
+)
+```
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Madeleine Kohler on Unsplash", eval = TRUE}
+knitr::include_graphics("img/madeleine-kohler-90Qn643Pq9c-unsplash.jpg")
+```
+
+Once upon a time, people traveled all over the world, and some stayed in hotels and others chose to stay in other people's houses that they booked through Airbnb.
+Recent developments in Edinburgh regarding the growth of Airbnb and its impact on the housing market means a better understanding of the Airbnb listings is needed.
+Using data provided by Airbnb, we can explore how Airbnb availability and prices vary by neighbourhood.
+
+# Getting started
+
+```{marginfigure}
+**Optional:** Instead of creating an R Project on your local computer, you could choose to use version control with GitHub as we do in the labs, but using your personal GitHub account rather than the `stat408-s22` organization account. Follow the instructions for one of the ways to connect a project to a GitHub repo [here](https://happygitwithr.com/usage-intro.html).
+```
+
+* Open RStudio. Navigate to File > New Project..., and select "New Directory", then "New Project". Name your directory something like "hw-02" and save it as a subdirectory of your STAT 408 folder on your computer. Click "Create Project".
+* Download the [R Markdown document `hw-02.Rmd`](hw-02.Rmd) from the course calendar and save it to your newly created "hw-02" folder.
+* Open the `hw-02.Rmd` document in RStudio. Update the YAML, changing the author name to your name, and **knit** the document to PDF.
+* Make sure it compiles without errors. The output will be in the `.pdf` file with the same name in the same directory.
+
+## Packages
+
+We'll use the **tidyverse** package for much of the data wrangling and visualization and the data lives in the **dsbox** package.
+
+First, try loading them into your RStudio session by running the following in your Console:
+```{r load-packages, message = FALSE}
+library(tidyverse)
+library(dsbox)
+```
+
+Most likely, you received an error like:
+
+> <span style="color: red;">`Error in library(dsbox) : there is no package called ‘dsbox’`</span>
+
+That error means that the package has not yet been installed. The `tidyverse` package lives on CRAN, so it is easily installed using the command
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+_Note_: You only need to run the `install.packages()` function once! 
+
+The `dsbox` package, however, is not yet on CRAN. It only lives on GitHub [here](https://github.com/rstudio-education/dsbox). To install packages directly from GitHub, we can use the `remotes` library, which may also need to be installed:
+```{r, eval=FALSE}
+install.packages("remotes") # Run this if needed
+remotes::install_github("rstudio-education/dsbox")
+```
+
+If asked during the installation to update packages, type `1` (to choose to install All), then type `Yes` if it asks if you want to install. (It may ask you this more than once, and it may take a few minutes.) If all goes well, you should then be able to load the package using the `library(dsbox)` command from earlier.
+
+## Data
+
+Once the required packages are loaded into your RStudio session,
+the data can be found in the **dsbox** package, and it's called `edibnb`.
+Since the dataset is distributed with the package, we don't need to load it separately; it becomes available to us when we load the package.
+
+You can view the dataset as a spreadsheet using the `View()` function.
+Note that you should not put this function in your R Markdown document, but instead type it directly in the Console, as it pops open a new window (and the concept of popping open a window in a static document doesn't really make sense...).
+When you run this in the Console, you'll see the **data viewer** window pop up. 
+
+```{r view-data}
+View(edibnb)
+```
+
+Alternatively, you can load the dataset into your environment using the `data()` function,
+```{r}
+data(edibnb)
+```
+then navigate to the "Environment" tab and click on the `edibnb` name.
+
+You can find out more about the dataset by inspecting its documentation, which you can access by running `?edibnb` in the Console or using the Help menu in RStudio to search for `edibnb`.
+You can also find this information [here](https://rstudio-education.github.io/dsbox/reference/edibnb.html).
+
+# Exercises
+
+```{marginfigure}
+**Hint:** The Markdown Quick Reference sheet has an example of inline R code that might be helpful. You can access it from the Help menu in RStudio.
+```
+
+1.  How many observations (rows) does the dataset have? Instead of hard coding the number in your answer, use inline code.
+2.  Run `View(edibnb)` in your Console to view the data in the data viewer. What does each row in the dataset represent? That is, what is each observational unit?
+
+
+Each column represents a variable.
+We can get a list of the variables in the data frame using the `names()` function.
+
+```{r}
+names(edibnb)
+```
+
+You can find descriptions of each of the variables in the help file for the dataset, which you can access by running `?edibnb` in your Console.
+
+```{marginfigure}
+**Note:** The plot will give a warning about some observations with non-finite values for price being removed. Don't worry about the warning, it simply means that 199 listings in the data didn't have prices available, so they can't be plotted.
+```
+
+```{marginfigure}
+**Hint:** Try the default facet setting first by running the code without the `nrow` and `ncol` arguments. Then, add values for the number of rows and columns of facets.
+```
+
+3.  Fill in the blanks in the code below to create a faceted histogram where each facet represents a neighbourhood and displays the distribution of Airbnb prices in that neighbourhood. Think critically about whether it makes more sense to stack the facets on top of each other in a column, lay them out in a row, or wrap them around. Along with your visualization, include your reasoning for the layout you chose for your facets.
+
+```{r, eval=FALSE}
+ggplot(data = ___, mapping = aes(x = ___)) +
+  geom_histogram(binwidth = ___) +
+  facet_wrap(~___, nrow = ___, ncol = ___)
+```
+
+Let's de-construct this code:
+
+-   `ggplot()` is the function we are using to build our plot, in layers.
+-   In the first layer we always define the data frame as the first argument (unless we "pipe" (`%>%`) the data into the `ggplot()` function). Then, we define the mappings between the variables in the dataset and the **aes**thetics of the plot (e.g. x and y coordinates, colours, etc.).
+-   In the next layer we represent the data with **geom**etric shapes, in this case with a histogram. You should decide what makes a reasonable bin width for the histogram by trying out a few options.
+-   In the final layer we facet the data by neighbourhood.
+
+<!-- # Put on HW 03 -->
+<!-- 4.  Use a single pipeline to identify the neighbourhoods with the top five median listing prices. Then, in another pipeline filter the data for these five neighbourhoods and make ridge plots of the distributions of listing prices in these five neighbourhoods. In a third pipeline calculate the minimum, mean, median, standard deviation, IQR, and maximum listing price in each of these neighbourhoods. Use the visualisation and the summary statistics to describe the distribution of listing prices in the neighbourhoods. (Your answer will include three pipelines, one of which ends in a visualisation, and a narrative.) -->
+
+4.  Create a visualization that will help you compare the distribution of review scores (`review_scores_rating`) across neighbourhoods. You get to decide what type of visualisation to create and there is more than one correct answer! In your answer, include a brief interpretation of how Airbnb guests rate properties in general and how the neighbourhoods compare to each other in terms of their ratings.
+
+# Exploration
+
+5. Select one of the data sets we have used in class or a dataset that you found elsewhere. Using `ggplot2` graphics, create a compelling graphic that maps at least three variables to aesthetics. For full credit, make sure to include informative titles and axes labels. 
+Include a written summary of the story your graphic displays. This should be about three sentences in length and describe the figure, but also summarize the "take away points."
+
+
+# Attribution
+
+This homework is adapted from material in the [Data Science in a Box](https://datasciencebox.org/index.html) course by Mine Çetinkaya-Rundel licensed under a [Creative Commons Attribution Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Visit [here](https://github.com/rstudio-education/datascience-box/blob/master/LICENSE.md) for more information about the license.
+
+The last exercise is adapted from Dr. Andy Hoegh's [Homework 2 assignment](https://stat408.github.io/HW2/) from STAT 408 Fall 2020.
