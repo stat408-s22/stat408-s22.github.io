@@ -252,3 +252,8 @@ Once you're done, check to make sure your latest changes are on GitHub and that 
 ```{r echo=FALSE, eval=TRUE}
 knitr::include_graphics("img/repo-end.png")
 ```
+
+# Attribution
+
+This lab is adapted from material in the [Data Science in a Box](https://datasciencebox.org/index.html) course by Mine Çetinkaya-Rundel licensed under a [Creative Commons Attribution Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Visit [here](https://github.com/rstudio-education/datascience-box/blob/master/LICENSE.md) for more information about the license.

@@ -393,3 +393,8 @@ Not sure how to use emojis on your computer? Maybe a teammate can help? Or you c
 ```
 
 🧶 ✅ ⬆️ *Yay, you're done! Commit all remaining changes, use the commit message "Done with Lab 1!* 💪*", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards. Before you wrap up the assignment, make sure all documents are updated on your GitHub repo.*
+
+# Attribution
+
+This lab is adapted from material in the [Data Science in a Box](https://datasciencebox.org/index.html) course by Mine Çetinkaya-Rundel licensed under a [Creative Commons Attribution Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Visit [here](https://github.com/rstudio-education/datascience-box/blob/master/LICENSE.md) for more information about the license.
