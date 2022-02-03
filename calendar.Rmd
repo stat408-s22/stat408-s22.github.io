@@ -65,7 +65,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- Week 2 slides ([PDF](lectures/week2/week2-slides.pdf)) ([Rmd](https://raw.githubusercontent.com/stat408-s22/stat408-s22.github.io/main/lectures/week2/week2-slides.Rmd))
+- Week 2 slides ([PDF](lectures/week2/week2-slides.pdf)) ([Rmd](lectures/week2/week2-slides.Rmd)
 
 __In-class Lab:__
 
@@ -101,7 +101,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- Week 3 slides ([PDF](lectures/week3/week3-slides.pdf)) ([Rmd](https://raw.githubusercontent.com/stat408-s22/stat408-s22.github.io/main/lectures/week3/week3-slides.Rmd))
+- Week 3 slides ([PDF](lectures/week3/week3-slides.pdf)) ([Rmd](lectures/week3/week3-slides.Rmd))
 
 __In-class Lab:__
 
