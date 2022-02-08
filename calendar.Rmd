@@ -132,7 +132,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- [Week 4 slides](lectures/week4/week4-slides.html) ([Rmd](lectures/week4/week4-slides.Rmd))
+- [Week 4 slides](lectures/week4/week4-slides.html) ([Rmd](lectures/week4/week4-slides.Rmd)) ([PDF](lectures/week4/week4-slides.pdf))
 
 __In-class Lab:__
  
