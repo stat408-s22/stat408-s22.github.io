@@ -10,6 +10,9 @@ output:
     theme: "Berkeley"
     colortheme: "seahorse"
     slide_level: 2
+  revealjs::revealjs_presentation:
+    transition: none
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
