@@ -1,0 +1,289 @@
+---
+title: "STAT 408: Week 4"
+subtitle: "Tidyverse Overview"
+date: "2/8/2022"
+urlcolor: blue
+output: 
+  ioslides_presentation:
+    widescreen: true
+  beamer_presentation:
+    theme: "Berkeley"
+    colortheme: "seahorse"
+    slide_level: 2
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+```
+
+# Cheat sheets!
+
+## Data wrangling cheat sheets
+
+`dplyr`: 
+
+https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf
+
+`tidyr`: 
+
+https://raw.githubusercontent.com/rstudio/cheatsheets/main/tidyr.pdf
+
+# Animal survey data
+
+## Data
+
+In much of these slides, we will use the animal species diversity data from [Data Carpentry](https://datacarpentry.org/R-ecology-lesson/02-starting-with-data.html).
+Each row holds information for a single animal, and the columns represent:
+
+| Column           | Description                                  |
+|------------------|----------------------------------------------|
+| record\_id       | Unique id for the observation                |
+| month            | month of observation                         |
+| day              | day of observation                           |
+| year             | year of observation                          |
+| plot\_id         | ID of a particular experimental plot of land |
+
+
+## Data (cont)
+
+| Column           | Description                                  |
+|------------------|----------------------------------------------|
+| species\_id      | 2-letter code                                |
+| sex              | sex of animal ("M", "F")                     |
+| hindfoot\_length | length of the hindfoot in mm                 |
+| weight           | weight of the animal in grams                |
+| genus            | genus of animal                              |
+| species          | species of animal                            |
+| taxon            | e.g. Rodent, Reptile, Bird, Rabbit           |
+| plot\_type       | type of plot                                 |
+
+
+# Tidyverse vs Base R
+
+## Reading in data
+
+Base R: `read.csv()` (more generally, `read.table()`)
+
+Tidyverse: `read_csv()` (more generally, `read_delim()`)
+
+```{r}
+surveys <- read_csv("https://math.montana.edu/shancock/data/animal_survey.csv")
+```
+
+---
+
+View the first few lines of the data...
+```{r}
+head(surveys)
+```
+
+---
+
+Inspect the structure of the data...
+```{r}
+str(surveys)
+```
+
+---
+
+Summarize the variables...
+```{r}
+summary(surveys)
+```
+
+
+
+## Data frames
+
+Base R: `data.frame()`
+
+Tidyverse: `tibble()`
+
+```{r}
+tibble1 <- tibble(x = 1:3, y = c('a','b','c'))
+tibble1
+```
+
+## Tibbles
+
+- The tibble includes the type of each vector, and only prints a certain number of rows/columns
+- The `read_csv()` function creates a tibble rather than a `data.frame` object
+
+```{r}
+is_tibble(surveys)
+```
+
+
+
+## Subsetting
+
+Base R: `[]`, `$`, `subset()`
+
+Tidyverse: From the `dplyr` package, 
+
+ - `filter()` will subset rows
+ - `select()` will subset columns
+
+---
+
+```{r}
+surveys %>% filter(weight < 5) %>% select(species_id, sex, weight)
+```
+
+## Re-ordering
+
+Base R: `sort()`
+
+Tidyverse: `arrange()`, `top_n()`
+
+- use `arrange(desc())` for descending order
+
+---
+
+```{r}
+surveys %>% select(species_id, sex, weight) %>% arrange(weight) %>% head()
+```
+
+---
+
+```{r}
+surveys  %>% 
+  select(species, weight, hindfoot_length) %>%
+  top_n(n = 10, hindfoot_length) %>% 
+  arrange(desc(hindfoot_length))
+```
+
+## Summarizing
+
+Many data analysis tasks can be approached using the _split-apply-combine_ paradigm: split the data into groups, apply some analysis to each group, and then combine the results. 
+
+Base R: `apply()`, `tapply()`, `lapply()`, etc.
+
+Tidyverse:
+
+- `group_by()` changes the scope of a function from operating on the entire data set to operating on it group-by-group, then
+- `summarize()` calculates summary statistics like means and standard deviations
+
+---
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  summarize(mean_weight = mean(weight, na.rm = TRUE))
+```
+
+---
+
+You can group by more than one variable...
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight))
+```
+
+---
+
+And you can summarize with more than one statistic...
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight)) %>%
+  arrange(min_weight)
+```
+
+
+# Exercise
+
+---
+
+Repeat this exercise from Week 2 but now using the `tidyverse` for data import and subsetting:
+
+Read in the `Seattle` data set:
+
+```{r}
+Seattle <- read_csv(
+  'http://math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv')
+```
+
+1. Create a new data frame that only includes houses worth more than $1,000,000.
+
+2. From this new data frame, what is the average living square footage (`sqft_living`) of houses?
+
+---
+
+### Solution in base R
+
+```{r}
+expensive.houses <- subset(Seattle, price > 1000000) # or
+expensive.houses <- Seattle[Seattle$price > 1000000,]
+mean(expensive.houses$sqft_living)
+```
+
+---
+
+### Solution in tidyverse
+
+```{r}
+# enter code here
+```
+
+
+
+# More features of the tidyverse
+
+
+
+## Data transformation
+
+- `mutate()` creates new columns (variables) using information from other columns
+- `rename()` renames columns (variables)
+
+---
+
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>%
+  select(species, weight) %>%
+  mutate(weight_kg = weight / 1000) %>%
+  head()
+```
+
+
+
+## Counting
+
+We often want to know the numbers of observations in a particular group.
+
+```{r}
+surveys %>% count(sex)
+```
+... is short-hand for
+```{r, eval=FALSE}
+surveys %>% group_by(sex) %>% summarize(count = n())
+```
+
+---
+
+```{r}
+surveys %>%
+  count(sex, species) %>%
+  arrange(species, desc(n))
+```
+
+# Exercise
+
+## Exercise
+
+1. How many animals were caught in each `plot_type` surveyed?
+2. Use `group_by()` and `summarize()` to find the mean, min, and max hindfoot length for each species (using `species_id`). Also add the number of observations.
+3. What was the heaviest animal measured in each year? Return the columns `year`, `genus`, `species_id`, and `weight`.
+

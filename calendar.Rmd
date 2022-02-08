@@ -65,7 +65,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- Week 2 slides ([PDF](lectures/week2/week2-slides.pdf)) ([Rmd](lectures/week2/week2-slides.Rmd)
+- Week 2 slides ([PDF](lectures/week2/week2-slides.pdf)) ([Rmd](lectures/week2/week2-slides.Rmd))
 
 __In-class Lab:__
 
@@ -97,7 +97,7 @@ __Reading and Online Resources:__
 * [Modern Dive Ch. 2](https://moderndive.com/2-viz.html)
 * [R 4 DS Ch. 3](https://r4ds.had.co.nz/data-visualisation.html)
 * [`ggplot2` website + cheatsheet](https://ggplot2.tidyverse.org/)
-* [Data Carpentry `ggplot2` tutorial](https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html)
+* Extra reference: [Data Carpentry `ggplot2` tutorial](https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html)
 
 __In-class Materials:__
 
@@ -113,23 +113,26 @@ __Homework:__
 
 ---
 
-## Week 4 (Feb 7--11): Tidyverse Overview 
+## Week 4 (Feb 7--11): Data Transformation with the Tidyverse
 
 ---
 
 __Weekly Overview:__ 
 
-1. Practice wrangling data with the tidyverse "verbs": `filter()`, `arrange()`, `select()`, `mutate()`, `summarise()`, `group_by()`
+1. Practice wrangling data with the tidyverse "verbs": `filter()`, `arrange()`,
+`select()`, `mutate()`, `group_by()`, `summarise()`
  
 __Reading and Online Resources:__ 
 
 
 - [Modern Dive Ch. 3](https://moderndive.com/3-wrangling.html)
-- [R 4 DS Ch. 5](https://r4ds.had.co.nz/transform.html)
+- [R 4 DS Ch. 5](https://r4ds.had.co.nz/transform.html) and [Ch. 10](https://r4ds.had.co.nz/tibbles.html)
+- Extra reference: [Data Carpentry `dplyr` and `tidyr` tutorial](https://datacarpentry.org/R-ecology-lesson/03-dplyr.html)
     
 
 __In-class Materials:__
 
+- [Week 4 slides](lectures/week4/week4-slides.html) ([Rmd](lectures/week4/week4-slides.Rmd))
 
 __In-class Lab:__
  
