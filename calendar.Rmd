@@ -135,6 +135,11 @@ __In-class Materials:__
 - [Week 4 slides](lectures/week4/week4-slides.html) ([Rmd](lectures/week4/week4-slides.Rmd)) ([PDF](lectures/week4/week4-slides.pdf))
 
 __In-class Lab:__
+
+- [Lab 3 Prep](labs/lab-03/lab-03-prep.html) - Complete this prior to the start of class on Thursday Feb 10!
+- [Lab 3](labs/lab-03/lab-03-nobel-laureates.html) - Due Monday, Feb 14 by 5pm in GitHub
+
+
  
 __Homework:__
 
