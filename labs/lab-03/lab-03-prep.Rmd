@@ -26,10 +26,16 @@ In this lab we will work with the data from this article to recreate some of the
 
 # Lab prep
 
-You have two tasks you should complete **before the lab**:
+You have three tasks you should complete **before the lab**:
 
 -   **Task 1:** Read the Buzzfeed article titled [*These Nobel Prize Winners Show Why Immigration Is So Important For American Science*](https://www.buzzfeednews.com/article/peteraldhous/immigration-and-science)*.* We will replicate this analysis in lab so it's crucial that you're familiar with it ahead of time.
--   **Task 2:** Read about merge conflicts below. The merge conflict exercise we'll start with during the lab will assume that you have this background information.
+-   **Task 2:** Complete your GitHub profile. Sign into [github.com](https://github.com/). Navigate to your profile page
+by clicking on your icon in the top right corner, then clicking on "Your profile".
+    * Click the "Edit profile" button under your name.
+    * Enter your full name (first and last) in the "Name" text box.
+    * Select your preferred email as your email address.
+    * Click Save.
+-   **Task 3:** Read about merge conflicts below. The merge conflict exercise we'll start with during the lab will assume that you have this background information.
 
 ## Merges and merge conflicts
 
