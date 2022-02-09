@@ -26,10 +26,17 @@ In this lab we will work with the data from this article to recreate some of the
 
 # Lab prep
 
-You have two tasks you should complete **before the lab**:
+You have three tasks you should complete **before the lab**:
 
 -   **Task 1:** Read the Buzzfeed article titled [*These Nobel Prize Winners Show Why Immigration Is So Important For American Science*](https://www.buzzfeednews.com/article/peteraldhous/immigration-and-science)*.* We will replicate this analysis in lab so it's crucial that you're familiar with it ahead of time.
--   **Task 2:** Read about merge conflicts below. The merge conflict exercise we'll start with during the lab will assume that you have this background information.
+-   **Task 2:** Complete your GitHub profile. Sign into [github.com](https://github.com/). Navigate to your profile page
+by clicking on your icon in the top right corner, then clicking on "Your profile".
+    * Click the "Edit profile" button under your name.
+    * Enter your full name (first and last) in the "Name" text box.
+    * Select your preferred email as your email address.
+    * Click Save.
+-   **Task 3:** Read about merge conflicts below. The merge conflict exercise we'll start with during the lab will assume that you have this background information.
+
 
 ## Merges and merge conflicts
 
@@ -229,6 +236,9 @@ Make sure each team member gets to commit to the repo by the time you submit you
 And make sure that the person taking the lead for an exercise is sharing their screen.
 You don't have to switch at each exercise, you can find a cadence that works for your team and stick to it.
 
+You may want to get your [Data transformation (dplyr)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf) and
+[Data visualization (ggplot2)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf) R cheat sheets handy!
+
 ## Get to know your data
 
 1.  How many observations and how many variables are in the dataset? Use inline code to answer this question. What does each row represent?
@@ -332,8 +342,11 @@ Once you decide as a team that you're done with this lab, all members of the tea
 
 # Team agreement
 
-Teams work better when members have a common understanding of the team's
-goals and expectations for collaboration. These can be set with a "team agreement". As a team, discuss and fill out the `team-agreement.Rmd` file located in your team's repo, then knit, commit,
+Teams work better when members have a common understanding of the 
+team's goals and expectations for collaboration.
+These can be set with a team agreement or contract. 
+As a team, discuss and fill out the `team-agreement.Rmd` file 
+located in your team's Lab 03 repo, then knit, commit,
 and push the team agreement to GitHub.
 
 The purpose of this exercise

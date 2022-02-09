@@ -1,6 +1,11 @@
 ---
 title: "Team Agreement"
-author: "Team Name: Team member 1, Team member 2, Team member 3, Team member 4"
+author: |
+        | Insert team name here:
+        | Insert team member 1 here
+        | Insert team member 2 here
+        | Insert team member 3 here
+        | Insert team member 4 here
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
