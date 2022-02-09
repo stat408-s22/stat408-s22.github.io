@@ -68,5 +68,5 @@ Then you can stage and commit the result.
 
 # Yay\! You're now ready to start Lab 03!
 
-
+<br><br>
 
