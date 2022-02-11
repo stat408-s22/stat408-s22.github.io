@@ -1,0 +1,80 @@
+---
+title: "Homework 3"
+author: "your name here"
+date: "Due **Wednesday**, February 16, 2022 at 5:00 PM in D2L"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Instructions
+
+Use this .Rmd file as a template for your homework. Please use D2L to turn in both the PDF output and your R Markdown (.Rmd) file. Your .Rmd file should compile on its own if it is downloaded by your instructor.
+
+## Load packages and data
+
+```{r load-packages}
+library(tidyverse)
+library(scales)
+library(fivethirtyeight)
+```
+
+## Exercises
+
+### Exercise 1
+
+Remove this text, and add your answer for Exercise 1 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 2
+
+Remove this text, and add your answer for Exercise 2 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 3
+
+Remove this text, and add your answer for Exercise 3 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 4
+
+...
+
+### Exercise 5
+
+...
+
+### Exercise 6
+
+...
+
+### Exercise 7
+
+...
+
+### Exercise 8
+
+...
+
+### Exercise 9
+
+...
+
+### Exercise 10
+
+...
+
+
+## Cite Sources
+
+Remove this text and cite the sources used on your homework here.
