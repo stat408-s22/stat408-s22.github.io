@@ -143,7 +143,7 @@ __In-class Lab:__
  
 __Homework:__
 
-
+- [Homework 3](homework/hw-03/hw-03-college-majors.html) ([Rmd](homework/hw-03/hw-03.Rmd)) - Due **Wednesday**, Feb 16 by 5pm in D2L
 
 ---
 
