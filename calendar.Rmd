@@ -153,6 +153,9 @@ __Homework:__
 
 __Weekly Overview:__ 
 
+1. Write code using tidyverse style guidelines
+2. Practice debugging code
+3. Introduction to writing functions
  
 __Reading and Online Resources:__ 
 
@@ -164,6 +167,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
+- [Week 5 slides](lectures/week5/week5-slides.html) ([Rmd](lectures/week5/week5-slides.Rmd)) ([PDF](lectures/week5/week5-slides.pdf))
 
 __In-class Lab:__
 
