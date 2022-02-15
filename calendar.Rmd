@@ -192,10 +192,11 @@ __Reading and Online Resources:__
 __In-class Materials:__
 
 
-__In-class Lab:__
+__Midterm Exam 1:__
 
- 
-__Homework:__
+- In-class midterm exam 1 on Thursday, Feb 24
+- Take-home midterm exam 1 component due in D2L Monday, Feb 28 by 5:00pm
+- [Examples of old exams](https://github.com/stat408/oldexams)
 
 
 
