@@ -200,16 +200,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>What would you expect the relationship between smoking status and health outcome to be?</p></li>
 </ol>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<p><label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle"><span class="marginnote"><span style="display: block;">Categorical variables can be stored in a data frame, like <code>Whickham</code>, but can also be stored in a <strong>contingency table</strong>, or table of frequencies. The <code>geom_bar()</code> function makes the height of the bar proportional to the number of cases in each group (appropriate when your data is stored in a data frame with one case per row); <code>geom_col</code> uses the values in the data as the heights of the bars (appropriate when your data is stored as a continency table.</span></span></p>
+<p><label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle"><span class="marginnote"><span style="display: block;">Categorical variables can be stored in a data frame, like <code>Whickham</code>, but can also be stored in a <strong>contingency table</strong>, or table of frequencies. The <code>geom_bar()</code> function makes the height of the bar proportional to the number of cases in each group (appropriate when your data is stored in a data frame with one case per row); <code>geom_col</code> uses the values in the data as the heights of the bars (appropriate when your data is stored as a contingency table).</span></span></p>
 <ol start="5" style="list-style-type: decimal">
-<li>Create a visualization depicting the relationship between smoking status and health outcome. In your answer, don’t forget to label your R chunk as well (where it says <code>label-me-1</code>). Your label should be short, informative, shouldn’t include spaces, and shouldn’t repeat a previous label. Here is some code to get you started:</li>
+<li>Create a visualization depicting the relationship between smoking status and health outcome. In your answer, don’t forget to label your R chunk as well (where it says <code>label-me-1</code>). Your label should be short, informative, shouldn’t include spaces, and shouldn’t repeat a previous label.</li>
+</ol>
+<p><label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> After grouping on the appropriate variable using <code>group_by()</code>, you can calculate the conditional proportions in each group with <code>mutate(prop = n / sum(n))</code>.</span></span></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Briefly describe the relationship between smoking status and health outcome displayed in your plot from the previous exercise, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative. Here is some code to get you started:</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, outcome)</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
-<li>Briefly describe the relationship between smoking status and health outcome displayed in your plot from the previous exercise, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative.</li>
-</ol>
-<p><label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint</strong>: Use the <code>case_when()</code> function.</span></span></p>
+<p><label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> Use the <code>case_when()</code> function.</span></span></p>
 <ol start="7" style="list-style-type: decimal">
 <li>Create a new variable called <code>age_cat</code> using the following scheme:</li>
 </ol>
@@ -220,13 +221,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Add this variable as a column in the <code>Whickham</code> dataset.</p>
 <ol start="8" style="list-style-type: decimal">
-<li>Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by <code>age_cat</code>. In your answer, don’t forget to label your R chunk as well (where it says <code>label-me-2</code>).</li>
+<li><p>Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by <code>age_cat</code>. In your answer, don’t forget to label your R chunk as well (where it says <code>label-me-2</code>).</p></li>
+<li><p>What changed in the relationship between smoking status and health outcome when we looked at the relationship within a specific age category? What might explain this change? Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative. Here is some code to get you started:</p></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, age_cat, outcome)</span></code></pre></div>
-<ol start="9" style="list-style-type: decimal">
-<li>What changed in the relationship between smoking status and health outcome when we looked at the relationship within a specific age category? What might explain this change? Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative.</li>
-</ol>
 </div>
 </div>
 <div id="part-ii-road-traffic-accidents" class="section level1">
@@ -257,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <ol start="12" style="list-style-type: decimal">
-<li>Create another data visualization based on these data and interpret it. You can choose any variables and any type of visualization you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn’t enough, but if points are colored by z, that’s fine.</li>
+<li>(<strong>Optional bonus exercise</strong>) Create another data visualization based on these data and interpret it. You can choose any variables and any type of visualization you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn’t enough, but if points are colored by z, that’s fine.</li>
 </ol>
 </div>
 </div>
@@ -276,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="exercises-2" class="section level2">
 <h2>Exercises</h2>
 <p>Answer the following questions using pipelines. For each question, state your answer in a sentence, e.g. “In this sample, the first three common names of purchasers are …”. Note that the answers to all questions are within the context of this particular sample of sales, i.e., you shouldn’t make inferences about the population of all Lego sales based on this sample.</p>
-<p><label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> Look at the examples at the bottom of the <code>lego_sales</code> help file.</span></span></p>
+<p><label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> Look at the examples at the bottom of the <code>lego_sales</code> help file.</span></span></p>
 <ol start="13" style="list-style-type: decimal">
 <li><p>What are the three most common first names of purchasers?</p></li>
 <li><p>How many distinct themes are there in the dataset?</p></li>
@@ -284,10 +283,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Among the most common theme of Lego sets purchased, what is the most common subtheme?</p></li>
 </ol>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<p><label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> You will need to consider quantity of purchases as well as price of lego sets.</span></span></p>
+<p><label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> You will need to consider quantity of purchases as well as price of lego sets.</span></span></p>
 <ol start="17" style="list-style-type: decimal">
 <li><p>Which Lego theme has made the most money for Lego?</p></li>
-<li><p>Come up with a question you want to answer using these data, and write it down. Then, create a data visualization that answers the question, and explain how your visualization answers the question.</p></li>
+<li><p>(<strong>Optional bonus exercise</strong>) Come up with a question you want to answer using these data, and write it down. Then, create a data visualization that answers the question, and explain how your visualization answers the question.</p></li>
 </ol>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 </div>
