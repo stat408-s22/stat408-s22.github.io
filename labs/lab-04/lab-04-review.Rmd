@@ -79,6 +79,10 @@ You can find out more about the dataset by inspecting their documentation, which
 
 ## Exercises
 
+```{marginfigure}
+Intro stat review: [Study design](https://mtstateintrostats.github.io/IntroStatTextbook/intro-to-data.html#observational-studies)
+```
+
 1.  What type of study do you think these data come from: observational or experiment?
     Why?
 
@@ -177,7 +181,7 @@ accidents %>%
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-12.  Create another data visualization based on these data and interpret it. You can choose any variables and any type of visualization you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn't enough, but if points are coloured by z, that's fine. 
+12.  Create another data visualization based on these data and interpret it. You can choose any variables and any type of visualization you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn't enough, but if points are colored by z, that's fine. 
 
 
 # Part III: Legos
@@ -201,7 +205,7 @@ For each question, state your answer in a sentence, e.g. "In this sample, the fi
 Note that the answers to all questions are within the context of this particular sample of sales, i.e., you shouldn't make inferences about the population of all Lego sales based on this sample.
 
 ```{marginfigure}
-**Hint:** Look at the examples in the `lego_sales` help file.
+**Hint:** Look at the examples at the bottom of the `lego_sales` help file.
 ```
 
 13.  What are the three most common first names of purchasers?
