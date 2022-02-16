@@ -1,0 +1,226 @@
+---
+title: "Lab 04 - Refresh and Review"
+output: 
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    highlight: pygments
+    css: ../lab.css
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+This week we'll do some data gymnastics to refresh and review what we learned over the past few weeks through three shorter case studies.
+
+# Learning goals
+
+- Discovering Simpson's paradox via visualizations
+- More practice data wrangling and visualizing
+
+# Getting started
+
+Each member of the team should:
+
+- Go to the course GitHub organization (or your team page) and locate your lab repo, which should be named `lab-04-review-YOUR_TEAM_NAME`.
+- Grab the URL of the repo, and clone it in RStudio by creating a new project from Version Control with Git.
+- Open the R Markdown document `lab-04.Rmd` and Knit it.
+Make sure it compiles without errors.
+The output will be in the file markdown `.md` file with the same name.
+
+## Warm up
+
+Before we introduce the data, let's warm up with some simple exercises.
+Update the YAML of your R Markdown file with your team information, knit, commit, and push your changes.
+Make sure to commit with a meaningful commit message.
+Then, go to your repo on GitHub and confirm that your changes are visible in your Rmd **and** md files.
+If anything is missing, commit and push again.
+
+## Packages
+
+We'll use the **tidyverse** package for much of the data wrangling and visualisation and data from the **mosaicData** and **dsbox** packages.
+You can load them by running the following in your Console:
+
+```{r eval = TRUE, message = FALSE}
+library(tidyverse) 
+library(mosaicData)  # You may have to install this package
+library(dsbox)  # This should be installed from Homework 2
+```
+
+This code also appears at the beginning of your `lab-04.Rmd` file.
+
+## Reminders
+
+Take turns answering the exercises.
+Make sure each team member gets to commit to the repo by the time you submit your work.
+And make sure that the person taking the lead for an exercise is sharing their screen.
+
+```{marginfigure}
+Intro stat review: [Decision tree for determining the appropriate type of plot](https://mtstateintrostats.github.io/IntroStatTextbook/eda.html#data-visualization-summary)
+```
+
+You may want to get your [Data transformation (dplyr)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf) and
+[Data visualization (ggplot2)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf) R cheat sheets handy!
+
+# Part I: Smokers in Whickham
+
+```{r photo1, fig.margin = TRUE, eval = TRUE, echo = FALSE}
+knitr::include_graphics("img/whickham.png")
+```
+
+A study conducted in Whickham, England recorded participants' age, smoking status at baseline, and then 20 years later recorded their health outcome.
+In this part of the lab, we analyse the relationships between these variables, first two at a time, and then controlling for the third.
+
+## Data
+
+The dataset we'll use is called Whickham from the **mosaicData** package.
+You can find out more about the dataset by inspecting their documentation, which you can access by running `?Whickham` in the Console or using the Help menu in RStudio to search for `Whickham`.
+
+## Exercises
+
+1.  What type of study do you think these data come from: observational or experiment?
+    Why?
+
+2.  How many observations are in this dataset?
+    Instead of hard coding the number in your answer, use inline code.
+    What does each observation represent?
+
+3.  How many variables are in this dataset?
+    What type of variable is each (quantitative or categorical)?
+    Display each variable using an appropriate visualization.
+
+4.  What would you expect the relationship between smoking status and health outcome to be?
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+
+```{marginfigure}
+Categorical variables can be stored in a data frame, like `Whickham`, but can also be stored in a **contingency table**, or table of frequencies. The `geom_bar()` function makes the height of the bar proportional to the number of cases in each group (appropriate when your data is stored in a data frame with one case per row); `geom_col` uses the values in the data as the heights of the bars (appropriate when your data is stored as a continency table.
+```
+
+5.  Create a visualization depicting the relationship between smoking status and health outcome. In your answer, don't forget to label your R chunk as well (where it says `label-me-1`). Your label should be short, informative, shouldn't include spaces, and shouldn't repeat a previous label. Here is some code to get you started:
+
+```{r}
+Whickham %>%
+  count(smoker, outcome)
+```
+
+6. Briefly describe the relationship between smoking status and health outcome displayed in your plot from the previous exercise, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative. 
+
+
+```{marginfigure}
+**Hint**: Use the `case_when()` function.
+```
+
+7.  Create a new variable called `age_cat` using the following scheme:
+
+-   `age <= 44 ~ "18-44"`
+-   `age > 44 & age <= 64 ~ "45-64"`
+-   `age > 64 ~ "65+"`
+
+Add this variable as a column in the `Whickham` dataset.
+
+8.  Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. In your answer, don't forget to label your R chunk as well (where it says `label-me-2`).
+
+
+```{r, eval = FALSE}
+Whickham %>%
+  count(smoker, age_cat, outcome)
+```
+
+9.  What changed in the relationship between smoking status and health outcome when we looked at the relationship within a specific age category? What might explain this change? Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative.
+
+
+# Part II: Road traffic accidents
+
+
+```{r photo2, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Clark Van Der Beken on Unsplash", eval = TRUE}
+knitr::include_graphics("img/accident.jpg")
+```
+
+In this part we'll look at traffic accidents in Edinburgh.
+The data are made available [online](https://data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-safety-data/datafile/36f1658e-b709-47e7-9f56-cca7aefeb8fe/preview) by the UK Government.
+It covers all recorded accidents in Edinburgh in 2018 and some of the variables were modified for the purposes of this assignment.
+
+
+## Data
+
+The data can be found in the **dsbox** package, and it's called `accidents`.
+You can find out more about the dataset by inspecting its documentation, which you can access by running `?accidents` in the Console or using the Help menu in RStudio to search for `accidents`.
+
+
+## Exercises
+
+
+10.  Run `View(accidents)` in your Console to view the data in the data viewer. (Do not include this code in your `lab-04.Rmd` file!) What does each row in the dataset represent?
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+
+11.  Recreate the following plot. Write a few sentences describing the plot in context of the data. 
+
+```{r eval = TRUE, echo = FALSE, fig.fullwidth = TRUE}
+accidents %>%
+  mutate(day_of_week_type = if_else(day_of_week %in% c("Saturday", "Sunday"), "Weekend", "Weekday")) %>%
+  ggplot(aes(x = time, fill = severity)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~day_of_week_type, ncol = 1) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  labs(
+    title = "Number of accidents throughout the day",
+    subtitle = "By day of week and severity",
+    x = "Time of day",
+    y = "Density",
+    fill = "Severity"
+  )
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+
+12.  Create another data visualization based on these data and interpret it. You can choose any variables and any type of visualization you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn't enough, but if points are coloured by z, that's fine. 
+
+
+# Part III: Legos
+
+
+```{r photo3, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Daniel Cheung on Unsplash", eval = TRUE}
+knitr::include_graphics("img/daniel-cheung-ZqqlOZyGG7g-unsplash.jpg")
+```
+
+In this part, we'll practice our data wrangling skills using (simulated) data from Lego sales in 2018 for a sample of customers who bought Legos in the US.
+
+## Data
+
+The data can be found in the **dsbox** package, and it's called `lego_sales`.
+You can find out more about the dataset by inspecting its documentation, which you can access by running `?lego_sales` in the Console or using the Help menu in RStudio to search for `lego_sales`.
+
+## Exercises
+
+Answer the following questions using pipelines.
+For each question, state your answer in a sentence, e.g. "In this sample, the first three common names of purchasers are ...".
+Note that the answers to all questions are within the context of this particular sample of sales, i.e., you shouldn't make inferences about the population of all Lego sales based on this sample.
+
+```{marginfigure}
+**Hint:** Look at the examples in the `lego_sales` help file.
+```
+
+13.  What are the three most common first names of purchasers?
+
+14. How many distinct themes are there in the dataset?
+
+15.  What are the three most common themes of Lego sets purchased?
+
+16.  Among the most common theme of Lego sets purchased, what is the most common subtheme?
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+
+```{marginfigure}
+**Hint:** You will need to consider quantity of purchases as well as price of lego sets.
+```
+
+17.  Which Lego theme has made the most money for Lego?
+
+18.  Come up with a question you want to answer using these data, and write it down.
+    Then, create a data visualization that answers the question, and explain how your visualization answers the question.
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
