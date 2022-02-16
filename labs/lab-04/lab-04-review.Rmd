@@ -119,7 +119,8 @@ Whickham %>%
 
 
 ```{marginfigure}
-**Hint:** Use the `case_when()` function.
+**Hint:** Use the `case_when()` function inside the `mutate()` function,
+then assign the result to `Whickham`.
 ```
 
 7.  Create a new variable called `age_cat` using the following scheme:
@@ -128,7 +129,7 @@ Whickham %>%
 -   `age > 44 & age <= 64 ~ "45-64"`
 -   `age > 64 ~ "65+"`
 
-Add this variable as a column in the `Whickham` dataset.
+and add this variable to the `Whickham` dataset.
 
 8.  Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. In your answer, don't forget to label your R chunk as well (where it says `label-me-2`). 
 
@@ -173,8 +174,6 @@ accidents %>%
   ggplot(aes(x = time, fill = severity)) +
   geom_density(alpha = 0.5) +
   facet_wrap(~day_of_week_type, ncol = 1) +
-  theme_minimal() +
-  scale_fill_viridis_d() +
   labs(
     title = "Number of accidents throughout the day",
     subtitle = "By day of week and severity",
@@ -205,8 +204,9 @@ You can find out more about the dataset by inspecting its documentation, which y
 
 ## Exercises
 
-Answer the following questions using pipelines.
-For each question, state your answer in a sentence, e.g. "In this sample, the first three common names of purchasers are ...".
+Answer the following exercises using pipelines.
+For each question, include the code and output used, and
+state your answer in a sentence, e.g. "In this sample, the first three common names of purchasers are ...".
 Note that the answers to all questions are within the context of this particular sample of sales, i.e., you shouldn't make inferences about the population of all Lego sales based on this sample.
 
 ```{marginfigure}
@@ -215,7 +215,7 @@ Note that the answers to all questions are within the context of this particular
 
 13.  What are the three most common first names of purchasers?
 
-14. How many distinct themes are there in the dataset?
+14.  How many distinct themes are there in the dataset?
 
 15.  What are the three most common themes of Lego sets purchased?
 
