@@ -197,11 +197,14 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 - [R 4 DS Ch. 19](https://r4ds.had.co.nz/functions.html): Functions
-- [R 4 DS Ch. 21](https://r4ds.had.co.nz/iteration.html): Iterations
+- [R 4 DS Ch. 21](https://r4ds.had.co.nz/iteration.html): Iterations (Sections 21.0--21.3)
+- Debugging:
+    * [Debugging in RStudio](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
+    * [Roger Peng's Debugging Guide](http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf) (optional/advanced)
 
 __In-class Materials:__
 
-- Week 6 slides
+- [Week 6 slides](lectures/week6/week6-slides.html)  ([Rmd](lectures/week6/week6-slides.Rmd)) ([PDF](lectures/week6/week6-slides.pdf))
 
 __**Midterm Exam 1:**__
 
