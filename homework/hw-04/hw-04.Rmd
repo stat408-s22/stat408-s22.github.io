@@ -1,0 +1,144 @@
+---
+title: "Homework 4"
+author: "your name here"
+date: "Due Wed, Mar 2, 2022 at 5:00 PM in D2L"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+Use this .Rmd file as a template for your homework. Please use D2L to turn 
+in both the Knitted PDF output and your R Markdown file. Your .Rmd file 
+should compile on its own if it is downloaded by your instructor.
+
+## Load packages
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+```
+
+# RStudio tips and tricks
+
+## Exercise 1
+
+Remove this text, and copy and paste your D2L discussion post here.
+
+
+# RStudio add-ins.
+
+## Exercise 2
+
+```{r, eval = FALSE}
+# copy and paste code to style here
+```
+
+Remove this text, and add your answer for Exercise 2 here.
+
+
+## Exercise 3
+
+Remove this text, and add your answer for Exercise 3 here.
+
+
+## Exercise 4
+
+Remove this text, and add your answer for Exercise 4 here.
+
+
+# Debugging Part I
+
+## Exercise 5
+
+The goal of this code is to create a figure of age by passenger 
+class among passengers that were on the Titanic. There are a
+few bugs in the code; identify and fix them.
+List all the things that you changed.
+```{r, eval=FALSE}
+titanic == read_csv("http://math.montana.edu/ahoegh/teaching/stat408/datasets/titanic.csv")
+
+titanic 
+  %>% filter(!is.na(Age)) %>% # removed passengers without age
+  mutate(Pclass = factor(Pclass)) %>% # changed class to factor
+  ggplot(y = Age, x = Pclass)) %>%
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(color = Sex) +
+  theme_bw() + 
+  xlab(Passenger Class) +
+  ggtitle('Passenger age by class and gender on Titanic')
+```
+
+After you have debugged the code above, change the option `eval = FALSE`
+to `eval = TRUE` in the R chunk to demonstrate that the code runs.
+
+
+# Writing functions
+
+## Exercise 6
+
+Remove this text, and write your answer for Exercise 6 here.
+Add R chunks as needed.
+
+## Exercise 7
+
+...
+
+## Exercise 8
+
+...
+
+## Exercise 9
+
+...
+
+
+# Debugging Part II
+
+## Exercise 10
+
+Debug the following function, by rewriting the function below
+and demonstrating that the function calls specified below
+return the correct answer.
+
+```{r, eval=FALSE}
+MontyHallMonteCarlo <- function(num.sims, print){
+  # Function to simulate Monty Hall winning probability when switching doors
+  # ARGS: number of simulations (as integer or double), print command
+  #       that accepts TRUE or FALSE as to whether to print simulation results
+  # Returns: list containing winning probability and (if print = TRUE)
+  #          vector of results with strings "Win" or "Lose" for each simulation
+  if (!num.spins %% 1 == 0) stop('Please enter an integer or double')
+  results <- rep(FALSE,num.sims)
+  for (i in 1:num.sims){
+    # randomly choose door with car
+    car.door <- sample(3,1)
+    # randomly choose door for participant to select
+    select.door <- sample(1,3)
+    # you win when switching if the door with a car is not the
+    # one you initally selected
+    if (car.door = select.door) {
+      results <- FALSE
+    }
+  }
+  win.prob <- mean(results)
+  ifelse(print, return(list(win.prob,results)),return(list(win.prob))
+}
+
+MonteHallMonteCarlo(8.1,print=T)
+MonteHallMonteCarlo('8.1',print=T)
+MonteHallMonteCarlo(8,print=T)
+MonteHallMonteCarlo(10000,print=F)
+```
+
+After you have debugged the code above, change the option `eval = FALSE`
+to `eval = TRUE` in the R chunk to demonstrate that the code runs.
+
+
+# Cite Sources
+
+Remove this text and cite the sources used on your homework here.

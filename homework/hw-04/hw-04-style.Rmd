@@ -1,0 +1,227 @@
+---
+title: "HW 04 - Style, Debugging and Functions"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  eval = FALSE,
+  out.width = "80%",
+  fig.asp = 0.618,
+  fig.width = 10,
+  dpi = 300
+)
+```
+
+# Getting started
+
+* Open RStudio. Navigate to File > New Project..., and select "New Directory", then "New Project". Name your directory something like "hw-04" and save it as a subdirectory of your STAT 408 folder on your computer. Click "Create Project".
+* Download the [R Markdown document `hw-04.Rmd`](hw-04.Rmd) from the course calendar and save it to your newly created "hw-04" folder.
+* Open the `hw-04.Rmd` document in RStudio. Update the YAML, changing the author name to your name, and **knit** the document to PDF.
+* Make sure it compiles without errors. The output will be in the `.pdf` file with the same name in the same directory.
+
+# RStudio tips and tricks
+
+1. Go to the RStudio Tips twitter account, [https://twitter.com/rstudiotips](https://twitter.com/rstudiotips),
+and find one tip that looks interesting and helpful for our class.
+Practice using it! Then post the tip and a couple sentences
+describing why you like it or how you used it in our D2L Discussion 
+"R/RStudio Tips & Tricks" topic.
+
+
+# RStudio addins
+
+```{marginfigure}
+Other options for automated styling in RStudio include the built-in
+Code > Reformat Code option, or the 
+[`formatR`](https://yihui.org/formatr/) package.
+```
+
+We spent the better part of a class period describing the 
+features of R style guidelines,
+but anything with rules (like style guidelines) can easily be automated.
+And since RStudio is created by programmers, there are tools within RStudio to
+help us adhere to a particular style. One option for automated styling is
+the [styler](https://styler.r-lib.org/index.html) addin.
+
+Read the following two pages about RStudio addins and the styler add-in:
+
+* [Overview of RStudio add-ins](https://towardsdatascience.com/rstudio-addins-or-how-to-make-your-coding-life-easier-6b627c7b2240)
+* [Styler](https://www.tidyverse.org/blog/2017/12/styler-1.0.0/)
+
+Install the styler addin, and then complete the following exercises.
+
+Consider the following code:
+
+```{r, eval=FALSE}
+data(iris) #read in the data set
+r = cor(iris$Sepal.Length,iris$Sepal.Width);r
+iris%>%group_by(Species) %>% summarize(r.sepal=cor(Sepal.Length,Sepal.Width), r.petal=cor(Petal.Length,Petal.Width),mean.sepal=mean(Sepal.Length),mean.petal=mean(Petal.Length)) #correlation by species
+iris%>%ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point()+theme_minimal()+ggtitle(`Sepal Width vs Height by Species`)
+#here is some basic math
+1*2^5
+#and a function
+triangle_area=function ( b,h ){#calculate area of a triangle with base b and height h
+  (1/2)*b*h}
+```
+
+2. Copy and paste the code above into an R chunk in your `hw-04.Rmd` file. 
+Select the code and run styler addin on the selection. 
+
+3. Create a bulleted list describing which features in the code changed
+and how they were styled, e.g.,
+
+* changed `=` to `<-` when used as assignment
+* ...
+
+4. Are there any tidyverse style guidelines that the styler addin missed?
+If so, what?
+
+# Debugging Part I
+
+5. The goal of this code is to create a figure of age by passenger class among passengers that were on the Titanic. There are a few bugs in the code; identify and fix them. List all the things that you changed.
+```{r, eval=FALSE}
+titanic == read_csv("http://math.montana.edu/ahoegh/teaching/stat408/datasets/titanic.csv")
+
+titanic 
+  %>% filter(!is.na(Age)) %>% # removed passengers without age
+  mutate(Pclass = factor(Pclass)) %>% # changed class to factor
+  ggplot(y = Age, x = Pclass)) %>%
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(color = Sex) +
+  theme_bw() + 
+  xlab(Passenger Class) +
+  ggtitle('Passenger age by class and gender on Titanic')
+```
+
+
+# Writing functions
+
+There is a classic probability problem called "the hat problem": 
+
+> Suppose $n$ people go to a fancy restaurant.
+Each person is wearing a hat and checks his/her
+hat at the door as he/she arrives. The hat-check
+attendant gets tipsy throughout the evening,
+and returns a random hat to each person as
+they leave. The patrons leave in a random order.
+What is the probability that no one gets his or her own hat back? 
+
+The goal of this part of the homework is to write
+a function that will take an argument $n$ and return
+the estimated probability that no one gets their own hat back.
+
+In order to estimate this probability, we need to simulate
+the random process many times, and then calculate the
+proportion of times no one got their hat back.
+
+The code below will simulate one trial of the hat process
+for $n = 20$ and return the number of people who got their
+hat back.
+
+```{r}
+hats <- sample(1:20, 20, replace = FALSE)
+heads <- sample(1:20, 20, replace = FALSE)
+sum(hats == heads)
+```
+
+Try running the code and make sure you understand each line
+of the code before proceeding.
+
+6. Fill in the for loop below to simulate the hat process
+1000 times for $n = 20$, storing the number of matches
+from each iteration in the object `n_matches`.
+```{r}
+n_matches <- vector("integer", 1000)
+for(i in seq_along(n_matches)) {
+  # add code here to simulate hat process
+  # store the result from each iteration
+  # in n_matches
+}
+```
+
+```{marginfigure}
+**Hint:** The code `n_matches == 0` will generate a
+logical vector. Since logical vectors are treated
+as 0's (FALSE) and 1's (TRUE), `mean(n_matches == 0)`
+will return the proportion of TRUEs in the vector.
+```
+
+7. Use the `n_matches` object created in the last exercise
+to estimate the probability of zero hat matches when
+$n = 20$.
+
+8. Now, create a function called `FindHatProbability` that
+takes arguments `n` (number of hats) and `reps` (number
+of times to simulate the process), and returns an estimated
+probability of zero hat matches. Set the default value
+for `reps` to 10000.
+
+```{marginfigure}
+It can be shown that the limit of this probability
+as $n$ goes to infinity is $1/e$!
+```
+
+
+9. Use your function for the previous exercise to estimate
+the probability of zero matches for $n = 5, 10, 20, 50$.
+How does this probability change as $n$ increases?
+
+# Debugging Part II
+
+```{marginfigure}
+For a short video of the Monty Hall problem see [from 21 with Kevin Spacey](https://www.youtube.com/watch?v=Zr_xWfThjJ0) or 
+[from numb3rs tv show](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwjLwcvG1rTWAhUrsVQKHWq9CbEQyCkIKjAA&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DP9WFKmLK0dc&usg=AFQjCNEYUi91dn4_xNLXQr9pESAdn9aApQ).
+```
+
+Another fun probability problem is the "Monty Hall problem".
+Deriving the probabilities in the hat problem or the
+Monty Hall problem requires some advanced probability
+knowledge, but estimating the probabilities through
+simulation takes only a bit of coding!
+
+
+10. Debug the following function, by rewriting the function below
+and demonstrating that the function calls specified below return the 
+correct answer. 
+```{r, error= TRUE}
+MontyHallMonteCarlo <- function(num.sims, print){
+  # Function to simulate Monty Hall winning probability when switching doors
+  # ARGS: number of simulations (as integer or double), print command
+  #       that accepts TRUE or FALSE as to whether to print simulation results
+  # Returns: list containing winning probability and (if print = TRUE)
+  #          vector of results with strings "Win" or "Lose" for each simulation
+  if (!num.spins %% 1 == 0) stop('Please enter an integer or double')
+  results <- rep(FALSE,num.sims)
+  for (i in 1:num.sims){
+    # randomly choose door with car
+    car.door <- sample(3,1)
+    # randomly choose door for participant to select
+    select.door <- sample(1,3)
+    # you win when switching if the door with a car is not the
+    # one you initally selected
+    if (car.door = select.door) {
+      results <- FALSE
+    }
+  }
+  win.prob <- mean(results)
+  ifelse(print, return(list(win.prob,results)),return(list(win.prob))
+}
+
+MonteHallMonteCarlo(8.1,print=T)
+MonteHallMonteCarlo('8.1',print=T)
+MonteHallMonteCarlo(8,print=T)
+MonteHallMonteCarlo(10000,print=F)
+```
+
+
+# Cite sources
+
+Write the sources you used to complete this assignment at the end of your .Rmd document, adhering to the "Guidance on Citing Sources" bullet points in the [collaboration policy section on our course syllabus](https://stat408-s22.github.io/#Policy_on_collaboration_and_academic_misconduct).
+
