@@ -156,7 +156,7 @@ __Weekly Overview:__
 
 1. Write code using tidyverse style guidelines
 2. Practice debugging code
-3. Introduction to writing functions
+3. Write your own R functions
  
 __Reading and Online Resources:__ 
 
@@ -190,9 +190,9 @@ __Homework:__
 
 __Weekly Overview:__ 
 
-1. Writing functions
-2. Introduction to for/while loops
-3. Advanced debugging
+1. Write your own R functions (cont)
+2. Use for/while loops in simulation
+3. Debug using built-in tools
  
 __Reading and Online Resources:__ 
 
@@ -201,6 +201,7 @@ __Reading and Online Resources:__
 - Debugging:
     * [Debugging in RStudio](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
     * [Roger Peng's Debugging Guide](http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf) (optional/advanced)
+    * [Video on debugging](https://montana.techsmithrelay.com/6guK) (Dr. Hoegh)
 
 __In-class Materials:__
 
@@ -229,9 +230,14 @@ __**Midterm Exam 1:**__
 
 __Weekly Overview:__ 
 
+1. Implement merge and join procedures to wrangle multiple data sets
+2. Transform data from wide to long format
  
 __Reading and Online Resources:__ 
 
+- [Modern Dive Ch. 4](https://moderndive.com/4-tidy.html)
+- [R 4 DS Ch. 12](https://r4ds.had.co.nz/tidy-data.html): Tidy data
+- [R 4 DS Ch. 13](https://r4ds.had.co.nz/relational-data.html): Relational data
 
 
 __In-class Materials:__
