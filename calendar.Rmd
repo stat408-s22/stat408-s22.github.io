@@ -242,7 +242,9 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- [Week 7 slides](lectures/week7/week7-slides.html)  ([Rmd](lectures/week7/week7-slides.Rmd)) ([PDF](lectures/week7/week7-slides.pdf))
+- [Week 7 slides](lectures/week7/week7-slides.html)
+- [Week 7 slides repo](https://github.com/stat408-s22/week7-slides)
+
 
 __In-class Lab:__
 
