@@ -561,9 +561,6 @@ disco
 ```{r}
 df_comb <- ski_acres %>% 
   full_join(df_cost, by = c("ski.hill" = "ski.resort")) %>%
-  mutate(ski.hill = as.character(ski.hill),
-         skiable.acres = as.character(skiable.acres),
-         ticket.cost = as.character(ticket.cost)) %>% 
   rbind(disco) %>% #<<<
   arrange(ski.hill)
 str(df_comb)
@@ -578,9 +575,6 @@ names(disco_df) <- c("ski.hill", "skiable.acres", "ticket.cost")
   
 df_comb <- ski_acres %>% 
   full_join(df_cost, by = c("ski.hill"= "ski.resort")) %>%
-  mutate(ski.hill = as.character(ski.hill),
-         skiable.acres = as.character(skiable.acres),
-         ticket.cost = as.character(ticket.cost)) %>% 
   full_join(disco_df) %>% #<<<
   arrange(ski.hill)
 str(df_comb)
@@ -745,6 +739,8 @@ purchases %>%
 </div>
  
 # Example: Billboard
+
+## Example: Billboard
 
 Consider the `billboard` dataset (contained in the `tidyr` package) which contains the rank of the song (in 2000) for each week after it first entered the list.
 
