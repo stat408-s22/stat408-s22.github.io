@@ -242,6 +242,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
+- [Week 7 slides](lectures/week7/week7-slides.html)  ([Rmd](lectures/week7/week7-slides.Rmd)) ([PDF](lectures/week7/week7-slides.pdf))
 
 __In-class Lab:__
 
