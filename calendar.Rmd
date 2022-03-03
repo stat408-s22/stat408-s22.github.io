@@ -248,7 +248,8 @@ __In-class Materials:__
 
 __In-class Lab:__
 
- 
+- [Lab 5](labs/lab-05/lab-05-wrangling.html) - Due Monday, Mar 7 by 5pm in GitHub
+
 __Homework:__
 
 
