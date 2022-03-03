@@ -37,45 +37,44 @@ knitr::knit_hooks$set(mysize = function(before, options, envir) {
 # Data Wrangling
 
 ## Data Wrangling
-As a statistician or more generally a data scientist the ability
-to manipulate, process, clean, and merge datasets is an essential skill. 
 
-- These skills are generally referred to as data wrangling or munging.
-- In a data analysis or visualization setting, they will undoubtedly
-require a majority of your time.
-- Wrangling data can be a painful process.
-- This lecture will provide some tools and examples of organizing data.
+As a statistician or more generally a data scientist the ability to manipulate, process, clean, and merge datasets is an essential skill.
+
+-   These skills are generally referred to as data wrangling or munging.
+-   In a data analysis or visualization setting, they will undoubtedly require a majority of your time.
+-   Wrangling data can be a painful process.
+-   This lecture will provide some tools and examples of organizing data.
 
 ## Data Wrangling Concepts
 
-- Wide and thin datasets
-- Merging and joining relational data
-- Dealing with strings
-- Dealing with date/time objects
-
+-   Wide and thin datasets
+-   Merging and joining relational data
+-   Dealing with strings
+-   Dealing with date/time objects
 
 # Tidy Data
 
 ## Rules for Tidy Data
+
 The concept of **tidy data** can be attributed to Hadley Wickham and has three principles for organizing data. [Tidy Data Reference](https://vita.had.co.nz/papers/tidy-data.pdf)
 
-- Each variable forms a column.
-- Each observation forms a row.
-- Each type of observational unit forms a table (with a single value in each cell).
-
+-   Each variable forms a column.
+-   Each observation forms a row.
+-   Each type of observational unit forms a table (with a single value in each cell).
 
 ## Rules for Tidy Data
 
-![Visual Representation of Tidy Data. Source: R4DS ](img/tidy.png)
-
+```{r, echo=FALSE, out.width="100%", fig.cap = "Visual Representation of Tidy Data. Source: R4DS"}
+include_graphics("img/tidy.png")
+```
 
 ## Why use Tidy Data
 
 *Tidy datasets are all alike, but every messy dataset is messy in its own way. - Hadley Wickham*
 
-- Storing data in a consistent way gives familiarity with methods for manipulating data.
-- Tidy data structure takes advantage of vectorised operations in R.
-- Many useful packages: such as `dplyr` and `ggplot2` require tidy data.
+-   Storing data in a consistent way gives familiarity with methods for manipulating data.
+-   Tidy data structure takes advantage of vectorised operations in R.
+-   Many useful packages: such as `dplyr` and `ggplot2` require tidy data.
 
 ## What are messy data?
 
@@ -83,11 +82,10 @@ The concept of **tidy data** can be attributed to Hadley Wickham and has three p
 knitr::include_graphics("img/hyperwar-airplanes-on-hand.png")
 ```
 
->- Year --> should be its own column
->- Historical markers --> could make into variables or just use on annotations
+> -   Year --\> should be its own column
+> -   Historical markers --\> could make into variables or just use on annotations
 
 Source: [Army Air Forces Statistical Digest, WW II](https://www.ibiblio.org/hyperwar/AAF/StatDigest/aafsd-3.html)
-
 
 ## What are messy data?
 
@@ -95,15 +93,15 @@ Source: [Army Air Forces Statistical Digest, WW II](https://www.ibiblio.org/hype
 knitr::include_graphics("img/us-general-economic-characteristic-acs-2017.png")
 ```
 
->- Data released in aggregate
->- Difficult to get data at the individual level (data privacy issues)
+> -   Data released in aggregate
+> -   Difficult to get data at the individual level (data privacy issues)
 
 Source: [US Census Fact Finder, General Economic Characteristics, ACS 2017](https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_17_5YR_DP03&src=pt)
 
 ## Displaying vs summarizing data
 
-- Summary data might look "tidy", but its rows are not the observational units
-- Raw data can produce summary data, but you can't go back to raw data from summary data
+-   Summary data might look "tidy", but its rows are not the observational units
+-   Raw data can produce summary data, but you can't go back to raw data from summary data
 
 ```{r load-recent-grads, echo=FALSE, eval=TRUE}
 recent_grads <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/recent-grads.csv")
@@ -112,23 +110,24 @@ recent_grads <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data
 ## Displaying vs summarizing data
 
 Raw data or summary data?
+
 ```{r, echo=FALSE, eval=TRUE}
 recent_grads %>% select(Major, ShareWomen, Unemployment_rate)
 ```
 
-<div class="notes">
-- Clue that you're looking at raw data --> number of rows equals number of observations
-- What are the observational units in this data set? (majors)
-- What if the observational units were graduates?
-</div>
+::: notes
+-   Clue that you're looking at raw data --\> number of rows equals number of observations
+-   What are the observational units in this data set? (majors)
+-   What if the observational units were graduates?
+:::
 
 ## Displaying vs summarizing data
 
 Raw data or summary data?
+
 ```{r, echo=FALSE, eval=TRUE}
 recent_grads %>% group_by(Major_category) %>% summarize(ave_med_salary = mean(Median))
 ```
-
 
 # Merge / Join
 
@@ -136,7 +135,7 @@ recent_grads %>% group_by(Major_category) %>% summarize(ave_med_salary = mean(Me
 
 Consider the two data frames, how can we merge them and what should be the dimensions of the merged data frame.
 
-<div class="columns-2">
+::: columns-2
 ```{r, echo = FALSE}
 df1 <- data.frame(school = c('MSU','VT','Mines'),
             state= c('MT','VA','CO'), stringsAsFactors = F)
@@ -148,8 +147,10 @@ df2 <- data.frame(school = c('Mines','MSU','VT'),
             enrollment = c(5794,15688,30598), stringsAsFactors = F)
 df2
 ```
-</div>
+:::
+
 ## pre-sort
+
 One possibility is to use the arrange the data frames first.
 
 ```{r}
@@ -158,13 +159,13 @@ df2 <- df2[order(df2$school),]
 ```
 
 ## pre-sort
+
 One possibility is to use the arrange the data frames first.
 
 ```{r}
 df1 
 df2 
 ```
-
 
 ## rbind() and cbind()
 
@@ -177,22 +178,19 @@ comb_df <- comb_df[,-3]
 ```
 
 ## rbind() and cbind()
+
 Now assume we want to add another school to the data frame.
 
 ```{r, error=TRUE}
 new.school <- c('Luther', 'IA',2337)
 rbind(comb_df, new.school)
 ```
+
 Note: If your strings are saved as factors, this chunk of code will give you an error.
-
-
 
 ## bind_rows() / bind_cols()
 
-`dplyr` also contains functions for 
-- binding rows: `bind_rows()` 
-- binding columns: `bind_cols()`
-
+`dplyr` also contains functions for - binding rows: `bind_rows()` - binding columns: `bind_cols()`
 
 # Joins in `dplyr`
 
@@ -202,7 +200,7 @@ dates <- read_csv("data/scientists/dates.csv")
 works <- read_csv("data/scientists/works.csv")
 ```
 
-## Data: Women in science 
+## Data: Women in science
 
 Information on 10 women in science who changed the world.
 
@@ -231,7 +229,6 @@ dates
 works
 ```
 
-
 ## Desired output
 
 ```{r echo=FALSE}
@@ -239,7 +236,6 @@ professions %>%
   left_join(dates) %>%
   left_join(works)
 ```
-
 
 ## Inputs, reminder
 
@@ -255,39 +251,35 @@ nrow(dates)
 nrow(works)
 ```
 
-
 ## Joining data frames
 
 ```{r eval=FALSE}
 something_join(x, y)
 ```
 
-- `left_join()`: all rows from x
-- `right_join()`: all rows from y
-- `full_join()`: all rows from both x and y
-- `semi_join()`: all rows from x where there are matching values in y, keeping just columns from x
-- `inner_join()`: all rows from x where there are matching values in y, return 
-all combination of multiple matches in the case of multiple matches
-- `anti_join()`: return all rows from x where there are not matching values in y, never duplicate rows of x
-- ...
-
+-   `left_join()`: all rows from x
+-   `right_join()`: all rows from y
+-   `full_join()`: all rows from both x and y
+-   `semi_join()`: all rows from x where there are matching values in y, keeping just columns from x
+-   `inner_join()`: all rows from x where there are matching values in y, return all combination of multiple matches in the case of multiple matches
+-   `anti_join()`: return all rows from x where there are not matching values in y, never duplicate rows of x
+-   ...
 
 ## Setup
 
 For the next few slides...
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE}
 x <- tibble(
   id = c(1, 2, 3),
   value_x = c("x1", "x2", "x3")
   )
 ```
+
 ```{r}
 x
 ```
-
 
 ```{r echo=FALSE}
 y <- tibble(
@@ -295,106 +287,101 @@ y <- tibble(
   value_y = c("y1", "y2", "y4")
   )
 ```
+
 ```{r}
 y
 ```
-
-</div>
+:::
 
 ## `left_join()`
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/left-join.gif")
 ```
+
 <br><br>
+
 ```{r}
 professions %>%
   left_join(dates) 
 ```
-</div>
- 
+:::
 
 ## `right_join()`
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/right-join.gif")
 ```
 
 <br><br>
+
 ```{r}
 professions %>%
   right_join(dates) 
 ```
-</div> 
- 
+:::
 
 ## `full_join()`
 
-
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/full-join.gif")
 ```
 
 <br><br>
+
 ```{r}
 dates %>%
   full_join(works) 
 ```
-</div> 
- 
+:::
 
 ## `inner_join()`
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/inner-join.gif")
 ```
 
 <br><br>
+
 ```{r}
 dates %>%
   inner_join(works) 
 ```
-
-</div> 
+:::
 
 ## `semi_join()`
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/semi-join.gif")
 ```
 
 <br><br>
+
 ```{r}
 dates %>%
   semi_join(works) 
 ```
-</div> 
- 
+:::
 
 ## `anti_join()`
 
-<div class="columns-2">
-
+::: columns-2
 ```{r echo=FALSE, out.width="90%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/anti-join.gif")
 ```
 
 <br><br>
+
 ```{r}
 dates %>%
   anti_join(works) 
 ```
-</div> 
+:::
 
 ## Putting it altogether
 
@@ -404,27 +391,24 @@ professions %>%
   left_join(works)
 ```
 
-
 # Exercise: Student records
-
- 
 
 ## Student records
 
-- Have:
-  - Enrollment: official university enrollment records
-  - Survey: Student provided info missing students who never filled it out and including students who filled it out but dropped the class
-- Want: 
-    - Survey info for all enrolled in class 
-    - Students who are enrolled in class but missing survey
-    - Students who took the survey but are no longer enrolled
+-   Have:
+    -   Enrollment: official university enrollment records
+    -   Survey: Student provided info missing students who never filled it out and including students who filled it out but dropped the class
+-   Want:
+    -   Survey info for all enrolled in class
+    -   Students who are enrolled in class but missing survey
+    -   Students who took the survey but are no longer enrolled
 
 ```{r include=FALSE}
 enrollment <- read_csv("data/students/enrollment.csv")
 survey <- read_csv("data/students/survey.csv")
 ```
 
----
+------------------------------------------------------------------------
 
 ```{r message = FALSE}
 enrollment
@@ -434,69 +418,68 @@ enrollment
 survey
 ```
 
-
 ## Student records: Solution
 
 ### In class
+
 ```{r}
 enrollment %>% 
   left_join(survey, by = "id")  
 ```
 
----
+------------------------------------------------------------------------
 
 ### Survey missing
+
 ```{r}
 enrollment %>% 
   anti_join(survey, by = "id")  
 ```
 
----
+------------------------------------------------------------------------
 
 ### Dropped
+
 ```{r}
 survey %>% 
   anti_join(enrollment, by = "id")  
 ```
 
-
 # Exercise: Grocery sales
-
 
 ## Grocery sales
 
-- Have:
-  - Purchases: One row per customer per item, listing purchases they made
-  - Prices: One row per item in the store, listing their prices
-- Want: 
-  - Total revenue (over all customers)
-  - Revenue per customer
-  
+-   Have:
+    -   Purchases: One row per customer per item, listing purchases they made
+    -   Prices: One row per item in the store, listing their prices
+-   Want:
+    -   Total revenue (over all customers)
+    -   Revenue per customer
+
 ```{r include=FALSE}
 purchases <- read_csv("data/sales/purchases.csv")
 prices <- read_csv("data/sales/prices.csv")
 ```
 
----
+------------------------------------------------------------------------
 
-<div class="columns-2">
+::: columns-2
 ```{r message = FALSE}
 purchases
 ```
 
 <br>
+
 ```{r message = FALSE}
 prices
 ```
-</div>
-
- 
+:::
 
 ## Grocery sales: Solution
 
 ### Total revenue
 
-<div class="columns-2">
+::: columns-2
 ```{r}
 purchases %>% 
   left_join(prices)  
@@ -507,18 +490,17 @@ purchases %>%
   left_join(prices) %>%
   summarise(total_revenue = sum(price))  
 ```
-</div>
+:::
 
----
+------------------------------------------------------------------------
 
 ### Revenue by customer
-<div class="columns-2">
 
+::: columns-2
 ```{r}
 purchases %>% 
   left_join(prices)
 ```
-
 
 ```{r}
 purchases %>% 
@@ -526,8 +508,7 @@ purchases %>%
   group_by(customer_id) %>%  
   summarise(total_revenue = sum(price))
 ```
-</div>
-
+:::
 
 # Exercise: Ski hills
 
@@ -543,18 +524,18 @@ df_cost <- data.frame( ski.resort = c('Bridger Bowl', 'Big Sky', 'Steamboat', 'J
 disco <- c('Discovery', 2200, 20)
 ```
 
-
-<div class="columns-2">
+::: columns-2
 ```{r}
 ski_acres
 ```
+
 <br><br><br><br>
+
 ```{r}
 df_cost
 disco
 ```
-</div>
-
+:::
 
 ## Solution option 1
 
@@ -568,7 +549,6 @@ str(df_comb)
 
 ## Solution option 2
 
-
 ```{r}
 disco_df <- data.frame(matrix(disco, nrow = 1))
 names(disco_df) <- c("ski.hill", "skiable.acres", "ticket.cost")
@@ -579,7 +559,6 @@ df_comb <- ski_acres %>%
   arrange(ski.hill)
 str(df_comb)
 ```
-
 
 # wide / long data
 
@@ -593,7 +572,6 @@ We have data organised in an unideal way for our analysis.
 
 We want to reorganise the data to carry on with our analysis.
 
-
 ## Data: Grocery sales
 
 ```{r include=FALSE}
@@ -601,37 +579,37 @@ customers <- read_csv("data/sales/customers.csv")
 prices <- read_csv("data/sales/prices.csv")
 ```
 
-<div class="columns-2">
-
+::: columns-2
 We have...
+
 ```{r echo=FALSE}
 customers
 ```
+
 <br><br><br><br><br><br>
 
 We want...
+
 ```{r echo=FALSE}
 customers %>%
   pivot_longer(cols = item_1:item_3, names_to = "item_no", values_to = "item")
 ```
-</div>
+:::
 
 ## A grammar of data tidying
 
-<div class="columns-2">
+::: columns-2
 ```{r dplyr-part-of-tidyverse, echo=FALSE, out.width="60%", caption = "tidyr is part of the tidyverse"}
 include_graphics("img/tidyr-part-of-tidyverse.png")
 ```
 
 The goal of tidyr is to help you tidy your data via
 
-- pivoting for going between wide and long data
-- splitting and combining character columns
-- nesting and unnesting columns
-- clarifying how `NA`s should be treated
-</div>
-
-
+-   pivoting for going between wide and long data
+-   splitting and combining character columns
+-   nesting and unnesting columns
+-   clarifying how `NA`s should be treated
+:::
 
 ## Not this...
 
@@ -639,20 +617,17 @@ The goal of tidyr is to help you tidy your data via
 include_graphics("img/pivot.gif")
 ```
 
-
 ## but this!
-
 
 ```{r echo=FALSE, fig.align='center', out.width="45%", out.extra ='style="background-color: #FDF6E3"'}
 include_graphics("img/tidyr-longer-wider.gif")
 ```
 
-
 ## Wider vs. longer
 
-<div class="columns-2">
-
+::: columns-2
 Wider = more columns
+
 ```{r echo=FALSE}
 customers
 ```
@@ -660,22 +635,20 @@ customers
 <br><br><br><br><br><br>
 
 Longer = more rows
+
 ```{r echo=FALSE}
 customers %>%
   pivot_longer(cols = item_1:item_3, names_to = "item_no", values_to = "item")
 ```
-
-</div>
+:::
 
 ## `pivot_longer()`
 
-<div class="columns-2">
-
->- `data` (as usual)
->- `cols`: columns to pivot into longer format 
->- `names_to`: name of the column where column names of pivoted variables go (character string)
->- `values_to`: name of the column where data in pivoted variables go (character string)
-
+::: columns-2
+> -   `data` (as usual)
+> -   `cols`: columns to pivot into longer format
+> -   `names_to`: name of the column where column names of pivoted variables go (character string)
+> -   `values_to`: name of the column where data in pivoted variables go (character string)
 
 ```{r eval=FALSE}
 pivot_longer(
@@ -685,9 +658,7 @@ pivot_longer(
   values_to = "value"
   )
 ```
-
-</div>
-
+:::
 
 ## Customers $\rightarrow$ purchases
 
@@ -702,31 +673,29 @@ purchases <- customers %>%
 purchases
 ```
 
-
-
 ## Why pivot?
 
 Most likely, because the next step of your analysis needs it
 
-<div class="columns-2">
+::: columns-2
 ```{r}
 prices
 ```
 
 <br><br><br>
+
 ```{r}
 purchases %>%
   left_join(prices)
 ```
-</div>
+:::
 
 ## Purchases $\rightarrow$ customers
 
-<div class="columns-2">
-
-- `data` (as usual)
-- `names_from`: which column in the long format contains the what should be column names in the wide format
-- `values_from`: which column in the long format contains the what should be values in the new columns in the wide format
+::: columns-2
+-   `data` (as usual)
+-   `names_from`: which column in the long format contains the what should be column names in the wide format
+-   `values_from`: which column in the long format contains the what should be values in the new columns in the wide format
 
 ```{r}
 purchases %>%
@@ -735,9 +704,8 @@ purchases %>%
     values_from = item 
   )
 ```
+:::
 
-</div>
- 
 # Example: Billboard
 
 ## Example: Billboard
@@ -751,14 +719,16 @@ billboard
 ## `billboard` data
 
 If we want to identify songs that reach number 1 quickly, the data need to wrangled.
+
 ```{r}
 billboard %>% 
   select(artist, track, date.entered, wk1, wk2) %>%
   pivot_longer(
-  cols= c('wk1', 'wk2'),
-  names_to = 'week',
-  values_to = 'rank',
-  values_drop_na = T)
+    cols = c('wk1', 'wk2'),
+    names_to = 'week',
+    values_to = 'rank',
+    values_drop_na = TRUE
+    )
 ```
 
 ## Billboard Data Analysis
@@ -766,11 +736,13 @@ billboard %>%
 ```{r}
 billboard %>% 
   pivot_longer(
-  cols= starts_with('wk'),
-  names_to = 'week',
-  values_to = 'rank',
-  values_drop_na = T) %>%
-  mutate(week_numb= as.numeric(str_replace(week, 'wk',''))) %>%
+    cols= starts_with('wk'),
+    names_to = 'week',
+    values_to = 'rank',
+    values_drop_na = TRUE) %>%
+  mutate(
+    week_numb = as.numeric(str_replace(week, 'wk',''))
+    ) %>%
   filter(rank == 1) %>%
   arrange(week_numb) %>% 
   slice(1) %>%
@@ -783,15 +755,15 @@ Determine which song in this dataset spent the most time at #1.
 
 ## Solution: Code
 
-
 ```{r}
 billboard_long <- billboard %>% 
   pivot_longer(
-  cols= starts_with('wk'),
-  names_to = 'week',
-  values_to = 'rank',
-  values_drop_na = TRUE) %>%
-  mutate(week_numb = 
+    cols= starts_with('wk'),
+    names_to = 'week',
+    values_to = 'rank',
+    values_drop_na = TRUE) %>%
+  mutate(
+    week_numb = 
     as.numeric(str_replace(week, 'wk',''))) %>%
   filter(rank == 1) %>%
   group_by(track) %>% 
@@ -804,4 +776,3 @@ billboard_long <- billboard %>%
 ```{r, echo=FALSE}
   kable(billboard_long[1:13,]) %>% kable_minimal()
 ```
-

@@ -252,6 +252,7 @@ __In-class Lab:__
 
 __Homework:__
 
+- **Part I only - will be updated shortly**: [Homework 5](homework/hw-05/hw-05-wrangle.html) ([Rmd](homework/hw-05/hw-05.Rmd)) - Due Tuesday, Mar 8 by 5pm in GitHub
 
 
 
