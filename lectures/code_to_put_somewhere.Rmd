@@ -1,0 +1,165 @@
+---
+title: "STAT 408: Week "
+subtitle: "Teach This Sometime"
+date: "someday"
+urlcolor: blue
+output: 
+  ioslides_presentation:
+    widescreen: true
+  beamer_presentation:
+    theme: "Berkeley"
+    colortheme: "seahorse"
+    slide_level: 2
+  revealjs::revealjs_presentation:
+    transition: none
+    incremental: false
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+```
+
+# Lists and Arrays
+
+## Lists
+Consider the two lists 
+
+```{r}
+msu.info <- list( name = c('Waded Cruzado','Andy Hoegh'), 
+         degree.from = c('University of Texas at Arlington','Virginia Tech'),
+         job.title = c('President', 'Assistant Professor of Statistics'))
+
+msu.info2 <- list(c('Waded Cruzado','University of Texas at Arlington',
+                     'President'), c('Andy Hoegh',
+                  'Virginia Tech','Assistant Professor of Statistics'))
+```
+
+## List Output
+
+```{r, mysize=TRUE, size='\\tiny'}
+
+msu.info
+
+msu.info2
+```
+
+## Lists - indexing
+With the current lists we can index elements using the double bracket `[[ ]]` notation or if names have been initialized, those can be used too.
+
+So the first element of each list can be indexed
+```{r, mysize=TRUE, size='\\tiny'}
+msu.info[[1]]
+msu.info$name
+```
+
+## Exercise: Lists 
+Explore the indexing with these commands.
+```{r, mysize=TRUE, size='\\tiny', eval=F}
+msu.info <- list( name = c('Waded Cruzado','Andy Hoegh'), 
+         degree.from = c('University of Texas at Arlington','Virginia Tech'),
+         job.title = c('President', 'Assistant Professor of Statistics'))
+msu.info[1]
+msu.info[[1]]
+msu.info$name[2]
+msu.info[1:2]
+unlist(msu.info)
+```
+
+## Solution: Lists 1
+```{r, mysize=TRUE, size='\\tiny'}
+msu.info[1]
+msu.info[[1]]
+msu.info$name[2]
+```
+
+## Solution: Lists 2
+```{r, mysize=TRUE, size='\\tiny'}
+msu.info[1:2]
+unlist(msu.info)
+```
+
+
+## Lists  - nested lists
+
+```{r, mysize=TRUE, size='\\footnotesize'}
+
+list(list('a','b'),list('c','d'))
+```
+
+
+## Arrays
+
+Arrays are a general form a matrix, but have a higher dimension.
+
+```{r, mysize=TRUE, size='\\tiny'}
+array.1 <- array(1:8, dim=c(2,2,2)); array.1
+array.1[2,2,1]
+```
+
+## Exercise: Arrays
+
+Create an array of dimension 2 x 2 x 3, where each of the three 2 x 2 subarray (or matrix) is the Identity matrix.
+
+## Solution: Arrays
+Create an array of dimension 2 x 2 x 3, where each of the three 2 x 2 subarray (or matrix) is the Identity matrix.
+
+```{r, mysize=TRUE, size='\\tiny'}
+array(c(1,0,0,1), dim = c(2,2,3))
+```
+
+
+# Matrix Style Operations
+
+
+## colMeans, rowSums
+R contains a set of built in functions for taking the mean and sum of matrices that have been optimized for speed.
+
+```{r colMeans}
+mat1 <- matrix(1:4,ncol=2,nrow=2)
+rowMeans(mat1)
+colSums(mat1)
+```
+
+## Apply
+For generic functions, the set of apply commands are extremely useful. They provide a mechanism for matrix style operations similar to the built in `rowMeans()` type of functions.
+
+The apply function has three arguments: 
+
+- matrix
+- margin (rows=1, columns=2)
+- function
+```{r apply}
+apply(mat1,2,mean)
+```
+
+## Aggregate
+Another useful function is `aggregate` which can be used to compute summary statistics of dataset by a particular group. Aggregate also has three essential elements.
+
+1. An R object
+2. list of groups 
+3. function
+
+```{r agg}
+aggregate(Loblolly$height,by=list(Loblolly$age),mean)
+```
+
+## Exercise: Aggregate
+Earlier we wrote a function to compute the average housing price for two states, now use aggregate to compute this for all the states in the housing data set.
+
+## Solution: Aggregate
+
+```{r, mysize=TRUE, size='\\tiny'}
+housing.prices <- read.csv(
+  'http://math.montana.edu/ahoegh/teaching/stat408/datasets/HousingSales.csv',
+  stringsAsFactors = F)
+housing.prices.state <- aggregate(housing.prices$Closing_Price, 
+                                  by=list(housing.prices$State),mean)
+head(housing.prices.state)
+```
+
