@@ -24,7 +24,7 @@ library(tidyverse)
 library(dsbox) 
 ```
 
-# Exercises
+# Part I: La Quinta is Spanish for next to Denny's, Pt. 2
 
 ## Exercise 1
 
@@ -74,6 +74,19 @@ haversine <- function(long1, lat1, long2, lat2, round = 3) {
 
 Add exercise headings as needed.
 
+# Part II: History of Baseball
+
+```{r, eval = FALSE, message = F}
+player <- read_csv("https://math.montana.edu/shancock/data/player.csv")
+all_star <- read_csv("https://math.montana.edu/shancock/data/all_star.csv")
+salary <- read_csv("https://math.montana.edu/shancock/data/salary.csv")
+```
+
+## Exercise 11
+
+...
+
+Add exercise headings as needed.
 
 
 # Cite Sources

@@ -4,7 +4,7 @@ output:
   tufte::tufte_html:
     tufte_variant: "envisioned"
     highlight: pygments
-    css: ../lab.css
+    css: ../hw.css
 link-citations: yes
 ---
 
@@ -15,7 +15,7 @@ link-citations: yes
 * Open the `hw-05.Rmd` document in RStudio. Update the YAML, changing the author name to your name, and **knit** the document to PDF.
 * Make sure it compiles without errors. The output will be in the `.pdf` file with the same name in the same directory.
 
-# Part I: La Quinta is Spanish for next to Denny's, Pt. 1
+# Part I: La Quinta is Spanish for next to Denny's, Pt. 2
 
 Let's revisit the Denny's and La Quinta Inn and Suites data we visualized in the previous lab.
 Remember that the datasets we'll use are called `dennys` and `laquinta` from the **dsbox** package.
@@ -98,5 +98,26 @@ Adding to the code, document this function with (1) a description, (2) summary o
 10. Repeat the same analysis for a state of your choosing, different than the ones we covered so far: (i) filter Denny's and La Quinta Data Frames for your chosen state, (ii) join these data frames to get a complete list of all possible pairings, (iii) calculate the distances between all possible pairings of Denny's and La Quinta in your chosen state, (iv) find the minimum distance between each Denny's and La Quinta location, (v) visualize and describe the distribution of these shortest distances using appropriate summary statistics.
 
 
-# Part II: Take a sad plot and make it better
+# Part II: History of Baseball
+
+For this question, a subset of the tables contained in the History of Baseball database are available. Additional details are available here: [https://www.kaggle.com/seanlahman/the-history-of-baseball](https://www.kaggle.com/seanlahman/the-history-of-baseball). The following tables will be used for these questions:
+
+- player
+- all_star
+- salary
+
+```{r, eval = FALSE, message = F}
+player <- read_csv("https://math.montana.edu/shancock/data/player.csv")
+all_star <- read_csv("https://math.montana.edu/shancock/data/all_star.csv")
+salary <- read_csv("https://math.montana.edu/shancock/data/salary.csv")
+```
+
+11. How many players were born in Montana?
+
+12. Print a table that contains each player born in Montana. The table should contain the `player_id` as well as given name and their total salary across all years (i.e., the sum of all the salaries across years). If salary is not available (pre-1985), include the player but have an NA for salary.
+
+13. Create a long dataset for that contains the yearly salaries of David Ortiz, Derek Jeter, and Troy Tulowitzki.
+
+14. Create a wide dataset for that contains the yearly salaries of David Ortiz, Derek Jeter, and Troy Tulowitzki.
+
 
