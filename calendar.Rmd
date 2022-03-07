@@ -264,9 +264,20 @@ __Homework:__
 
 __Weekly Overview:__ 
 
- 
+1. Continue to learn data wrangling techniques
+2. Manipulate character strings
+3. Manipulate time/date objects
+4. Manipulate factor objects
+
 __Reading and Online Resources:__ 
 
+- Strings: ([R 4 DS Ch. 14](https://r4ds.had.co.nz/strings.html))
+- Factors: ([R 4 DS Ch. 15](https://r4ds.had.co.nz/factors.html))
+- Dates and Times: ([R 4 DS Ch.16](https://r4ds.had.co.nz/dates-and-times.html))
+- Tidyverse packages:
+    * [stringr website](https://stringr.tidyverse.org/)
+    * [forcats website](https://forcats.tidyverse.org/)
+    * [lubridate website](https://lubridate.tidyverse.org/)
 
 __In-class Materials:__
 
