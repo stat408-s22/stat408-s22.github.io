@@ -223,7 +223,7 @@ R has four common types of data structures:
 - Data Frames
 
 ## Data structure overview
-The base data structures in R can be organized by dimensionality and whether they are homogenous.
+The base data structures in R can be organized by dimensionality and whether they are homogeneous.
 
 Dimension     | Homogenous     | Heterogenous
 ------------- | -------------  | -------------

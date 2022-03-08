@@ -1,0 +1,236 @@
+---
+title: "Week 8 Lecture Exercises"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Baltimore Towing Data
+
+## The dataset
+
+```{r, message = F}
+baltimore_tow <- read_csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/BaltimoreTowing.csv')
+str(baltimore_tow)
+```
+
+## Information for a few vehicles
+
+```{r}
+kable(head(baltimore_tow, 8)) %>%
+   kable_styling()
+```
+
+# Data Wrangling Concepts
+
+# Goal 1. Average Towing Cost by Month
+
+Now compute the average towing cost grouped by month.
+
+## Not Solution: group_by()
+
+```{r, eval = F}
+baltimore_tow %>% 
+  group_by(month) %>% 
+  summarize(mean.cost = mean(totalPaid))
+```
+
+
+## Exercise: Using the `substr()` function
+Use the `substr()` function to extract month and create a new variable in R. 
+
+## Exercise: Using the `strsplit()` function
+Use the `strsplit()` function to remove the dollar sign from the cost.
+
+## Lists
+Consider the two lists 
+
+```{r}
+msu.info <- list(
+  name = c('Waded Cruzado', 'Stacey Hancock'), 
+  degree.from = c('University of Texas at Arlington', 
+                  'Colorado State University'),
+  job.title = c('President',
+                'Associate Professor of Statistics'))
+
+msu.info2 <- list(
+  c('Waded Cruzado',
+    'University of Texas at Arlington',
+    'President'), 
+  c('Stacey Hancock',
+    'Colorado State University',
+    'Associate Professor of Statistics'))
+```
+
+## List Output
+
+```{r}
+msu.info
+
+msu.info2
+```
+
+## Lists - indexing
+```{r}
+msu.info[[1]]
+msu.info$name
+```
+
+## Exercise: Lists 
+Explore the indexing with these commands.
+```{r, eval=F}
+msu.info[1]
+msu.info[[1]]
+msu.info$name[2]
+msu.info[1:2]
+unlist(msu.info)
+```
+
+## Elements of lists need not be the same class or even dimension!
+
+```{r}
+list(c("Jan","Feb","Mar"), 
+     matrix(c(3,9,5,1,-2,8), nrow = 2),
+     list("green", 12.3)
+     )
+```
+
+# lubridate package
+
+## Date objects for Baltimore tow
+
+```{r, message=F}
+library(lubridate) # loads with tidyverse
+class(baltimore_tow$receivingDateTime)
+baltimore_tow <- baltimore_tow %>% 
+  mutate(date_time = mdy_hms(receivingDateTime))
+class(baltimore_tow$date_time)
+```
+
+## Date objects for Baltimore tow
+
+```{r}
+head(month(baltimore_tow$date_time))
+head(year(baltimore_tow$date_time))
+```
+
+
+## Exercise: Stringr approach
+Use the `stringr` package to remove (replace) the dollar sign. Note that a dollar sign is a special character, so you'll need to use `\\$`.
+
+# Goal 2. Type of Vehicles Towed by Month
+
+## `unique` function -- how to group vehicles
+First examine the unique types of vehicles in this data set.
+
+```{r}
+unique(baltimore_tow$vehicleType)
+```
+
+## Grouping
+First consider reasonable groups for vehicle types.
+
+1. Cars - (Car, convertible)
+2. Large Cars - (SUV, Station Wagon, Sport Utility Vehicle, Van, Taxi)
+3. Trucks - (Pick-up Truck, Pickup Truck)
+4. Large Trucks - (Truck, Tractor Trailer, Tow Truck, Tractor, Construction Equipment, Commercial Truck)
+5. Bikes - (Motor Cycle (Street Bike), Dirt Bike, All terrain - 4 wheel bike, Mini-Bike)
+6. Misc (delete) - (Boat, Golf Cart, Trailer)
+
+## Messy Data: Data Cleaning
+Spelling errors can be addressed, by reassigning vehicles to the correct spelling.
+```{r}
+baltimore_tow$vehicleMake[baltimore_tow$vehicleMake == 
+                            'Peterbelt'] <- 'Peterbilt'
+baltimore_tow$vehicleMake[baltimore_tow$vehicleMake == 
+                            'Internantional'] <- 'International'
+baltimore_tow$vehicleMake <-
+  str_replace(baltimore_tow$vehicleMake,'Izuzu','Isuzu')
+baltimore_tow$vehicleMake <-
+  str_replace(baltimore_tow$vehicleMake,'Frightliner','Freightliner')
+```
+Also note that many of the groupings have mis-classified vehicles, but we will not focus on that yet.
+
+## Exercise: Delete Misc. Type Vehicles
+
+First we will delete golf carts, boats, and trailers. There are several ways to do this, consider making a new data frame called `balt_tow_small` that does not include golf carts, boats, and trailers.
+
+## Exercise: Create Additional Groups
+
+Now we need to create a variable for the additional groups below.
+
+1. Cars - (Car, convertible)
+2. Large Cars - (SUV, Station Wagon, Sport Utility Vehicle, Van, Taxi)
+3. Trucks - (Pick-up Truck, Pickup Truck)
+4. Large Trucks - (Truck, Tractor Trailer, Tow Truck, Tractor, Construction Equipment, Commercial Truck)
+5. Bikes - (Motor Cycle (Street Bike), Dirt Bike, All terrain - 4 wheel bike, Mini-Bike)
+
+
+## Solution: 
+Next we wish to compute how many vehicles were towed for each vehicle type
+
+```{r}
+balt_tow_small %>% count(Group)
+```
+
+# Factors
+## Character Values
+
+```{r}
+favorite_day <- c('Friday', 'Saturday', 'Sunday', 'Tuesday', 'Saturday', 'Saturday')
+class(favorite_day)
+```
+
+## Creating Factors
+
+```{r}
+day_factor <- as.factor(favorite_day)
+class(day_factor)
+sort(day_factor)
+```
+
+## Reordering Factors
+
+```{r}
+library(forcats)
+day_factor <- fct_relevel(day_factor,
+                          c('Sunday','Tuesday','Friday','Saturday'))
+sort(day_factor)
+```
+
+
+## Creating Factors
+Rather than coercing a class variable to be a factor, the factor can be created directly.
+```{r}
+day_factor2 <- factor(c('Friday', 'Saturday', 'Sunday', 'Monday'),
+                      levels = c('Sunday', 'Monday', 'Tuesday', 
+                        'Wednesday','Thursday','Friday','Saturday'))
+sort(day_factor2)
+```
+
+## Collapsing Factors
+Factors can also easily be collapsed with `forcats`
+
+```{r}
+balt_tow_small %>% 
+  mutate(Group2 = fct_collapse(vehicleType, 
+           Cars = c('Car','Convertible'),
+           Large_Cars = c('SUV', 'Station Wagon',
+                          'Sport Utility Vehicle',
+                          'Van','Taxi'),
+           Trucks = c('Pick-up Truck','Pickup Truck'),
+           Large_Trucks = c('Truck', 'Tractor Trailer',
+                            'Tow Truck', 'Tractor',
+                            'Construction Equipment',
+                            'Commercial Truck'),
+           Bikes = c('Motor Cycle (Street Bike)', 'Dirt Bike',
+                     'Mini-Bike','All terrain - 4 wheel bike')
+           )
+         ) %>% 
+  mutate(Group2 = fct_infreq(Group2)) %>%
+  group_by(Group2) %>% 
+  summarize(ave_cost = mean(cost), .groups = 'drop')
+```

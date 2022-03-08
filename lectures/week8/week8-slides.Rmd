@@ -1,0 +1,505 @@
+---
+title: 'STAT 408: Week 8'
+subtitle: Strings, Dates and Factors
+date: "3/8/2022"
+output:
+  ioslides_presentation:
+    css: https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css
+    widescreen: yes
+  beamer_presentation:
+    theme: Berkeley
+    colortheme: seahorse
+    slide_level: 2
+  revealjs::revealjs_presentation:
+    transition: none
+    incremental: no
+  slidy_presentation:
+    incremental: no
+urlcolor: blue
+---
+
+<!-- To enable presenter mode add ?presentme=true to the URL of the presentation. For example: -->
+
+<!-- my-presentation.html?presentme=true -->
+
+<!-- The presenter mode window will open and will always re-open with the presentation until it is disabled with: -->
+
+<!-- my-presentation.html?presentme=false -->
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+```
+
+# Baltimore Towing Data
+
+## An Overview
+This dataset contains information on vehicles towed in Baltimore, MD:
+
+- A larger version of this dataset along with additional descriptions can be found at:  [https://data.baltimorecity.gov/Transportation/DOT-Towing/k78j-azhn](https://data.baltimorecity.gov/Transportation/DOT-Towing/k78j-azhn). 
+
+<!-- Originally from data.gov -->
+
+- The full version of the dataset contains 61,000 rows and 36 columns, where each row corresponds to a vehicle and the columns are information pertaining to the vehicle.
+
+- We will be working with a smaller dataset with approximately 30,000 rows and 5 columns.
+
+## The dataset
+First read in the data set which is available at: [http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/BaltimoreTowing.csv](http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/BaltimoreTowing.csv).
+```{r, message = F}
+baltimore_tow <- read_csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/BaltimoreTowing.csv')
+str(baltimore_tow)
+```
+
+<!-- Vehicle type, make, model -->
+<!-- What time vehicle placed into impound -->
+<!-- Total paid to get vehicle out -->
+<!-- Note in Make - all caps, misspelling -->
+<!-- - some missing data -->
+<!-- - form of date/time -->
+<!-- - total paid in chr -->
+<!-- - all variables characters -->
+
+## Information for a few vehicles
+
+```{r, echo = FALSE}
+kable(head(baltimore_tow, 8)) %>%
+   kable_styling()
+```
+
+# Data Wrangling Concepts
+
+## Data Wrangling Concepts
+
+- Dealing with strings
+- Dealing with date/time objects
+- Dealing with factors
+
+# Goal 1. Average Towing Cost by Month
+
+<!-- Think about how you would answer this with a data set like this -->
+
+## Motivating Exercise: `group_by()`
+
+Now compute the average towing cost grouped by month.
+
+## Not Solution: `group_by()`
+
+Now compute the average towing cost grouped by month.
+
+```{r, eval = F}
+baltimore_tow %>% 
+  group_by(month) %>% 
+  summarize(mean.cost = mean(totalPaid))
+```
+
+<!-- We don't have all the data in the format we need to solve the problem -->
+<!-- We need month - part of date  -->
+<!-- How would you do this if you didn't know how to write code (e.g., in Excel) -->
+
+
+## Motivating Exercise: `group_by()`
+
+Now compute the average towing cost grouped by month.
+
+
+```{r, echo = FALSE}
+kable(head(baltimore_tow, 4)) %>% kable_styling()
+```
+
+
+##  `substr()` function
+Consider adding a column for year to the data set. This can be done using `substr().`
+
+*Usage*: substr(x, start, stop)
+
+*Arguments*: 
+
+- x, text	a character vector.
+- start, first integer. The first element to be extracted
+- stop, last integer. The last element to be extracted
+
+## Exercise: Using the `substr()` function
+Use the `substr()` function to extract month and create a new variable in R. 
+
+## Solution: Using the `substr()` function
+Use the `substr()` function to extract month and create a new variable in R. 
+
+```{r}
+baltimore_tow$month <- substr(baltimore_tow$receivingDateTime, 0, 2)
+head(baltimore_tow$month)
+```
+
+<!-- Note character vector -->
+
+## Motivating Exercise: `group_by()`
+
+Now compute the average towing cost grouped by month.
+
+```{r, warning = F}
+baltimore_tow %>% 
+  group_by(month) %>% 
+  summarize(mean.cost = mean(totalPaid))
+```
+
+<!-- Note NAs - why? -->
+<!-- possible some NAs in the values given to the function -->
+<!-- - in this case: dollar signs makes variable a character -->
+
+## `strsplit()` function
+In many situations, the year could be in a different position so the `substr()` might not work. For example month the date could be coded `4/1/2015` rather than `04/01/2015` So consider, using `strsplit()` instead.
+
+*Usage*: strsplit(x, split)
+
+*Arguments*:
+
+- x: character vector, each element of which is to be split. Other inputs, including a factor, will give an error.
+- split: character vector (or object which can be coerced to such) containing regular expression(s) (unless fixed = TRUE) to use for splitting. 
+
+## Exercise: Using the `strsplit()` function
+Use the `strsplit()` function to remove the dollar sign from the cost.
+
+## Solution: Using the `strsplit()` function
+Use the `strsplit()` function to remove the dollar sign from the cost.
+
+```{r}
+## example for one row
+strsplit(baltimore_tow$totalPaid[1],'$', fixed = T)[[1]][2]
+```
+
+<!-- Run inner part of code first -->
+<!-- Result is a list -->
+
+# Lists
+
+## Data structure overview (review)
+The base data structures in R can be organized by dimensionality and whether they are homogenous.
+
+Dimension     | Homogeneous     | Heterogeneous
+------------- | -------------  | -------------
+1d            | Vector         | List
+2d            | Matrix         | Data Frame
+no d          | Array          |
+
+## Lists
+Consider the two lists 
+
+```{r}
+msu.info <- list(
+  name = c('Waded Cruzado', 'Stacey Hancock'), 
+  degree.from = c('University of Texas at Arlington', 
+                  'Colorado State University'),
+  job.title = c('President',
+                'Associate Professor of Statistics'))
+
+msu.info2 <- list(
+  c('Waded Cruzado',
+    'University of Texas at Arlington',
+    'President'), 
+  c('Stacey Hancock',
+    'Colorado State University',
+    'Associate Professor of Statistics'))
+```
+
+## List Output
+
+```{r}
+msu.info
+
+msu.info2
+```
+
+## Lists - indexing
+With the current lists we can index elements using the double bracket `[[ ]]` notation or if names have been initialized, those can be used too.
+
+So the first element of each list can be indexed
+```{r, mysize=TRUE, size='\\tiny'}
+msu.info[[1]]
+msu.info$name
+```
+
+## Exercise: Lists 
+Explore the indexing with these commands.
+```{r, eval=F}
+msu.info[1]
+msu.info[[1]]
+msu.info$name[2]
+msu.info[1:2]
+unlist(msu.info)
+```
+
+## Indexing lists
+
+> "If list `x` is a train carrying objects, then `x[[5]]` is the object in car 5; `x[4:6]` is a train of cars 4-6."
+
+— @RLangTip
+
+Source: http://adv-r.had.co.nz/Subsetting.html
+
+## Elements of lists need not be the same class or even dimension!
+
+```{r}
+list(c("Jan","Feb","Mar"), 
+     matrix(c(3,9,5,1,-2,8), nrow = 2),
+     list("green", 12.3)
+     )
+```
+
+## Solution: Using the `strsplit()` function (revisited)
+Use the `strsplit()` function to remove the dollar sign from the cost.
+
+```{r}
+strsplit(baltimore_tow$totalPaid[1:2], '$', fixed = T)[[1]][2]
+```
+
+
+# lubridate package
+
+## lubridate package
+
+lubridate is a tidyverse package for manipulating date objects. There is a nice [website](https://lubridate.tidyverse.org) with a cheatsheet.
+
+<!-- website is first place to go for questions -->
+
+## Date objects for Baltimore tow
+
+```{r, message=F}
+library(lubridate) # loads with tidyverse
+class(baltimore_tow$receivingDateTime)
+baltimore_tow <- baltimore_tow %>% 
+  mutate(date_time = mdy_hms(receivingDateTime))
+class(baltimore_tow$date_time)
+```
+
+<!-- Make character a date_time object -->
+
+## Date objects for Baltimore tow
+
+```{r}
+head(month(baltimore_tow$date_time))
+head(year(baltimore_tow$date_time))
+```
+
+<!-- Only real challenge is getting to be a date_time object in the first place -->
+
+## Stringr Package
+The `stringr` package ([cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)) provides a nice set of tools. There is also an [information page](https://stringr.tidyverse.org/articles/from-base.html).
+
+
+## Exercise: Stringr approach
+Use the `stringr` package to remove (replace) the dollar sign. Note that a dollar sign is a special character, so you'll need to use `\\$`.
+
+<!-- Open up website and cheatsheet and find a function we can use -->
+
+## Solution: Stringr approach
+Use the `stringr` package to remove (replace) the dollar sign
+```{r}
+library(stringr)
+baltimore_tow$cost <- 
+  as.numeric(str_replace(baltimore_tow$totalPaid, '\\$',''))
+```
+
+<!-- convert character string into a number -->
+
+## Motivating Exercise: `group_by()`
+
+Now compute the average towing cost grouped by month.
+
+```{r}
+baltimore_tow %>% 
+  group_by(month) %>% 
+  summarize(mean.cost = mean(cost), .groups = 'keep')
+```
+
+<!-- The challenge wasn't the dplyr code, but how to get "month" and "cost" in a way we can use them -->
+
+# Goal 2. Type of Vehicles Towed by Month
+
+
+## Goal 2. Type of Vehicles Towed by Month
+Next we wish to compute how many vehicles were towed for each vehicle type.
+
+However, we want to take a close look at the vehicle types in the data set and perhaps create more useful groups.
+
+## `unique` function -- how to group vehicles
+First examine the unique types of vehicles in this data set.
+
+```{r}
+unique(baltimore_tow$vehicleType)
+```
+
+<!-- dplyr function to do this? -->
+
+## Grouping
+First consider reasonable groups for vehicle types.
+
+1. Cars - (Car, convertible)
+2. Large Cars - (SUV, Station Wagon, Sport Utility Vehicle, Van, Taxi)
+3. Trucks - (Pick-up Truck, Pickup Truck)
+4. Large Trucks - (Truck, Tractor Trailer, Tow Truck, Tractor, Construction Equipment, Commercial Truck)
+5. Bikes - (Motor Cycle (Street Bike), Dirt Bike, All terrain - 4 wheel bike, Mini-Bike)
+6. Misc (delete) - (Boat, Golf Cart, Trailer)
+
+## Messy Data: Grouping
+Next examine values in some of these groups, we will just look at the vehicle type of 'Truck'.
+
+```{r, mysize=TRUE, size='\\scriptsize', tidy=T}
+unique(baltimore_tow$vehicleMake[baltimore_tow$vehicleType == 'Truck'])
+```
+
+<!-- Work your way from inner-most code to outer-most -->
+<!-- How would you do this in tidyverse? -->
+
+Note that there are several spelling errors in this data set. How do we combine them?
+
+
+## Messy Data: Data Cleaning
+Spelling errors can be addressed, by reassigning vehicles to the correct spelling.
+```{r}
+baltimore_tow$vehicleMake[baltimore_tow$vehicleMake == 
+                            'Peterbelt'] <- 'Peterbilt'
+baltimore_tow$vehicleMake[baltimore_tow$vehicleMake == 
+                            'Internantional'] <- 'International'
+baltimore_tow$vehicleMake <-
+  str_replace(baltimore_tow$vehicleMake,'Izuzu','Isuzu')
+baltimore_tow$vehicleMake <-
+  str_replace(baltimore_tow$vehicleMake,'Frightliner','Freightliner')
+```
+Also note that many of the groupings have mis-classified vehicles, but we will not focus on that yet.
+
+<!-- "Traditional" way to do it -->
+
+## Exercise: Delete Misc. Type Vehicles
+
+First we will delete golf carts, boats, and trailers. There are several ways to do this, consider making a new data frame called `balt_tow_small` that does not include golf carts, boats, and trailers.
+
+## Solution: Delete Misc. Type Vehicles
+
+First we will delete golf carts, boats, and trailers.
+
+```{r}
+balt_tow_small <- baltimore_tow %>% 
+  filter(!(vehicleType %in% c("Golf Cart", "Boat", "Trailer")))
+```
+
+
+## Exercise: Create Additional Groups
+
+Now we need to create a variable for the additional groups below.
+
+1. Cars - (Car, convertible)
+2. Large Cars - (SUV, Station Wagon, Sport Utility Vehicle, Van, Taxi)
+3. Trucks - (Pick-up Truck, Pickup Truck)
+4. Large Trucks - (Truck, Tractor Trailer, Tow Truck, Tractor, Construction Equipment, Commercial Truck)
+5. Bikes - (Motor Cycle (Street Bike), Dirt Bike, All terrain - 4 wheel bike, Mini-Bike)
+
+## Solution: Create Additional Groups
+
+One way to create groups is by creating a new variable
+
+```{r}
+balt_tow_small$Group <- '' # Creates empty string for all rows in data set
+
+balt_tow_small$Group[balt_tow_small$vehicleType %in% 
+                       c('Car','Convertible')] <- 'Cars'
+
+balt_tow_small$Group[balt_tow_small$vehicleType %in% c('SUV',
+ 'Station Wagon','Sport Utility Vehicle','Van','Taxi')] <- 'Large Cars'
+
+balt_tow_small$Group[balt_tow_small$vehicleType %in% 
+                       c('Pick-up Truck','Pickup Truck')] <- 'Trucks'
+
+balt_tow_small$Group[balt_tow_small$vehicleType %in% 
+    c('Truck','Tractor Trailer','Tow Truck','Tractor',
+      'Construction Equipment','Commercial Truck')] <- 'Large Trucks'
+
+balt_tow_small$Group[balt_tow_small$vehicleType %in% 
+    c('Motor Cycle (Street Bike)','Dirt Bike','Mini-Bike',
+      'All terrain - 4 wheel bike')] <- 'Bikes'
+```
+
+
+## Solution: 
+Next we wish to compute how many vehicles were towed for each vehicle type
+
+```{r}
+balt_tow_small %>% count(Group)
+```
+
+# Factors
+
+<!-- Easier way to do this - but we need to talk about factors -->
+
+## Factors...
+Factors are a specific way to store categorical data. Using factors results in a more efficient data storage process, but can be cumbersome.
+
+Factors can be necessary for making plots and fitting models in R.
+
+
+
+## forcats Package
+The `forcats` package, [website](https://forcats.tidyverse.org), is a tidyverse package designed for dealing with categorical factors.
+
+## Character Values
+
+```{r}
+favorite_day <- c('Friday', 'Saturday', 'Sunday', 'Tuesday', 'Saturday', 'Saturday')
+class(favorite_day)
+```
+
+## Creating Factors
+
+```{r}
+day_factor <- as.factor(favorite_day)
+class(day_factor)
+sort(day_factor)
+```
+
+<!-- as.... -> coerce data to be a different class type -->
+<!-- - you'd hope sort would sort in order of weekdays -->
+<!-- - alphabetical -->
+
+## Reordering Factors
+
+```{r}
+library(forcats)
+day_factor <- fct_relevel(day_factor,
+                          c('Sunday','Tuesday','Friday','Saturday'))
+sort(day_factor)
+```
+
+
+## Creating Factors
+Rather than coercing a class variable to be a factor, the factor can be created directly.
+```{r}
+day_factor2 <- factor(c('Friday', 'Saturday', 'Sunday', 'Monday'),
+                      levels = c('Sunday', 'Monday', 'Tuesday', 
+                        'Wednesday','Thursday','Friday','Saturday'))
+sort(day_factor2)
+```
+
+## Collapsing Factors
+Factors can also easily be collapsed with `forcats`
+
+```{r}
+balt_tow_small %>% 
+  mutate(Group2 = fct_collapse(vehicleType, 
+           Cars = c('Car','Convertible'),
+           Large_Cars = c('SUV', 'Station Wagon',
+                          'Sport Utility Vehicle',
+                          'Van','Taxi'),
+           Trucks = c('Pick-up Truck','Pickup Truck'),
+           Large_Trucks = c('Truck', 'Tractor Trailer',
+                            'Tow Truck', 'Tractor',
+                            'Construction Equipment',
+                            'Commercial Truck'),
+           Bikes = c('Motor Cycle (Street Bike)', 'Dirt Bike',
+                     'Mini-Bike','All terrain - 4 wheel bike')
+           )
+         ) %>% 
+  mutate(Group2 = fct_infreq(Group2)) %>%
+  group_by(Group2) %>% 
+  summarize(ave_cost = mean(cost), .groups = 'drop')
+```

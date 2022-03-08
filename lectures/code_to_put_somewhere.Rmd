@@ -27,62 +27,7 @@ knitr::knit_hooks$set(mysize = function(before, options, envir) {
 
 # Lists and Arrays
 
-## Lists
-Consider the two lists 
-
-```{r}
-msu.info <- list( name = c('Waded Cruzado','Andy Hoegh'), 
-         degree.from = c('University of Texas at Arlington','Virginia Tech'),
-         job.title = c('President', 'Assistant Professor of Statistics'))
-
-msu.info2 <- list(c('Waded Cruzado','University of Texas at Arlington',
-                     'President'), c('Andy Hoegh',
-                  'Virginia Tech','Assistant Professor of Statistics'))
-```
-
-## List Output
-
-```{r, mysize=TRUE, size='\\tiny'}
-
-msu.info
-
-msu.info2
-```
-
-## Lists - indexing
-With the current lists we can index elements using the double bracket `[[ ]]` notation or if names have been initialized, those can be used too.
-
-So the first element of each list can be indexed
-```{r, mysize=TRUE, size='\\tiny'}
-msu.info[[1]]
-msu.info$name
-```
-
-## Exercise: Lists 
-Explore the indexing with these commands.
-```{r, mysize=TRUE, size='\\tiny', eval=F}
-msu.info <- list( name = c('Waded Cruzado','Andy Hoegh'), 
-         degree.from = c('University of Texas at Arlington','Virginia Tech'),
-         job.title = c('President', 'Assistant Professor of Statistics'))
-msu.info[1]
-msu.info[[1]]
-msu.info$name[2]
-msu.info[1:2]
-unlist(msu.info)
-```
-
-## Solution: Lists 1
-```{r, mysize=TRUE, size='\\tiny'}
-msu.info[1]
-msu.info[[1]]
-msu.info$name[2]
-```
-
-## Solution: Lists 2
-```{r, mysize=TRUE, size='\\tiny'}
-msu.info[1:2]
-unlist(msu.info)
-```
+(added to week 8)
 
 
 ## Lists  - nested lists
