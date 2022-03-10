@@ -1,0 +1,211 @@
+---
+title: "Martian Alphabet"
+output: html_document
+date: '2022-03-10'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Learning outcomes
+
+* Carry out the statistical investigation process.
+
+* Program a simulation-based hypothesis test.
+
+## Can you read "Martian"?
+
+How well can humans distinguish one "Martian" letter from another?
+In today’s activity, we’ll find out. When shown the two Martian letters,
+Kiki and Bumba, write down whether you think Bumba is on the left
+or on the right.
+
+
+1.	Were you correct or incorrect in identifying Bumba?
+
+
+
+### Steps of the statistical investigation process
+
+#### Step 1:
+The first step of any statistical investigation is to
+*ask a research question*.  In this study the research question is:
+Can we as a class read Martian? (We will refine this later on!).
+
+#### Step 2:
+To answer any research question, we must
+*design a study and collect data*. For our question,
+the study consists of each student being presented with two
+Martian letters and asking which was Bumba.  Your responses
+will become our observed data that we will explore.  
+
+**Observational units** or **cases** are the subjects
+data are collected on. In a spreadsheet of the data set,
+each row represents a single observational unit.  
+
+2.  What are the observational units in this study?
+
+
+
+3.  How many students are in class today? This is the **sample size**.
+
+
+
+A **variable** is information collected or measured on each observational
+unit or case. Each column in a data set will represent a different variable.
+Today we are only measuring one variable on each observational unit.
+
+4. **Identify the variable we are collecting on each observational unit in this study, i.e., what are we measuring on each student?**  *Hint*: Your answer to question 1 is the outcome for the variable measured on one observational unit.
+
+
+5. Is the variable identified in question 4 categorical or quantitative?
+
+
+#### Step 3:
+Once we have collected data, the next step is to
+*summarize and visualize the data*.
+
+6.	How many people in your class were correct in identifying Bumba?
+Using the class size from question 3, calculate the proportion of
+students who correctly identified Bumba.  
+
+
+
+The proportion in question 6 is called a **summary statistic**---a single value
+that summarizes the data set. It is important to note that a variable is different than a summary statistic. A *variable* is measured on a
+*single observational unit* while a summary statistic is calculated
+from a group of observational units.  For example, the variable
+"whether or not a student lives on campus" can be measured on each
+individual student.  In a class of 50 students we can calculate the
+proportion of students who live on campus, the summary statistic.
+Look back and make sure you wrote the variable in question 4 as a
+variable, NOT a summary statistic. 
+
+
+Looking at the data set and the summary statistic is only one way
+to display the data.  We will also want to create a visualization
+or picture of the data. 
+
+7. Create a well-labeled plot of the observed class data.
+
+
+                    
+#### Step 4:
+The next step is to *use statistical analysis methods
+to draw **inferences** from the data*. To answer the research question,
+we will simulate what *could* have happened in our class given
+random chance, repeat many times to understand the expected
+*variability* between different "randomly guessing" classes,
+then compare our class's observed data to the simulation.
+This gives us an estimate of how often (or the probability of)
+the class's result would occur if students were all merely guessing,
+allowing us to determine if the data provide evidence that we as a
+class can read Martian.
+
+
+8. If humans really don't know Martian and are just guessing which
+is Bumba, what are the chances of getting it right?
+
+
+9. Use R to simulate one student's “guess” under the assumption
+that we can't read Martian. What was the result of your one simulation?
+
+
+
+10. How could we use coins to simulate the entire class "just guessing"
+which Martian letter is Bumba? 
+
+
+11. How many people in your class would you expect to choose Bumba
+correctly just by chance?  Explain your reasoning.
+
+
+
+12. Now use R to simulate an entire class just guessing.
+What was the result from your class's simulation?  
+What proportion of students "guessed" correctly in the simulation?
+
+
+
+13. If students really don’t know Martian and are just guessing which
+is Bumba, which seems more unusual: the result from your class’s
+**simulation** in question 12 or the observed proportion of students
+in your class that were correct (this is your summary statistic from question 6)?  
+Explain your reasoning.
+
+
+
+14.	While your observed class data is likely far different from the simulated 
+"just-guessing" class, comparing our class data to a single simulation does not 
+provide enough information.  The differences seen could just be due to the
+randomness of that set of coin flips!  Let’s simulate another class.
+Run your code from question 12 again.
+What was the result from your class's second simulation?
+What proportion of students "guessed" correctly in the second simulation?
+Create a plot to compare the two simulated results with the observed class result.
+
+
+
+13.	**We still only have a couple of simulations to compare our class data to.
+It would be much better to be able to see how our class compared to hundreds or 
+thousands of "just-guessing" classes.
+Use a for loop in R to simulate 1,000 "just-guessing" classes and keep track
+of the proportion of each class that guessed correctly.
+
+
+14. Create a plot of the distribution of simulated proportions from question 13. 
+**What does one "dot" on the plot represent in context of the problem?**
+
+
+15. Based on your plot in question 14, is your class particularly good
+or bad at Martian?  Explain.
+
+16.	Is it *possible* that we could see our class results just by chance
+if everyone was just guessing?  Explain your reasoning.
+
+
+17.	**Is it *likely* that we could see our class results just by chance
+if everyone was just guessing?  Explain your reasoning.**
+
+
+A **p-value** is the probability of seeing the result in your data, or something
+"more extreme", under the assumption of a null hypothesis.
+A null hypothesis is usually one of "no effect" or "just by chance" --- an
+assumption under which it is relatively is easy to simulate data.
+
+18. In this activity, describe in context the following statistical terms:
+
+- **null hypothesis** ($H_0$)
+
+- **alternative hypothesis** ($H_a$)
+
+- **p-value**
+
+
+19. Use your results from question 13 to estimate the p-value for this analysis.
+
+
+
+20. Write a function in R that will calculate an estimated p-value for
+this situation, where the function takes inputs: 
+
+
+
+
+
+21. In STAT 216, we use the R package `catstats` to conduct these simulation-based
+hypothesis tests. In question 20, you wrote a function similar to the 
+`one_proportion_test()` function in `catstats`.
+This function can be found in the code [here](https://github.com/greenwood-stat/catstats/blob/master/R/s216-applets.R).
+Find the `one_proportion_test()` function in the code and compare it to your
+function. What does `one_proportion_test()` include that yours does not?
+
+
+
+#### Step 5:
+The next step in the statistical investigation process is to *communicate the results and answer the research question*.
+
+22.	Does this activity provide strong evidence that students were not
+just guessing at random? If so, what do you think is going on here?
+Can we as a class read Martian?^[Reference for “Martian alphabet” is a TED talk given by Vilayanur Ramachandran in 2007. The synesthesia part begins at roughly 17:30 minutes: `http://www.ted.com/talks/vilayanur_ramachandran_on_your_mind`.]  

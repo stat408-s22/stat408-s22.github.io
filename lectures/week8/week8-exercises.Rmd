@@ -42,8 +42,22 @@ baltimore_tow %>%
 ## Exercise: Using the `substr()` function
 Use the `substr()` function to extract month and create a new variable in R. 
 
+```{r}
+baltimore_tow <- 
+  baltimore_tow %>% mutate(month = substr(receivingDateTime, 1, 2))
+```
+
+
+
 ## Exercise: Using the `strsplit()` function
 Use the `strsplit()` function to remove the dollar sign from the cost.
+
+```{r}
+tmp <- strsplit(baltimore_tow$totalPaid, "$", fixed = TRUE)
+tmp <- unlist(tmp)
+head(unlist(strsplit(baltimore_tow$totalPaid, "$", fixed = TRUE))[seq(2, 60526, by = 2)])
+```
+
 
 ## Lists
 Consider the two lists 
@@ -86,6 +100,7 @@ msu.info[1]
 msu.info[[1]]
 msu.info$name[2]
 msu.info[1:2]
+msu.info[[1:2]]
 unlist(msu.info)
 ```
 
@@ -158,6 +173,14 @@ Also note that many of the groupings have mis-classified vehicles, but we will n
 
 First we will delete golf carts, boats, and trailers. There are several ways to do this, consider making a new data frame called `balt_tow_small` that does not include golf carts, boats, and trailers.
 
+```{r}
+balt_tow_small <- baltimore_tow %>%
+  filter( !(vehicleType %in% c("Boat", "Golf Cart", "Trailer")) )
+balt_tow_small %>% distinct(vehicleType)
+```
+
+
+
 ## Exercise: Create Additional Groups
 
 Now we need to create a variable for the additional groups below.
@@ -167,6 +190,17 @@ Now we need to create a variable for the additional groups below.
 3. Trucks - (Pick-up Truck, Pickup Truck)
 4. Large Trucks - (Truck, Tractor Trailer, Tow Truck, Tractor, Construction Equipment, Commercial Truck)
 5. Bikes - (Motor Cycle (Street Bike), Dirt Bike, All terrain - 4 wheel bike, Mini-Bike)
+
+
+```{r}
+balt_tow_small %>%
+  mutate(
+    Group = case_when(
+      vehicleType %in% c("Car", "convertible") ~ "Cars",
+      
+    )
+  )
+```
 
 
 ## Solution: 

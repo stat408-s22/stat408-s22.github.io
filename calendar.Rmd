@@ -5,12 +5,12 @@ output:
     toc: no
 ---
 
-Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. 
+Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. After spring break, we will switch the schedule and have labs Tuesdays and lecture Thursdays.
 
 * **You should bring your laptop with you to every class period.**
-* Assigned readings for the week should be completed prior to Thursday's lab. Whether you learn better by reading prior to lecture, or hearing a lecture prior to reading is up to you.
-* Weekly labs will typically be due the following **Monday** in GitHub by 5pm.
-* Weekly homework assignments will typically be due the following **Tuesday** in D2L by 5pm.
+* Assigned readings for the week should be completed prior to lab. Whether you learn better by reading prior to lecture, or hearing a lecture prior to reading is up to you.
+* Weekly labs are due in GitHub by 5pm on the due date.
+* Weekly homework assignments are due in D2L by 5pm on the due date.
 
 
 ---
@@ -283,11 +283,11 @@ __In-class Materials:__
 
 - [Week 8 slides](lectures/week8/week8-slides.html)
 - [Week 8 slides exercises](lectures/week8/week8-exercises.Rmd)
-
-__In-class Lab:__
-
+- [Martian Alphabet Activity](lectures/week8/MartianAlphabetActivity.html) ([Rmd](lectures/week8/MartianAlphabetActivity.Rmd))
  
 __Homework:__
+
+- [Homework 6]() ([Rmd]()) (will post soon) - Due Thursday, Mar 24 by 11pm in D2L
 
 
 ---
@@ -304,6 +304,10 @@ __Homework:__
 
 ---
 
+__Tue In-class Lab:__
+
+- Lab 6 - Due Friday, Mar 25 by 5pm in Github
+
 __Weekly Overview:__ 
 
  
@@ -313,8 +317,6 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-
-__In-class Lab:__
 
  
 __Homework:__
