@@ -6,6 +6,7 @@ date: '2022-03-10'
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ## Learning outcomes
@@ -23,6 +24,7 @@ or on the right.
 
 
 1.	Were you correct or incorrect in identifying Bumba?
+
 
 
 
@@ -46,11 +48,12 @@ each row represents a single observational unit.
 
 2.  What are the observational units in this study?
 
+- One observational unit = one student
 
 
 3.  How many students are in class today? This is the **sample size**.
 
-
+$n$ = 13
 
 A **variable** is information collected or measured on each observational
 unit or case. Each column in a data set will represent a different variable.
@@ -58,8 +61,12 @@ Today we are only measuring one variable on each observational unit.
 
 4. **Identify the variable we are collecting on each observational unit in this study, i.e., what are we measuring on each student?**  *Hint*: Your answer to question 1 is the outcome for the variable measured on one observational unit.
 
+- If student is correct or incorrect in their guess.
+
 
 5. Is the variable identified in question 4 categorical or quantitative?
+
+- Categorical (binary)
 
 
 #### Step 3:
@@ -69,6 +76,11 @@ Once we have collected data, the next step is to
 6.	How many people in your class were correct in identifying Bumba?
 Using the class size from question 3, calculate the proportion of
 students who correctly identified Bumba.  
+
+```{r}
+prop <- 9/13
+prop
+```
 
 
 
@@ -89,6 +101,31 @@ or picture of the data.
 
 7. Create a well-labeled plot of the observed class data.
 
+```{r}
+martian <- data.frame(
+  outcome = rep( c("correct", "incorrect"), c(9, 4) )
+)
+ggplot(data = martian, aes(x = outcome)) +
+  geom_bar(aes(y = ..prop.., group = 1), fill = "purple") +
+  labs(x = "Student Answer", y = "Frequency",
+       title = "Frequency of Class Guessing Correct or Incorrect",
+       subtitle = "Martian Alphabet")
+
+
+martian_sum <- data.frame(
+  outcome = c("correct", "incorrect"),
+  proportion = c(9/13, 4/13)
+)
+
+ggplot(data = martian_sum, aes(x = outcome, y = proportion)) +
+  geom_col(fill = "purple") +
+  labs(x = "Student Answer", y = "Frequency",
+       title = "Proportion of Class Guessing Correct or Incorrect",
+       subtitle = "Martian Alphabet")
+
+
+
+```
 
                     
 #### Step 4:
@@ -107,25 +144,42 @@ class can read Martian.
 8. If humans really don't know Martian and are just guessing which
 is Bumba, what are the chances of getting it right?
 
+- 0.50 (50%)
 
 9. Use R to simulate one student's “guess” under the assumption
 that we can't read Martian. What was the result of your one simulation?
 
+```{r}
+sample(c("correct", "incorrect"), size = 1, prob = c(0.5, 0.5))
+```
 
 
 10. How could we use coins to simulate the entire class "just guessing"
 which Martian letter is Bumba? 
 
+- We would need 13 coins
 
 11. How many people in your class would you expect to choose Bumba
 correctly just by chance?  Explain your reasoning.
 
+```{r}
+13*.5
+```
 
 
 12. Now use R to simulate an entire class just guessing.
 What was the result from your class's simulation?  
 What proportion of students "guessed" correctly in the simulation?
 
+```{r}
+x <- sample(c("correct", "incorrect"), size = 13, prob = c(0.5, 0.5), replace = TRUE)
+
+data.frame(x) %>% group_by(x) %>% count()
+
+mean(ifelse(x == "correct", 1, 0))
+
+mean(x == "correct")
+```
 
 
 13. If students really don’t know Martian and are just guessing which
@@ -153,9 +207,33 @@ thousands of "just-guessing" classes.
 Use a for loop in R to simulate 1,000 "just-guessing" classes and keep track
 of the proportion of each class that guessed correctly.
 
+```{r}
+sim_props <- vector("numeric", 1000)
+
+sim_props <- NULL
+
+for(i in 1:1000){
+  x <- sample(c("correct", "incorrect"), 
+              size = 13, prob = c(0.5, 0.5), replace = TRUE)
+  sim_props[i] <- mean(x == "correct")
+}
+
+```
+
+
+
 
 14. Create a plot of the distribution of simulated proportions from question 13. 
 **What does one "dot" on the plot represent in context of the problem?**
+
+```{r}
+hist(sim_props)
+
+data.frame(sim_props) %>% ggplot(aes(x = sim_props)) +
+  geom_dotplot(dotsize = 0.08)
+
+```
+
 
 
 15. Based on your plot in question 14, is your class particularly good
@@ -176,11 +254,18 @@ assumption under which it is relatively is easy to simulate data.
 
 18. In this activity, describe in context the following statistical terms:
 
-- **null hypothesis** ($H_0$)
+- **null hypothesis** ($H_0$) - The class can't read Martian. OR The class is just guessing. OR The true probability of choosing the correct answer is 0.5.
 
-- **alternative hypothesis** ($H_a$)
+- **alternative hypothesis** ($H_a$) - The class can read Martian. OR The class is NOT just guessing. OR The true probability of choosing the correct answer is greater than 0.5.
 
-- **p-value**
+- **p-value** - The probability of getting a proportion guessing 
+correctly of `r 9/13` or greater, assuming the true proportion of guessing correctly is equal to 0.5.
+
+We would only see results like we saw in our class in about **p-value** of all possible samples of 13 students, assuming we can't read Martian.
+
+The probability of at least 69% of students in our class guessing correctly, assuming we can't read Martian, is **p-value**.
+
+
 
 
 19. Use your results from question 13 to estimate the p-value for this analysis.
@@ -188,8 +273,26 @@ assumption under which it is relatively is easy to simulate data.
 
 
 20. Write a function in R that will calculate an estimated p-value for
-this situation, where the function takes inputs: 
+this situation, where the function takes inputs: observed data, desired
+number of simulations.
 
+```{r}
+p_value <- function(x, n, reps = 1000){
+  # x = number of correct guesses in observed data
+  # n = sample size
+  # reps = number of simulated classes
+  sim_props <- NULL
+  for(i in 1:reps){
+    my_samp <- sample(c("correct", "incorrect"), 
+                      size = n, prob = c(0.5, 0.5), replace = TRUE)
+    sim_props[i] <- mean(my_samp == "correct")
+  }
+  return( mean(sim_props >= x/n) )
+}
+
+p_value(9, 13, reps = 10000)
+
+```
 
 
 

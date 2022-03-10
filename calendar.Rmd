@@ -283,7 +283,8 @@ __In-class Materials:__
 
 - [Week 8 slides](lectures/week8/week8-slides.html)
 - [Week 8 slides exercises](lectures/week8/week8-exercises.Rmd)
-- [Martian Alphabet Activity](lectures/week8/MartianAlphabetActivity.html) ([Rmd](lectures/week8/MartianAlphabetActivity.Rmd))
+- [Martian Alphabet Activity](lectures/week8/MartianAlphabetActivity.html) ([Rmd](lectures/week8/MartianAlphabetActivity.Rmd)) (updated with notes from class)
+    * [R Console from class](lectures/week8/MartianAlphabetActivity-RConsole.txt)
  
 __Homework:__
 
