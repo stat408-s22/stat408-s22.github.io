@@ -288,7 +288,7 @@ __In-class Materials:__
  
 __Homework:__
 
-- [Homework 6]() ([Rmd]()) (will post soon) - Due Thursday, Mar 24 by 11pm in D2L
+- [Homework 6](homework/hw-06/hw-06.html) ([Rmd](homework/hw-06/hw-06.Rmd)) - Due Thursday, Mar 24 by 11pm in D2L
 
 
 ---

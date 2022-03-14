@@ -1,0 +1,79 @@
+---
+title: "Homework 6"
+author: "your name here"
+date: "Due Thur, Mar 24, 2022 at 11:00 PM in D2L"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+Use this .Rmd file as a template for your homework. Please use D2L to turn 
+in both the Knitted PDF output and your R Markdown file. Your .Rmd file 
+should compile on its own if it is downloaded by your instructor.
+
+## Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse) 
+```
+
+The data we will use for this homework contain single bike trips from March of 2017
+for the Capital BikeShare system in Washington, D.C.
+
+```{r load-data, cache = TRUE, message = FALSE}
+bikes <- read_csv("https://math.montana.edu/shancock/data/biketrips2017.csv")
+```
+
+_Notice_: This is a large file, so it takes RStudio a few minutes to import the data.
+In order to avoid waiting for this data to load each time you knit the document,
+I have added the [cache option](https://bookdown.org/yihui/rmarkdown-cookbook/cache.html)
+to the R chunk above that reads in the data.
+
+
+# Exercises
+
+## 1.
+Use the `str()` function to summarize the data set. 
+What does each column represent? What about each row? 
+
+## 2.
+Describe the difference between `substr()` and `strsplit()`. 
+
+## 3.
+Use one of the functions described in Exercise 2
+to create a new variable for the hour a bike trip began.
+Then use the `count()` function to compute the number of trips starting
+at each hour.
+
+## 4.
+Now, instead of using strings, we'll use the `lubridate` package to
+extract parts of dates and times. Examine the `lubridate` cheatsheet
+[here](https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf).
+What function from this package could you use to extract the day of the month?
+
+## 5.
+Use the function you chose in Exercise 4 to create a new variable called `day`
+that extracts the day of the month.
+Then use this variable to compute how many trips were made for each of the
+31 days in the month of March.
+(The cases that started and ended on different days have been already
+filtered out of the data set.)
+
+## 6.
+Create a new variable that contains the trip time.
+
+## 7.
+What percentage of bike rentals last more than an hour?
+
+## 8.
+Create a figure to plot the trip time as a function of day of week
+(Sunday, Monday, etc...).
+Make sure to include an informative title and
+sort the weekday into chronological ordering.
+Write a few sentences describing the key features of the plot.
+
