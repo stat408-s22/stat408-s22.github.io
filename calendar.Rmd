@@ -5,7 +5,7 @@ output:
     toc: no
 ---
 
-Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days. After spring break, we will switch the schedule and have labs Tuesdays and lecture Thursdays.
+Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days.
 
 * **You should bring your laptop with you to every class period.**
 * Assigned readings for the week should be completed prior to lab. Whether you learn better by reading prior to lecture, or hearing a lecture prior to reading is up to you.
@@ -301,25 +301,30 @@ __Homework:__
 
 ---
 
-## Week 9 (Mar 21--25): Web Scraping and Spatial Data
+## Week 9 (Mar 21--25): Web Scraping
 
 ---
 
-__Tue In-class Lab:__
-
-- Lab 6 - Due Friday, Mar 25 by 5pm in Github
-
 __Weekly Overview:__ 
 
- 
+1. Understand the basic structure of HTML
+2. Use the `rvest` package to scrape data from the web
+3. Explore using functions and iteration applied to web scraping
+
 __Reading and Online Resources:__ 
 
-
+- [Web scraping with `rvest`](https://rvest.tidyverse.org/articles/rvest.html)
+- [SelectorGadget vignette](https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html)
 
 __In-class Materials:__
 
+- [Week 9 slides](lectures/week9/week9-slides.html) ([Rmd](lectures/week9/week9-slides.Rmd))
 
  
+__In-class Lab:__
+
+
+
 __Homework:__
 
 

@@ -108,3 +108,100 @@ housing.prices.state <- aggregate(housing.prices$Closing_Price,
 head(housing.prices.state)
 ```
 
+
+
+# SQL
+
+## SQLite
+
+For this class we will use SQLite which enables users to store database files locally, but the principles are the same for querying a server-based database.
+
+We will use a European soccer database available at [https://www.kaggle.com/hugomathien/soccer/](https://www.kaggle.com/hugomathien/soccer/) which can be downloaded with the following link: [https://www.kaggle.com/hugomathien/soccer/downloads/database.sqlite](https://www.kaggle.com/hugomathien/soccer/downloads/database.sqlite)
+
+## Accessing Database
+```{r, mysize=TRUE, size='\\footnotesize'}
+library(DBI)
+library(RSQLite)
+## connect to a database WHICH IS STORED LOCALLY
+my.database <- dbConnect(SQLite(),
+  dbname="~/Google Drive/teaching/STAT408/data/database.sqlite")
+dbListTables(my.database)
+dbDisconnect(my.database)
+```
+
+## Identifying fields in table
+```{r, mysize=TRUE, size='\\footnotesize'}
+my.database <- dbConnect(SQLite(),
+ dbname="~/Google Drive/teaching/STAT408/data/database.sqlite")
+dbListFields(my.database, "Player")
+```
+
+## SQL commands
+
+The most basic SQL queries have the following structure:
+
+- **SELECT** var1name, var2name (filter columns)
+- **FROM** tablename (identify table)
+- **WHERE** condition1 (filter rows)
+- **GROUP_BY** var3name (aggregate data)
+- **HAVING** condition2 (filter aggregated data)
+- **ORDER_BY** var (arrange ordering)
+
+## SQL Query 1
+Select all columns for player and view first 5 rows.
+```{r, mysize=TRUE, size='\\tiny'}
+kable((dbGetQuery(my.database,"SELECT * FROM Player"))[1:5,])
+```
+
+## SQL Query 2
+Retain player name, weight, height for players over 200 cm
+```{r, mysize=TRUE, size='\\tiny'}
+kable(dbGetQuery(my.database,"SELECT player_name, height, weight FROM Player WHERE height > 200"))
+```
+
+## SQL Query 3
+Compute average weight for players of 200 cm
+```{r, mysize=TRUE, size='\\tiny'}
+dbGetQuery(my.database,"SELECT AVG(weight) as mean_weight FROM Player WHERE height > 200")
+```
+
+## Create a database
+```{r, mysize=TRUE, size='\\tiny'}
+new.db <- dbConnect(RSQLite::SQLite(), ":memory:")
+dbListTables(new.db)
+player <- as_tibble(dbGetQuery(my.database,"SELECT * FROM Player"))
+dbWriteTable(new.db, "player", player)
+dbListTables(new.db)
+dbDisconnect(new.db)
+dbDisconnect(my.database)
+```
+
+## Additional SQL
+SQL also has functionality for merging and updating tables. See the cheat sheet for more details.
+
+## SQL Exercise
+Select the average goals scored in matches in different countries from the match table
+
+## SQL Solution
+Select the average goals scored in matches in different countries from the match table
+
+```{r, mysize=TRUE, size='\\tiny'}
+my.database <- dbConnect(SQLite(),
+ dbname="~/Google Drive/teaching/STAT408/data/database.sqlite")
+st <- "SELECT AVG(home_team_goal + away_team_goal) as total_goals,
+    country_id  FROM match GROUP by country_id"
+dbGetQuery(my.database,st)
+dbListTables(my.database)
+```
+
+## SQL Solution
+Select the average goals scored in matches in different countries from the match table
+
+```{r, mysize=TRUE, size='\\tiny'}
+st2 <- "Create Table goals as SELECT AVG(home_team_goal + away_team_goal) as
+   total_goals, country_id  FROM match GROUP by country_id "
+dbGetQuery(my.database,st2)
+dbGetQuery(my.database, "SELECT * from goals INNER JOIN country on goals.country_id = country.id")
+dbSendQuery(my.database, "Drop Table goals")
+dbDisconnect(my.database)
+```
