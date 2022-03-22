@@ -175,7 +175,7 @@ kable(batting.df)
 Visit the baseball reference website for the Colorado Rockies [https://www.baseball-reference.com/teams/COL/2017.shtml](https://www.baseball-reference.com/teams/COL/2017.shtml) and scrape a table or text.
 
 ## Scraping Solution: Get Team Info
-```{r, mysize=TRUE, size='\\tiny'}
+```{r}
 batting.CO <- read_html("https://www.baseball-reference.com/teams/COL/2017.shtml")
 tables.CO <- batting.CO %>% html_elements('table') %>% html_table()
 as_tibble(tables.CO[[1]])
