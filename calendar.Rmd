@@ -319,15 +319,15 @@ __Reading and Online Resources:__
 __In-class Materials:__
 
 - [Week 9 slides](lectures/week9/week9-slides.html) ([Rmd](lectures/week9/week9-slides.Rmd))
-
+- [IMDB R script from class](lectures/week9/imdb.R)
  
 __In-class Lab:__
 
-
+- [Lab 6](labs/lab-06/lab-06-uoe-art.html) - Due Wednesday, Mar 30 by 5pm in GitHub
 
 __Homework:__
 
-
+- No homework this week due to a longer Lab 6.
 
 
 ---

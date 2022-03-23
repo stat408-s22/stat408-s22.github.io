@@ -1,0 +1,22 @@
+---
+title: "TEST"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_knit$set(root.dir = "/Users/staceyhancock/Documents/Repos/stat408/stat408-s22.github.io/labs/lab-06")
+library(robotstxt)
+library(rvest)
+library(tidyverse)
+```
+
+```{r}
+getwd()
+```
+

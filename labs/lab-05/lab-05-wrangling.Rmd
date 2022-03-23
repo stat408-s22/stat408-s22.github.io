@@ -297,3 +297,9 @@ ggplot() +
 That's it for now! You will revisit this data set and practice more joins on your homework for this week.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
+
+# Attribution
+
+This lab is adapted from material in the [Data Science in a Box](https://datasciencebox.org/index.html) course by Mine Çetinkaya-Rundel licensed under a [Creative Commons Attribution Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Visit [here](https://github.com/rstudio-education/datascience-box/blob/master/LICENSE.md) for more information about the license.
+
