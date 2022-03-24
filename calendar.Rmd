@@ -345,7 +345,7 @@ __Weekly Overview:__
 __Reading and Online Resources:__ 
 
 - [R Shiny Tutorial](https://shiny.rstudio.com/tutorial/) - great info here, including a series of videos
-- [R Shiny Cheatsheet]https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
+- [R Shiny Cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
 - [10 Data Viz Practices for the Web (or Elsewhere)](https://www.webdesignerdepot.com/2018/07/10-data-visualization-best-practices-for-the-web/)
 
 __In-class Materials:__
