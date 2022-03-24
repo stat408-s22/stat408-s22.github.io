@@ -338,10 +338,15 @@ __Homework:__
 
 __Weekly Overview:__ 
 
- 
+1. Understand and implement principles of data visualization
+2. Develop a beginner understanding of R Shiny
+3. Introduce data visualization project and select data set
+
 __Reading and Online Resources:__ 
 
-
+- [R Shiny Tutorial](https://shiny.rstudio.com/tutorial/) - great info here, including a series of videos
+- [R Shiny Cheatsheet]https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
+- [10 Data Viz Practices for the Web (or Elsewhere)](https://www.webdesignerdepot.com/2018/07/10-data-visualization-best-practices-for-the-web/)
 
 __In-class Materials:__
 
@@ -395,7 +400,7 @@ __In-class Materials:__
 
 __**Midterm Exam 2:**__
 
-- Midterm Exam 1 will cover material from Weeks 5--10
+- Midterm Exam 2 will cover material from Weeks 5--10
 - In-class component on Thursday, Apr 14
 - Take-home component due in D2L Monday, Apr 18 by 5:00pm
 - [Examples of old exams](https://github.com/stat408/oldexams)
