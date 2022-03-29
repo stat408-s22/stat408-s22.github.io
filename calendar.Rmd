@@ -382,7 +382,15 @@ __In-class Lab:__
 __Homework:__
 
 
+__Project:__
 
+By April 8th at 11:00 p.m., the following must be completed and available in your Github repo:
+
+1. Topic you are interested in researching (in README.md)
+2. Data source (in README.md)
+3. Two research questions (in README.md) 
+4. R script that scrapes a data set of interest (scrape.R)
+5. Scraped and cleaned data set (in the data folder) 
 
 ---
 
@@ -432,6 +440,16 @@ __In-class Lab:__
 __Homework:__
 
 
+__Project:__
+
+By April 22th at 11:00 p.m., the following must be completed:
+
+1. RShiny dashboard R code completed in GitHub
+2. RShiny app deployed to [https://www.shinyapps.io/](https://www.shinyapps.io/)
+3. Link to RShiny app posted in D2L Project Shiny Apps discussion board
+
+
+
 ---
 
 ## Week 14 (Apr 25--29): SAS II
@@ -473,7 +491,11 @@ __In-class Materials:__
 __In-class Lab:__
 
  
+__Project:__
 
+By May 6th at 11:00 p.m., the following must be completed:
+
+1. Post comments on at least **two** RShiny app discussion post including at (a) least one feature you think works well, and (b) at least one feature that you might have done differently, and (c) how you could extend the study (e.g., what other research questions does the analysis inspire?).
 
 ---
 

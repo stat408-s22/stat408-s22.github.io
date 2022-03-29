@@ -155,7 +155,7 @@ grades %>% ggplot(aes(x=location, y=percent)) +
 
 3. **Exams** (40%): There will be two midterm exams and one final exam. Each exam will have both an in-class and a take-home component. 
 
-4. **Project** (20%): A data storytelling project will be completed in groups.
+4. **Project** (20%): A data storytelling project will be completed in groups. Find the project instructions [here](projectinstructions.pdf).
 
 Letter grades generally follow the typical scale:
 
