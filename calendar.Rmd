@@ -351,6 +351,7 @@ __Reading and Online Resources:__
 __In-class Materials:__
 
 - [Week 10 slides](lectures/week10/week10-slides.html) ([Rmd](lectures/week10/week10-slides.Rmd))
+- [Shiny tutorial Rmd file](lectures/week10/week10-shiny-tutorial.Rmd)
 
 __In-class Lab:__
 

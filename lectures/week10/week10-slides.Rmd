@@ -280,9 +280,31 @@ include_graphics(normalizePath("lectures/week10/img/Shiny.png"))
 - [shinyapps.io](https://www.shinyapps.io/)
 
 
-## Exercise
+## Exercises
 
-Open the default Shiny Web App in R that contains the interactive histogram of Old faithful eruptions. Change the color of the histogram and reload the app.
+- Open the default Shiny Web App in R that contains the interactive histogram of Old faithful eruptions. Change the color of the histogram and reload the app.
+
+- Open the default Shiny document R Markdown file and change the system file to use a different embedded Shiny application example than "06_tabsets".
+
+## Shiny Apps to Demonstrate Shiny
+
+- [Google Trend Index](https://shiny.rstudio.com/)
+- [Shiny app with SAT data](https://r.amherst.edu/apps/nhorton/sat/) by Nick Horton
+- [RStudio built-in Shiny examples](https://shiny.rstudio.com/articles/basics.html)
+
+## Bonus Exercise
+
+The `babynames` library contains a (giant) dataset called `babynames`, which contains the full baby name data provided by the Social Security Administration (SSA). Type the following to explore the data set and its variables:
+
+```{r, eval = FALSE}
+library(babynames)  # You will most likely have to install this
+data(babynames)  # Load data into environment
+?babynames
+head(babynames)
+```
+
+Using the `babynames` data set, implement your own version of [this app](http://www.ssa.gov/oact/babynames/#ht=2) from the SSA.
+
 
 # Graphics in R: Additional Slides
 

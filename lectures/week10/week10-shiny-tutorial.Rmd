@@ -1,0 +1,81 @@
+---
+title: Shiny Tutorial
+author: Nicholas Horton and Danny Kaplan (USCOTS 2015 Workshop)
+output: html_document
+runtime: shiny
+---
+```{r include=FALSE}
+library(shiny, quietly=TRUE)
+library(ggplot2, quietly=TRUE)
+library(mosaic, quietly=TRUE)
+knitr::opts_chunk$set(tidy = FALSE)
+```
+
+This is an RMarkdown ⇒ HTML document that has interactive controls.  It's written with the Shiny system.
+
+An interactive document has *user inputs* and *display outputs*. The user sets the inputs as desired, the outputs respond accordingly. In writing an interactive document, you have to specify four things:
+
+1. What form for the various inputs: sliders, radio buttons, etc.
+#. What form for the outputs: graphics, tables, etc.
+#. A session with the data tables, packages, and all the other ordinary R objects that you will want to use
+#. Programming logic that transforms inputs to output
+
+
+
+## (1) Input Widgets
+
+To create an input widget, you write a chunk in which you call the appropriate `shiny` function. The widget will be displayed as the output of the chunk. For instance:
+
+```{r}
+sliderInput(inputId = "nbins",
+            label = "Bin width",
+            min = 0.1, max = 2, value = 0.5, step = 0.1)
+```
+
+In practice, you would suppress display of the command using `echo = FALSE` as a chunk argument.  But this is a document about how to use Shiny; the commands are part of the explanation.
+
+## (2) Display Outputs
+
+Just like the input widgets, the output displays are created by `shiny` functions.  There are many sorts: `renderPlot()`, `renderDataTable()`, `renderText()` and so on.  Here's a plot display:
+
+```{r}
+renderPlot(make_my_plot())
+```
+
+"What's the `make_my_plot()` function?" you ask.  This will contain the programming logic for filling in the display. Read on.
+
+## (3) An R Session
+
+This is where you will create data frames, load packages, and create all those regular R things that you'll need for your display. In this example, we'll use data from the `mosaicData` package.
+
+```{r}
+library(mosaicData)
+```
+
+## (4) Programming Logic
+
+*Programming logic* refers to the transformation of the information from the *input widgets* and the *R session* into the values that will be displayed. For this example, that logic will be contained within the `make_my_histogram()` function. Here's a simple implementation.
+
+```{r}
+make_my_plot <- reactive( 
+  {
+    vals <- data.frame(x = rnorm(1000))
+    ggplot(vals, aes(x = x)) + 
+      geom_histogram(binwidth = input$nbins)
+  }
+)
+```
+
+In many ways, `make_my_plot()` is an ordinary function. The statements in the function are collected in `{` and `}` brackets, in the normal way. `make_my_plot()` invokes `ggplot()` to generate graphics. The return value is the graphical object created by `ggplot()`, just as it would be in a normal function.  But there are some subtle differences that you should note.
+
+* `make_my_plot()` is created by the `reactive()` function rather than using the ordinary `function()` syntax.  `reactive()` is a special way of creating functions that knows how to communicate with the input widgets. In particular, any time the input widgets named in `make_my_plot()` change, the function will be re-evaluated. And, any statements that contain a call to `make_my_plot()` will also be re-evaluated.  This includes the `renderPlot()` statement used to define the display output.
+* Within `make_my_plot()`, the connection to the input widgets is made by grabbing their value with the expression `input$nbins`.  Recall that `"nbins"` is the `inputId` for the slider.  If you have other input widgets, you can refer to them as `input$`*widget_name*.
+* Unlike the way `function()` is used, the collection brackets `{` and `}` are *inside* the parentheses of `reactive()`.  That is, the familiar form is 
+
+    `function(` *args* `) {` *statements* `}` 
+
+    but for the reactive form^[Why did [Joe Cheng](https://www.linkedin.com/in/jcheng), the inventor of Shiny, write things this way?  He had little choice.  `function()` isn't actually a function in R.  It is a *special form* that is part of the core R specification.  As such, `function()` gets to do special things that contributed functions like `reactive()` are not allowed to do.] it is
+
+    `reactive( {` *statements* `} )`
+
+    It's easy to be confused by this.
