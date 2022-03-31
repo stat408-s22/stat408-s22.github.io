@@ -355,10 +355,12 @@ __In-class Materials:__
 
 __In-class Lab:__
 
- 
+- [Lab 7](labs/lab-07/lab-07-shiny.html) - Due Wednesday, Apr 6 by 5pm in GitHub
+
+
 __Homework:__
 
-
+- Will post soon!
 
 ---
 

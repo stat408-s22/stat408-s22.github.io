@@ -1,0 +1,42 @@
+---
+title: "week10-exercises"
+author: "Stacey Hancock"
+date: '2022-03-29'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Baby Name Shiny app
+
+Any year after 1879
+```{r}
+textInput(inputId = "yr",
+            label = "Birth Year")
+selectInput(inputId = "pop",
+            label = "Top Number of Names",
+            choices = c(20, 50, 100, 500, 1000), 
+            selected = 20)
+```
+Create the data frame of proportions...
+```{r}
+make_my_table <- reactive(
+  {
+    BabyNames %>%
+      filter(year == input$yr) %>%
+      group_by(sex) %>%
+      select(name,sex,count) %>%
+      arrange(desc(count)) %>%
+      filter(row_number() <= input$pop)
+  }
+)
+```
+
+Your list of top baby names!
+```{r}
+renderTable(
+  make_my_table()
+)
+```

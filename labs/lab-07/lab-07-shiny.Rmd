@@ -1,0 +1,84 @@
+---
+title: "Lab 07 - R Shiny"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+library(tidyverse)
+```
+
+
+In this lab, you'll practice building interactive webpages using RShiny with COVID-19 case data. Rather than generating an .md file with your lab answers, your code will generate an RShiny application within an R Markdown document.
+
+# Learning goals
+
+-   Reviewing reshaping data
+-   Creating interactive tables using RShiny
+-   Creating interactive figures using RShiny
+
+
+# Getting started
+
+Each member of the team should:
+
+- Go to the course GitHub organization (or your team page) and locate your lab repo, which should be named `lab-07-shiny-YOUR_TEAM_NAME`.
+- Grab the URL of the repo, and clone it in RStudio by creating a new project from Version Control with Git.
+- Open the R Markdown document `lab-07.Rmd` and Knit it.
+Make sure it compiles without errors.
+
+
+## Warm up
+
+Before we introduce the data, let's warm up with some simple exercises.
+
+-   Update the YAML of your R Markdown file with your team information and **knit** the document.
+-   Commit your changes with a meaningful commit message.
+-   Push your changes to GitHub.
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd **and** md files. If anything is missing, commit and push again.
+
+## Packages
+
+We'll use the **tidyverse** package for much of the data wrangling and visualization, and the **shiny** package to create our interactive data summaries and visualizations, and the **DT** package to render interactive tables.
+
+```{r eval = FALSE, message = FALSE}
+library(tidyverse) 
+library(shiny)
+library(DT)
+```
+
+## Data
+
+We will be using a data set on COVID-19 cases. Read in the data set using the following command.
+
+```{r, message = F, eval = FALSE, echo = TRUE}
+covid_cases <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv") 
+```
+
+# Exercises
+
+
+1. **Examine the data.** 
+
+A description of the data set was not provided, other than that it is "COVID-19" data. Navigate to the Github page where the data were obtained. Use the description of this Github page and an examination of the data you loaded to write a few sentences describing this data set. What information do these data provide the user? What are the observational units and variables? What dimension is the data set? 
+
+2. **Reshape the data.** 
+
+Convert the data set from wide to long format.
+
+3. **Create an Interactive Table.** 
+
+Allow users to select the date to display in the table. Note the `DT::renderDataTable` might be useful (this is the `renderDataTable` function in the `DT` package).
+
+4. **Create an Interactive Figure.** 
+
+Read in a US level COVID-19 dataset and convert this to a long dataframe.
+```{r, eval = FALSE, message = F}
+US_data <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv") 
+```
+Create an interactive figure of your choice. You can consider filtering by state / province to show curves, include colors and/or faceting based on selected variables, or something else of your choosing.
