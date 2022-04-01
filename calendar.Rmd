@@ -9,8 +9,8 @@ Each week, Tuesdays will be primarily lecture and class discussion or short acti
 
 * **You should bring your laptop with you to every class period.**
 * Assigned readings for the week should be completed prior to lab. Whether you learn better by reading prior to lecture, or hearing a lecture prior to reading is up to you.
-* Weekly labs are due in GitHub by 5pm on the due date.
-* Weekly homework assignments are due in D2L by 5pm on the due date.
+* Weekly labs are due in GitHub by 5pm on the due date (typically Wednesdays).
+* Weekly homework assignments are due in D2L by 5pm on the due date (typically Wednesdays).
 
 
 ---
@@ -360,7 +360,8 @@ __In-class Lab:__
 
 __Homework:__
 
-- Will post soon!
+- [Homework 7](homework/hw-07/hw-07.pdf) ([Rmd](homework/hw-07/hw-07.Rmd)) - Due Wednesday, Apr 6 by 11pm in D2L
+
 
 ---
 

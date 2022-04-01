@@ -1,0 +1,47 @@
+---
+title: "Homework 7"
+author: "your name here"
+date: "Due Wed, Apr 6, 2022 at 11:00 PM in D2L"
+urlcolor: blue
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+Use this .Rmd file as a template for your homework. Please use D2L to turn 
+in both the Knitted PDF output and your R Markdown file. Your .Rmd file 
+should compile on its own if it is downloaded by your instructor.
+
+## Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse) 
+```
+
+
+# Exercises
+
+## 1.
+Read the FlowingData article titled "How to Spot Visualization Lies" at [http://flowingdata.com/2017/02/09/how-to-spot-visualization-lies/](http://flowingdata.com/2017/02/09/how-to-spot-visualization-lies/). Summarize two key points in the article but **hint** pay attention to the entire article.
+
+
+## 2.
+Choose a data visualization from the [FlowingData](https://flowingdata.com/) or [Information is Beautiful](https://informationisbeautiful.net/) blogs on a topic of interest to you. Add a link to your chosen data visualization here:
+
+[add your link here](add your link here)
+
+Then answer the following questions:
+
+a. Discuss one feature of the data visualization that adheres to good data visualization principles and explain why.
+b. Discuss one feature of the data visualization that does not adhere to good data visualization principles or that could be improved and explain why.
+c. What does the data visualization make you understand that, say, a written version of the same data likely wouldn’t?
+
+
+
+## 3.
+Select one of the data sets we have used in class (e.g., BaltimoreTowing.csv, Bike.csv, SeattleHousing.csv or one of the scraped data sets). Create a compelling graphic that adheres to the design principles from class. Include a written summary of the story your graphic displays and explain how it adheres to good data visualization design principles.
