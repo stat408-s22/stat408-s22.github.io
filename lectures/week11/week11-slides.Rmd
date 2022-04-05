@@ -524,3 +524,13 @@ A 95% confidence interval for the mean rent of two bedroom apartments in Bozeman
 <li> We are 95% confident that the mean rent of two bedroom apartments in this sample is between \$1650.70 and \$2658.90. </li>
 
 </ol>
+
+## Reflection
+
+1. What is the difference between a bootstrap distribution and a sampling distribution?
+
+2. Where would you expect a sampling distribution to be centered?
+
+3. Where would you expect a bootstrap distribution to be centered?
+
+4. How should the variability in a sampling distribution of, say, a sample mean, change as the sample size increases? Why?
