@@ -1,0 +1,526 @@
+---
+title: 'STAT 408: Week 11'
+subtitle: 'Modeling Uncertainty'
+date: "4/5/2022"
+output:
+  ioslides_presentation:
+    css: https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css
+    widescreen: yes
+  beamer_presentation:
+    theme: Berkeley
+    colortheme: seahorse
+    slide_level: 2
+  revealjs::revealjs_presentation:
+    transition: none
+    incremental: no
+  slidy_presentation:
+    incremental: no
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(tidymodels) # tidy function
+library(openintro)
+library(scales)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+
+set.seed(1234)
+elmhurst_boot <- bootstraps(elmhurst, times = 1000)
+```
+
+# Motivation
+
+
+## Data
+
+Data from the openintro package: [`elmhurst`](http://openintrostat.github.io/openintro/reference/elmhurst.html).
+
+- Family income and gift aid data from a random sample of fifty students in the freshman class of Elmhurst College in Illinois, USA
+- Gift aid is financial aid that does not need to be paid back, as opposed to a loan
+
+
+
+## Linear model
+
+```{r echo=FALSE, out.width="100%"}
+ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "#8E2C90", size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "#8E2C90") +
+  scale_x_continuous(labels = label_dollar(suffix = "K")) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K")) +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Gift aid and family income",
+    subtitle = "Random sample 50 students at Elmhurst College"
+  )
+```
+
+## Interpreting the slope
+
+```{r elmhurst-fit, echo=TRUE, eval=FALSE}
+lm(gift_aid ~ family_income, data = elmhurst)
+```
+
+```{r, echo=FALSE}
+round(lm(gift_aid ~ family_income, data = elmhurst)$coef, 4)
+```
+
+
+For each additional $1,000 of family income, we would expect students to receive a net difference of 1,000 * (-0.0431) = -$43.10 in aid on average, i.e., $43.10 less in gift aid, on average.
+
+
+..._exactly $43.10 for all students at this school?!_
+
+
+# Inference
+
+## Statistical inference 
+
+... is the process of using sample data to make conclusions about the underlying population the sample came from.
+
+
+## Estimation
+
+Use data from samples to calculate sample statistics,
+which can then be used as estimates for population parameters.
+
+>- If you want to catch a fish, do you prefer a spear or a net?...
+
+>- If you want to estimate a population parameter, do you prefer to report a range of values the parameter might be in, or a single value?
+
+>- If we report a point estimate, we probably won’t hit the exact population parameter.
+>- If we report a range of plausible values we have a good shot at capturing the parameter.
+
+
+
+# Confidence intervals
+
+
+## Confidence intervals
+
+A plausible range of values for the population parameter is a **confidence interval**.
+
+>- In order to construct a confidence interval we need to quantify the variability of our sample statistic.
+
+>- For example, if we want to construct a confidence interval for a population slope, we need to come up with a plausible range of values around our observed sample slope.
+
+>- This range will depend on how precise and how accurate our sample statistic is as an estimate of the population parameter.
+
+>- Quantifying this requires a measurement of **how much we would expect the sample statistic to vary from sample to sample**, which is called **sampling variability**.
+
+
+## Sampling variability
+
+```{r, out.width="100%", fig.align='center', echo=FALSE}
+include_graphics(normalizePath("lectures/week11/img/Sampling_Distribution.png"))
+```
+
+
+## Quantifying the variability of sample statistics
+
+We can quantify the variability of sample statistics using
+
+- theory: via Central Limit Theorem
+
+```{r elmhurst-summary, echo=TRUE, eval=TRUE}
+summary(lm(gift_aid ~ family_income, data = elmhurst))$coef
+```
+
+or
+
+- simulation: via bootstrapping...
+
+
+
+# Bootstrapping
+
+## Bootstrapping
+
+- _"pulling oneself up by one’s bootstraps"_: accomplishing an impossible task without any outside help
+- **Impossible task:** estimating a population parameter using data from only the given sample
+- **Note:** Notion of saying something about a population parameter using only information from an observed sample is the crux of statistical inference
+
+```{r echo=FALSE}
+elmhurst_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(gift_aid ~ family_income, data = elmhurst) %>%
+  tidy() 
+elmhurst_slope_obs <- elmhurst_fit %>%
+  filter(term == "family_income") %>%
+  pull(estimate) %>%
+  round(4)
+```
+
+## Observed sample
+
+```{r echo=FALSE}
+ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "#8E2C90", size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "#8E2C90") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope =", elmhurst_slope_obs), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Gift aid and family income",
+    subtitle = "Random sample 50 students at Elmhurst College"
+  )
+```
+
+## Bootstrapped "population"
+
+Generated assuming there are more students like the ones in the observed sample...
+
+```{r echo=FALSE, warning=FALSE}
+elmhurst_boot %>% 
+  slice_head(n = 50) %>%
+  hoist(splits, "data") %>% 
+  unnest(data) %>% 
+  ggplot(aes(x = family_income, y = gift_aid)) +
+  geom_jitter(alpha = 0.11, width = 30, height = 10) +
+  geom_point(data = elmhurst, mapping = aes(x = family_income, y = gift_aid), color = "#8E2C90", size = 2) +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope = ?"), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Gift aid and family income",
+    subtitle = "(Simulated) population of students at Elmhurst College"
+  )
+```
+
+## Bootstrapping scheme
+
+1. Take a bootstrap sample - a random sample taken **with replacement** from the original sample, of the same size as the original sample
+
+2. Calculate the bootstrap statistic - a statistic such as mean, median, proportion, slope, etc. computed on the bootstrap samples
+
+3. Repeat steps (1) and (2) many times to create a bootstrap distribution - a distribution of bootstrap statistics
+
+4. Calculate the bounds of the XX% confidence interval as the middle XX% of the bootstrap distribution
+
+
+## Bootstrap sample 1
+
+```{r echo=FALSE}
+elmhurtst_boot_1 <- elmhurst %>%
+  slice_sample(n = 50, replace = TRUE)
+
+elmhurtst_boot_1_slope <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(gift_aid ~ family_income, data = elmhurtst_boot_1) %>%
+  tidy() %>%
+  filter(term == "family_income") %>%
+  pull(estimate) %>%
+  round(4)
+
+ggplot(elmhurtst_boot_1, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "#E48957", size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#E48957") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope =", elmhurtst_boot_1_slope), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap sample 1"
+  )
+```
+
+
+## Bootstrap sample 2
+
+
+```{r echo=FALSE}
+elmhurtst_boot_2 <- elmhurst %>%
+  slice_sample(n = 50, replace = TRUE)
+
+elmhurtst_boot_2_slope <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(gift_aid ~ family_income, data = elmhurtst_boot_2) %>%
+  tidy() %>%
+  filter(term == "family_income") %>%
+  pull(estimate) %>%
+  round(4)
+
+ggplot(elmhurtst_boot_2, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "#260b27", size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#260b27") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope =", elmhurtst_boot_2_slope), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap sample 2"
+  )
+```
+
+
+## Bootstrap sample 3
+
+```{r echo=FALSE}
+elmhurtst_boot_3 <- elmhurst %>%
+  slice_sample(n = 50, replace = TRUE)
+
+elmhurtst_boot_3_slope <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(gift_aid ~ family_income, data = elmhurtst_boot_3) %>%
+  tidy() %>%
+  filter(term == "family_income") %>%
+  pull(estimate) %>%
+  round(4)
+
+ggplot(elmhurtst_boot_3, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "#e6b0e7", size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#e6b0e7") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope =", elmhurtst_boot_3_slope), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap sample 3"
+  )
+```
+
+
+## Bootstrap sample 4
+
+```{r echo=FALSE}
+elmhurtst_boot_4 <- elmhurst %>%
+  slice_sample(n = 50, replace = TRUE)
+
+elmhurtst_boot_4_slope <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(gift_aid ~ family_income, data = elmhurtst_boot_4) %>%
+  tidy() %>%
+  filter(term == "family_income") %>%
+  pull(estimate) %>%
+  round(4)
+
+ggplot(elmhurtst_boot_4, aes(x = family_income, y = gift_aid)) +
+  geom_point(color = "orange", size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  geom_text(aes(x = 200, y = 40), label = paste("slope =", elmhurtst_boot_4_slope), size = 6, hjust = 0)  +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap sample 4"
+  )
+```
+
+## Bootstrap samples 1--4
+
+```{r echo=FALSE}
+ggplot() +
+  geom_point(data = elmhurtst_boot_1, aes(x = family_income, y = gift_aid), color = "#E48957") +
+  geom_smooth(data = elmhurtst_boot_1, aes(x = family_income, y = gift_aid), method = "lm", se = FALSE, color = "#E48957") +
+  geom_point(data = elmhurtst_boot_2, aes(x = family_income, y = gift_aid), color = "#260b27") +
+  geom_smooth(data = elmhurtst_boot_2, aes(x = family_income, y = gift_aid), method = "lm", se = FALSE, color = "#260b27") +
+  geom_point(data = elmhurtst_boot_3, aes(x = family_income, y = gift_aid), color = "#e6b0e7") +
+  geom_smooth(data = elmhurtst_boot_3, aes(x = family_income, y = gift_aid), method = "lm", se = FALSE, color = "#e6b0e7") +
+  geom_point(data = elmhurtst_boot_4, aes(x = family_income, y = gift_aid), color = "orange") +
+  geom_smooth(data = elmhurtst_boot_4, aes(x = family_income, y = gift_aid), method = "lm", se = FALSE, color = "orange") +
+  scale_x_continuous(labels = label_dollar(suffix = "K")) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K")) +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap samples"
+  )
+```
+
+we could keep going...
+
+
+## Many many samples...
+
+```{r echo=FALSE}
+elmhurst_models <- elmhurst_boot %>%
+  mutate(
+    model = map(splits, ~ lm(gift_aid ~ family_income, data = .)),
+    coef_info = map(model, tidy)
+  )
+
+elmhurst_coefs <- elmhurst_models %>%
+  unnest(coef_info)
+
+elmhurst_aug <- elmhurst_models %>%
+  slice_sample(n = 200) %>%
+  mutate(augmented = map(model, augment)) %>%
+  unnest(augmented)
+
+ggplot(elmhurst_aug, aes(x = family_income, y = gift_aid)) +
+  geom_line(aes(y = .fitted, group = id), alpha = 0.5, col = "gray") +
+  geom_point(color = "#8E2C90") +
+  scale_x_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 275)) + 
+  scale_y_continuous(labels = label_dollar(suffix = "K"), limits = c(0, 42)) +
+  labs(
+    x = "Family income",
+    y = "Gift aid",
+    title = "Bootstrap samples"
+  )
+```
+
+## Slopes of bootstrap samples
+
+```{r echo=FALSE}
+elmhurst_coefs %>%
+  filter(term == "family_income") %>%
+  ggplot(aes(estimate)) +
+  geom_histogram(binwidth = 0.0025, alpha = 0.7, fill = "gray") +
+  labs(title = "Slopes of bootstrap samples")
+```
+
+## 95% confidence interval
+
+```{r echo=FALSE}
+intervals <- int_pctl(elmhurst_models, coef_info) %>%
+  filter(term == "family_income")
+
+elmhurst_coefs %>%
+  filter(term == "family_income") %>%
+  ggplot(aes(estimate)) +
+  geom_histogram(binwidth = 0.0025, alpha = 0.7, fill = "gray") +
+  labs(title = "Distribution of slopes of bootstrap samples") +
+  geom_segment(
+    aes(
+      x = intervals %>% pull(.lower),
+      xend = intervals %>% pull(.lower),
+      y = 0,
+      yend = 25
+    ),
+    linetype = "dashed"
+  ) +
+  geom_text(
+    aes(x = intervals %>% pull(.lower), y = 30),
+    label = as.character(intervals %>% pull(.lower) %>% round(4)), size = 6
+  ) +
+  geom_segment(
+    aes(
+      x = intervals %>% pull(.upper),
+      xend = intervals %>% pull(.upper),
+      y = 0,
+      yend = 25
+    ),
+    linetype = "dashed"
+  ) +
+  geom_text(
+    aes(x = intervals %>% pull(.upper), y = 30),
+    label = as.character(intervals %>% pull(.upper) %>% round(4)), size = 6
+  ) +
+  geom_segment(
+    aes(
+      x = elmhurst_slope_obs,
+      xend = elmhurst_slope_obs,
+      y = 0,
+      yend = 25
+    ),
+    color = "#8E2C90"
+  ) +
+  geom_text(
+    aes(x = elmhurst_slope_obs, y = 30),
+    label = as.character(elmhurst_slope_obs), size = 6, color = "#8E2C90"
+  )
+```
+
+
+## Interpreting the slope, take two
+
+```{r echo=FALSE}
+int_pctl(elmhurst_models, coef_info)
+```
+
+**We are 95% confident that** for each additional $1,000 of family income, we would expect students to receive $69.50 to $21.90 less in gift aid, on average.
+
+
+## Code using **tidymodels** package
+
+```{r eval=FALSE}
+# set a seed
+set.seed(1234)
+
+# take 1000 bootstrap samples
+elmhurst_boot <- bootstraps(elmhurst, times = 1000)
+
+# for each sample
+# fit a model and save output in model column
+# tidy model output and save in coef_info column 
+elmhurst_models <- elmhurst_boot %>%
+  mutate(
+    model = map(splits, ~ lm(gift_aid ~ family_income, data = .)),
+    coef_info = map(model, tidy)
+  )
+```
+
+## Code using **tidymodels** package
+
+```{r eval=FALSE}
+# unnest coef_info (for intercept and slope)
+elmhurst_coefs <- elmhurst_models %>%
+  unnest(coef_info)
+
+# calculate 95% (default) percentile interval
+int_pctl(elmhurst_models, coef_info)
+```
+
+## Demo/Exercise
+
+Write a function to create a 95% confidence interval for a linear regression slope using bootstrapping from scratch.
+
+## Discussion
+
+Discuss and visualize how you could generate a bootstrapped estimate of sampling variability for...
+
+1. one mean
+2. one proportion
+3. difference in means
+
+## Demo/Exercise
+
+"Random" sample of 10 2-bedroom apartments for rent in Bozeman, MT in April 2022:
+
+```{r}
+apts <- data.frame(price = c(2349, 3500, 2650, 1250, 1700,
+                             2075, 2000, 1900, 2849, 1275))
+```
+
+(Data from [apartments.com](https://www.apartments.com/).... can we assume this is a random sample? From what population?)
+
+Use bootstrapping to estimate the sampling variability of the sample mean.
+
+## Extension
+
+How could we use bootstrapping to calculate a p-value for a test of
+
+$H_0: \mu = 2000$
+
+$H_a: \mu > 2000$,
+
+where $\mu$ is the "true" mean rent for 2-bedroom apartments in Bozeman.
+
+What if we wanted to test the median rather than the mean?
+
+## Interpreting (frequentist) confidence intervals
+
+A 95% confidence interval for the mean rent of two bedroom apartments in Bozeman was calculated as (\$1650.70, \$2658.90). Which of the following is a correct interpretation of this interval?
+
+<ol type="A">
+
+<li> 95% of the time, the mean rent of two bedroom apartments in a sample of 10 rentals is between \$1650.70 and \$2658.90. </li>
+
+<li> 95% of all two bedroom apartments in Bozeman have rents between \$1650.70 and \$2658.90. </li>
+
+<li> We are 95% confident that the mean rent of all two bedroom apartments in Bozeman is between \$1650.70 and \$2658.90. </li>
+
+<li> We are 95% confident that the mean rent of two bedroom apartments in this sample is between \$1650.70 and \$2658.90. </li>
+
+</ol>

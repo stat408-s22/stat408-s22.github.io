@@ -365,18 +365,23 @@ __Homework:__
 
 ---
 
-## Week 11 (Apr 4--8): Modeling
+## Week 11 (Apr 4--8): Modeling Uncertainty
 
 ---
 
 __Weekly Overview:__ 
 
- 
+1. Explore sampling variability through simulation.
+2. Carry out bootstrapping techniques to estimate sampling variability.
+
 __Reading and Online Resources:__ 
 
-
+- Sampling: [Modern Dive Ch. 7](https://moderndive.com/7-sampling.html)
+- Bootstrapping: [Modern Dive Ch. 8](https://moderndive.com/8-confidence-intervals.html)
 
 __In-class Materials:__
+
+- [Week 11 slides](lectures/week11/week11-slides.html) ([Rmd](lectures/week11/week11-slides.Rmd))
 
 
 __In-class Lab:__
@@ -397,15 +402,13 @@ By April 8th at 11:00 p.m., the following must be completed and available in you
 
 ---
 
-## Week 12 (Apr 11--15): Simulation
+## Week 12 (Apr 11--15): Review
 
 ---
 
 __Weekly Overview:__ 
 
- 
-__Reading and Online Resources:__ 
-
+1. Review and practice important concepts in statistical computing and visualization using R.
 
 
 __In-class Materials:__
@@ -429,10 +432,17 @@ __**Midterm Exam 2:**__
 
 __Weekly Overview:__ 
 
+1. Install SAS OnDemand
+2. SAS basics and DATA steps
+
  
 __Reading and Online Resources:__ 
 
-
+- SAS registration info (will post soon)
+- [SAS login link](https://welcome.oda.sas.com/login)
+- SAS video resources:
+    * [Create a SAS Profile](https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition)
+    * [Enrolling in SAS Course](https://video.sas.com/detail/video/4567828824001/sas-ondemand-for-academics:-enrollment-link-student-edition)
 
 __In-class Materials:__
 
@@ -461,7 +471,9 @@ By April 22th at 11:00 p.m., the following must be completed:
 
 __Weekly Overview:__ 
 
- 
+1. Overview of SAS PROCS
+2. Introduction to PROC SQL
+
 __Reading and Online Resources:__ 
 
 
@@ -483,7 +495,9 @@ __Homework:__
 
 __Weekly Overview:__ 
 
- 
+1. Graphics in SAS
+2. Semester review
+
 __Reading and Online Resources:__ 
 
 
