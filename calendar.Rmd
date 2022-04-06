@@ -382,6 +382,7 @@ __Reading and Online Resources:__
 __In-class Materials:__
 
 - [Week 11 slides](lectures/week11/week11-slides.html) ([Rmd](lectures/week11/week11-slides.Rmd))
+- [Bootstrapping R script from class](lectures/week11/Slope_Bootstrapping.R)
 
 
 __In-class Lab:__
