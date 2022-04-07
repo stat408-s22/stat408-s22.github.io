@@ -2,7 +2,9 @@
 title: "Course Calendar and Materials"
 output:
   html_document:
-    toc: no
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
 ---
 
 Each week, Tuesdays will be primarily lecture and class discussion or short activities, and Thursdays will be lab days.
