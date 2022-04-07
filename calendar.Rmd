@@ -387,9 +387,11 @@ __In-class Materials:__
 
 __In-class Lab:__
 
- 
+- [Lab 8](labs/lab-08/lab-08-inference-smoking.html) - Due Wednesday, Apr 13 by 5pm in GitHub
+
 __Homework:__
 
+- [Homework 8](homework/hw-08/hw-08.pdf) ([Rmd](homework/hw-08/hw-08.Rmd)) - Due Wednesday, Apr 13 by 11pm in D2L
 
 __Project:__
 
@@ -421,7 +423,6 @@ __**Midterm Exam 2:**__
 - In-class component on Thursday, Apr 14
 - Take-home component due in D2L Monday, Apr 18 by 5:00pm
 - [Examples of old exams](https://github.com/stat408/oldexams)
-
 
 
 

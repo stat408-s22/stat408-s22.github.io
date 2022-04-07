@@ -1,0 +1,142 @@
+---
+title: "Lab 08 - Smoking during pregnacy"
+subtitle: "Simulation based inference and bootstrapping"
+output: 
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    highlight: pygments
+    css: ../lab.css
+link-citations: yes
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+In 2004, the state of North Carolina released a large data set containing information on births recorded in this state.
+This data set is useful to researchers studying the relation between habits and practices of expectant mothers and the birth of their children.
+We will work with a random sample of observations from this data set.
+
+# Learning goals
+
+-   Using bootstrapping methods to estimate sampling variability
+-   Calculating confidence intervals using percentiles of a bootstrap distribution
+-   Conducting hypothesis tests via simulation
+-   Interpreting confidence intervals and results of hypothesis tests in context of the data
+
+# Getting started
+
+Each member of the team should:
+
+- Go to the course GitHub organization (or your team page) and locate your lab repo, which should be named `lab-08-inference-smoking-YOUR_TEAM_NAME`.
+- Grab the URL of the repo, and clone it in RStudio by creating a new project from Version Control with Git.
+- Open the R Markdown document `lab-08.Rmd` and Knit it.
+Make sure it compiles without errors.
+The output will be in the file markdown `.md` file with the same name.
+
+
+## Warm up
+
+Let's warm up with some simple exercises.
+
+-   Update the YAML of your R Markdown file with your team information and **knit** the document.
+-   Commit your changes with a meaningful commit message.
+-   Push your changes to GitHub.
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd **and** md files. If anything is missing, commit and push again.
+
+## Packages
+
+We'll use the **tidyverse** package for much of the data wrangling and visualization, and the data lives in the **openintro** package.
+You can load them by running the following in your Console:
+
+```{r}
+library(tidyverse) 
+library(openintro)
+```
+
+## Data
+
+The data can be found in the **openintro** package, and it's called `ncbirths`.
+Since the dataset is distributed with the package, we don't need to load it separately; it becomes available to us when we load the package.
+You can find out more about the dataset by inspecting its documentation, which you can access by running `?ncbirths` in the Console or using the Help menu in RStudio to search for `ncbirths`.
+You can also find this information [here](https://www.openintro.org/data/index.php?data=ncbirths).
+
+# Set a seed!
+
+In this lab we'll be generating random samples.
+The last thing you want is those samples to change every time you knit your document.
+So, you should set a seed.
+There's an R chunk in your R Markdown file set aside for this.
+Locate it and add a seed.
+Make sure all members in a team are using the same seed so that you don't get merge conflicts and your results match up for the narratives.
+
+# Exercises
+
+1.  What are the cases in this data set? How many cases are there in our sample?
+
+The first step in the analysis of a new dataset is getting acquainted with the data.
+Make summaries of the variables in your dataset, determine which variables are categorical and which are numerical.
+For numerical variables, are there outliers?
+If you aren't sure or want to take a closer look at the data, make a graph.
+
+## Baby weights
+
+A 1995 study suggests that average weight of Caucasian babies born in the US is 3,369 grams (7.43 pounds).[^lab-08-inference-smoking-1]
+In this dataset we only have information on mother's race, so we will make the simplifying assumption that babies of Caucasian mothers are also Caucasian, i.e. `whitemom = "white"`.
+
+We want to evaluate whether the average weight of Caucasian babies has changed since 1995.
+
+Our null hypothesis should state "there is nothing going on", i.e., no change since 1995: $H_0: \mu = 7.43$ pounds.
+
+Our alternative hypothesis should reflect the research question, i.e., some change since 1995.
+Since the research question doesn't state a direction for the change, we use a two sided alternative hypothesis: $H_A: \mu \ne 7.43$ pounds.
+
+3.  Create a filtered data frame called `ncbirths_white` that contain data only from white mothers.
+    Then, calculate the mean of the weights of their babies.
+
+4.  Are the conditions necessary for conducting simulation-based inference satisfied?
+    Explain your reasoning.
+
+We will use simulation-based methods to calculate a confidence interval for
+the true mean weight of Caucasian babies in North Carolina in 2004, as well as test the hypotheses stated above.
+
+## Confidence interval
+
+5.  Using the R script file we created in class as a guide, write and run code to generate a bootstrap distribution of 10,000 sample mean weights from your `ncbirths_white` data set. Then:
+
+- produce a (well-labeled!) histogram of this distribution, 
+- use the distribution to generate a 95% confidence interval for $\mu$, and
+- write a sentence interpreting your confidence interval in context of the problem.
+
+_The above exercise will take a while --- make sure every team member is contributing to the solution. That may mean getting up and all looking at the same computer!_
+
+
+## Hypothesis test
+
+Let's first discuss how a hypothesis test using simulation would work.
+Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds.
+In order to do so, we
+
+-   take a bootstrap sample from the original sample,
+-   calculate this bootstrap sample's mean,
+-   repeat these two steps a large number of times to create a bootstrap distribution of means centered at the observed sample mean,
+-   shift this distribution to be centered at the null value by subtracting / adding X to all bootstrap mean (X = difference between mean of bootstrap distribution and null value), and
+-   calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.
+
+Note, we already did the first three steps in the previous section!
+
+7.  Use the steps above to run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in context of the data and the hypothesis test. 
+
+_Every team member should be contributing to the solution for the above exercise!_
+
+
+
+# Attribution
+
+This lab is adapted from material in the [Data Science in a Box](https://datasciencebox.org/index.html) course by Mine Çetinkaya-Rundel licensed under a [Creative Commons Attribution Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Visit [here](https://github.com/rstudio-education/datascience-box/blob/master/LICENSE.md) for more information about the license.
+
+
+
+[^lab-08-inference-smoking-1]: Wen, Shi Wu, Michael S. Kramer, and Robert H. Usher.
+    "Comparison of birth weight distributions between Chinese and Caucasian infants." American Journal of Epidemiology 141.12 (1995): 1177-1187.
