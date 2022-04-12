@@ -16,7 +16,8 @@ snow <- tibble(ski_hill = c('Big Sky','Jackson Hole','Taos','Bridger Bowl','Love
                pass = c('Ikon','Ikon','Ikon','Powder Alliance','Powder Alliance', "Epic","Epic"),
        acres = c(5800, 2500,1294, 2000, 1800, 5317,7300),
        vertical = c(4336, 4139,3281, 2600, 2210,3450,3226 ))
-snow %>% arrange(pass) %>% kable()
+snow <- snow %>% arrange(pass)
+snow %>% kable()
 ```
 
 
