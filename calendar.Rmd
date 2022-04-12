@@ -420,6 +420,7 @@ __In-class Materials:__
 
 - [Review worksheet](lectures/week12/exam2-review.pdf) ([Rmd](lectures/week12/exam2-review.Rmd))
 - [Review worksheet key](lectures/week12/exam2-review-key.pdf) ([Rmd](lectures/week12/exam2-review-key.Rmd))
+- [Scratch R script](lectures/week12/review_scratch.R) - practice joins with these two data sets
 
 __**Midterm Exam 2:**__
 
