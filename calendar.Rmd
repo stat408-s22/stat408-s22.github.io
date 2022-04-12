@@ -418,8 +418,8 @@ __Weekly Overview:__
 
 __In-class Materials:__
 
-- [Review worksheet](lectures/week12/exam2-review.pdf)
-- [Review worksheet key](lectures/week12/exam2-review-key.pdf)
+- [Review worksheet](lectures/week12/exam2-review.pdf) ([Rmd](lectures/week12/exam2-review.Rmd))
+- [Review worksheet key](lectures/week12/exam2-review-key.pdf) ([Rmd](lectures/week12/exam2-review-key.Rmd))
 
 __**Midterm Exam 2:**__
 
