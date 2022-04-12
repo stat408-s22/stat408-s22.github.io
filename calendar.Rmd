@@ -418,6 +418,7 @@ __Weekly Overview:__
 
 __In-class Materials:__
 
+- [Review worksheet](lectures/week12/exam2-review.pdf)
 
 __**Midterm Exam 2:**__
 

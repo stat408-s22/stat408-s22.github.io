@@ -1,0 +1,108 @@
+---
+title: "Exam 2 Review"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+```
+
+For questions 1--4, use the following data frame (called `snow`) and interpret the code. For full credit (and partial credit), write (1) what the code will return, along with (2) justification for your answer.
+
+```{r, eval = T, echo = F}
+snow <- tibble(ski_hill = c('Big Sky','Jackson Hole','Taos','Bridger Bowl','Loveland', "Vail", "Park City"),
+               pass = c('Ikon','Ikon','Ikon','Powder Alliance','Powder Alliance', "Epic","Epic"),
+       acres = c(5800, 2500,1294, 2000, 1800, 5317,7300),
+       vertical = c(4336, 4139,3281, 2600, 2210,3450,3226 ))
+snow %>% arrange(pass) %>% kable()
+```
+
+
+### 1.
+
+```{r, eval=FALSE}
+library(tidyverse)
+snow %>% group_by(pass) %>% 
+  summarize(min_size = min(acres)) %>% 
+  arrange(min_size)
+```
+
+### 2.
+```{r, eval=FALSE}
+for (i in 1:5){
+  print(snow$ski_hill[i])
+    if (snow$pass[i] == 'Ikon'){
+      print("is on the Ikon pass")
+    } else {
+      print("is not on the Ikon pass")
+    }
+}
+```
+
+### 3.
+```{r, eval=FALSE}
+snow %>% ggplot(aes(y = vertical, x = acres, shape = pass)) +
+  geom_point() + ggtitle('Vertical vs. Skiable Acres')
+```
+
+### 4.
+```{r, eval=FALSE}
+ifelse(snow[,3] > 5000 | snow[,4] > 4000, 
+       "The mountain is big or steep",
+       "The mountain is not big or steep")
+```
+
+\newpage
+
+For questions 5--8, use the `snow` data frame and the `ticket_price` data frame (below). For full credit (and partial credit), write (1) what the code will return, along with (2) justification for your answer.
+```{r, eval = T, echo = F}
+ticket_price <- tibble(ski_hill = c('Big Sky','Bridger Bowl','Discovery'),
+               pass_cost = c('1,699', '900', '525'))
+ticket_price %>% kable()
+```
+
+### 5.
+```{r, eval=FALSE}
+typeof(ticket_price$pass_cost)
+```
+
+### 6.
+```{r, eval=FALSE}
+snow %>% inner_join(ticket_price, by = "ski_hill")
+```
+
+
+### 7.
+```{r, eval=FALSE}
+ticket_price %>% left_join(snow, by = "ski_hill")
+```
+
+### 8.
+```{r, eval=FALSE}
+library(stringr)
+ticket_price %>% mutate(cost = str_replace(pass_cost, ',', ''))
+```
+
+
+### 9.
+
+Finish the function. Either code or prose is acceptable.
+```{r, eval=FALSE}
+flip_coin <- function(num_flips){
+  # Function to simulate flipping a fair coin
+  # ARGS: num_flips - number of times to flip coin
+  # RETURNS: vector of coin flips containing "H" or "T"
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
+```
