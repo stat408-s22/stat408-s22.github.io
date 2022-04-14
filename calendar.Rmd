@@ -426,7 +426,7 @@ __**Midterm Exam 2:**__
 
 - Midterm Exam 2 will cover material from Weeks 5--10
 - In-class component on Thursday, Apr 14
-- Take-home component due in D2L Monday, Apr 18 by 5:00pm
+- Take-home component due in D2L (Rmd) and Gradescope (pdf) Tuesday, Apr 19 by 12:00pm (noon)
 - [Examples of old exams](https://github.com/stat408/oldexams)
 
 
