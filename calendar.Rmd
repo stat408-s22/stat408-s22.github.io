@@ -439,13 +439,13 @@ __**Midterm Exam 2:**__
 
 __Weekly Overview:__ 
 
-1. Install SAS OnDemand
+1. Create account on SAS OnDemand
 2. SAS basics and DATA steps
 
  
 __Reading and Online Resources:__ 
 
-- SAS registration info (will post soon)
+- SAS registration info: See D2L announcement!
 - [SAS login link](https://welcome.oda.sas.com/login)
 - SAS video resources:
     * [Create a SAS Profile](https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition)
