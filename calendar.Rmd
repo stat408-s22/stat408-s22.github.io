@@ -453,6 +453,9 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
+- Project Q&A
+- [Overview of SAS video](https://montana.techsmithrelay.com/4U3a) (Dr. Hoegh) - sign in to Techsmith with your montana.edu email, which will take you to a NetID login.
+- [Dr. Hoegh's slides for SAS video](https://stat408.github.io/Lecture13/)
 
 __In-class Lab:__
 
