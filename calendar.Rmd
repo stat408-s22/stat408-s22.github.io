@@ -433,18 +433,20 @@ __**Midterm Exam 2:**__
 
 ---
 
-## Week 13 (Apr 18--22): SAS I
+## Week 13 (Apr 18--22): Project Week
 
 ---
 
 __Weekly Overview:__ 
 
-1. Create account on SAS OnDemand
-2. SAS basics and DATA steps
+1. Continue working on project RShiny dashboard
+2. Create account on SAS OnDemand
+3. SAS basics and DATA steps
 
  
 __Reading and Online Resources:__ 
 
+- [How to deploy an RShiny app on shinyapps.io](https://shiny.rstudio.com/articles/shinyapps.html)
 - SAS registration info: See D2L announcement!
 - [SAS login link](https://welcome.oda.sas.com/login)
 - SAS video resources:
@@ -457,25 +459,20 @@ __In-class Materials:__
 - [Overview of SAS video](https://montana.techsmithrelay.com/4U3a) (Dr. Hoegh) - sign in to Techsmith with your montana.edu email, which will take you to a NetID login.
 - [Dr. Hoegh's slides for SAS video](https://stat408.github.io/Lecture13/)
 
-__In-class Lab:__
-
- 
-__Homework:__
-
 
 __Project:__
 
 By April 22th at 11:00 p.m., the following must be completed:
 
-1. RShiny dashboard R code completed in GitHub
+1. "Data Summary & Visualization" portion of RShiny dashboard R code completed in GitHub
 2. RShiny app deployed to [https://www.shinyapps.io/](https://www.shinyapps.io/)
-3. Link to RShiny app posted in D2L Project Shiny Apps discussion board
+3. Link to RShiny app posted at the bottom of README.md in Github repo
 
 
 
 ---
 
-## Week 14 (Apr 25--29): SAS II
+## Week 14 (Apr 25--29): SAS
 
 ---
 
@@ -493,13 +490,24 @@ __In-class Materials:__
 
 __In-class Lab:__
 
+- Lab 9
  
 __Homework:__
+
+- Homework 9
+
+__Project:__
+
+By April 29th at 11:00 p.m., the following must be completed:
+
+1. Complete RShiny dashboard (including both "Data Summary & Visualization" and "Discussions") R code completed in GitHub
+2. Link to RShiny app posted in D2L Pojrect Shiny Apps discussion board
 
 
 ---
 
-## Week 15 (May 2--6): SAS III
+
+## Week 15 (May 2--6): SAS
 
 ---
 
@@ -515,14 +523,12 @@ __Reading and Online Resources:__
 __In-class Materials:__
 
 
-__In-class Lab:__
 
- 
 __Project:__
 
 By May 6th at 11:00 p.m., the following must be completed:
 
-1. Post comments on at least **two** RShiny app discussion post including at (a) least one feature you think works well, and (b) at least one feature that you might have done differently, and (c) how you could extend the study (e.g., what other research questions does the analysis inspire?).
+1. Post comments on at least **two** RShiny app discussion posts. Each of your posts should include (a) at least one feature you think works well, (b) at least one feature that you might have done differently, and (c) how you could extend the study (e.g., what other research questions does the analysis inspire?).
 
 ---
 
