@@ -440,24 +440,14 @@ __**Midterm Exam 2:**__
 __Weekly Overview:__ 
 
 1. Continue working on project RShiny dashboard
-2. Create account on SAS OnDemand
-3. SAS basics and DATA steps
-
  
 __Reading and Online Resources:__ 
 
 - [How to deploy an RShiny app on shinyapps.io](https://shiny.rstudio.com/articles/shinyapps.html)
-- SAS registration info: See D2L announcement!
-- [SAS login link](https://welcome.oda.sas.com/login)
-- SAS video resources:
-    * [Create a SAS Profile](https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition)
-    * [Enrolling in SAS Course](https://video.sas.com/detail/video/4567828824001/sas-ondemand-for-academics:-enrollment-link-student-edition)
 
 __In-class Materials:__
 
 - Project Q&A
-- [Overview of SAS video](https://montana.techsmithrelay.com/4U3a) (Dr. Hoegh) - sign in to Techsmith with your montana.edu email, which will take you to a NetID login.
-- [Dr. Hoegh's slides for SAS video](https://stat408.github.io/Lecture13/)
 
 
 __Project:__
@@ -469,59 +459,93 @@ By April 22th at 11:00 p.m., the following must be completed:
 3. Link to RShiny app posted at the bottom of README.md in Github repo
 
 
+__Optional content on SAS:__
+
+Based on the student survey given this week, we will cover predictive modeling, classification, and clustering instead of SAS for the next two weeks. If you would still like to explore SAS, we have a SAS On Demand course set up for you where you can practice with SAS. Here are some additional resources:
+
+_Accessing SAS:_
+
+- SAS registration info: See D2L announcement!
+- [SAS login link](https://welcome.oda.sas.com/login)
+
+_SAS video resources:_
+
+- [Create a SAS Profile](https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition)
+- [Enrolling in SAS Course](https://video.sas.com/detail/video/4567828824001/sas-ondemand-for-academics:-enrollment-link-student-edition)
+
+_Dr. Hoegh's SAS videos and slides:_
+
+- [Overview of SAS video, Part I](https://montana.techsmithrelay.com/4U3a) (Dr. Hoegh) - sign in to Techsmith with your montana.edu email, which will take you to a NetID login.
+    * [Dr. Hoegh's slides for SAS video Part I](https://stat408.github.io/Lecture13/)
+- [Overview of SAS video, Part II](https://montana.techsmithrelay.com/kGmd)
+    * [Dr. Hoegh's slides for SAS video Part II](https://stat408.github.io/Lecture14/)
+- [Overview of SAS video, Part III](https://montana.techsmithrelay.com/Hc5Q)
+    * [Dr. Hoegh's slides for SAS video Part III](https://stat408.github.io/Lecture15/)
+- [Overview of Proc SQL](https://montana.techsmithrelay.com/676W)
+    * [Dr. Hoegh's slides for Proc SQL video](https://stat408.github.io/Lecture16/)
+
 
 ---
 
-## Week 14 (Apr 25--29): SAS
+## Week 14 (Apr 25--29): Predictive Modeling, Classification, and Clustering
 
 ---
 
 __Weekly Overview:__ 
 
-1. Overview of SAS PROCS
-2. Introduction to PROC SQL
+1. Introduce (review) predictive modeling methods
+2. Explore classification methods (supervised learning)
+3. Explore clustering methods (unsupervised learning)
 
 __Reading and Online Resources:__ 
 
+For this week and next, we will use [_Modern Data Science with R_, 2nd ed., by Baumer, Kaplan and Horton](https://mdsr-book.github.io/mdsr2e/) as our reference. We will touch on topics in Chapters 10--12:
 
+* [Chapter 10: Predictive modeling](https://mdsr-book.github.io/mdsr2e/ch-modeling.html)
+* [Chapter 11: Supervised learning](https://mdsr-book.github.io/mdsr2e/ch-learningI.html)
+* [Chapter 12: Unsupervised learning](https://mdsr-book.github.io/mdsr2e/ch-learningII.html)
 
 __In-class Materials:__
 
+- Week 14 slides (will post soon)
 
 __In-class Lab:__
 
-- Lab 9
+- Lab 9 (will post soon) - Due Wednesday, May 4 by 5pm in GitHub
  
 __Homework:__
 
-- Homework 9
+- Homework 9 (will post soon) - Due Wednesday, May 4 by 11pm in D2L
 
 __Project:__
 
 By April 29th at 11:00 p.m., the following must be completed:
 
 1. Complete RShiny dashboard (including both "Data Summary & Visualization" and "Discussions") R code completed in GitHub
-2. Link to RShiny app posted in D2L Pojrect Shiny Apps discussion board
+2. Link to RShiny app posted in D2L Project Shiny Apps discussion board
 
 
 ---
 
 
-## Week 15 (May 2--6): SAS
+## Week 15 (May 2--6): Predictive Modeling, Classification, and Clustering
 
 ---
 
 __Weekly Overview:__ 
 
-1. Graphics in SAS
-2. Semester review
+1. Continue exploration of predictive modeling, classification, and clustering
+2. Review for final exam
 
 __Reading and Online Resources:__ 
 
-
+- Continued from last week
 
 __In-class Materials:__
 
+- Week 14 slides (will post soon)
+- Review worksheet (will post soon)
+- Review worksheet key (will post soon)
 
 
 __Project:__
@@ -536,6 +560,12 @@ By May 6th at 11:00 p.m., the following must be completed:
 
 ---
 
+**Take Home portion (optional):** Released Friday, May 6th at 8:00am. Due Monday, May 9 by 11:00pm
+
 **In Class portion:** Tuesday, May 10 12:00--1:50pm
 
-**Take Home portion:** Due Monday, May 9 by 5:00pm
+Your final exam grade will be the _higher_ of the following scores:
+
+1. In-class final exam score.
+2. Weighted average of your take-home and in-class final exam scores, weighted as 40% in-class, 60% take-home.
+

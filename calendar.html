@@ -13,7 +13,7 @@
 
 <title>Course Calendar and Materials</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -62,6 +62,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -86,6 +87,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -311,7 +315,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -903,33 +907,15 @@ exams</a></li>
 <p><strong>Weekly Overview:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Continue working on project RShiny dashboard</li>
-<li>Create account on SAS OnDemand</li>
-<li>SAS basics and DATA steps</li>
 </ol>
 <p><strong>Reading and Online Resources:</strong></p>
 <ul>
 <li><a href="https://shiny.rstudio.com/articles/shinyapps.html">How to
 deploy an RShiny app on shinyapps.io</a></li>
-<li>SAS registration info: See D2L announcement!</li>
-<li><a href="https://welcome.oda.sas.com/login">SAS login link</a></li>
-<li>SAS video resources:
-<ul>
-<li><a
-href="https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition">Create
-a SAS Profile</a></li>
-<li><a
-href="https://video.sas.com/detail/video/4567828824001/sas-ondemand-for-academics:-enrollment-link-student-edition">Enrolling
-in SAS Course</a></li>
-</ul></li>
 </ul>
 <p><strong>In-class Materials:</strong></p>
 <ul>
 <li>Project Q&amp;A</li>
-<li><a href="https://montana.techsmithrelay.com/4U3a">Overview of SAS
-video</a> (Dr. Hoegh) - sign in to Techsmith with your montana.edu
-email, which will take you to a NetID login.</li>
-<li><a href="https://stat408.github.io/Lecture13/">Dr. Hoegh’s slides
-for SAS video</a></li>
 </ul>
 <p><strong>Project:</strong></p>
 <p>By April 22th at 11:00 p.m., the following must be completed:</p>
@@ -941,46 +927,129 @@ href="https://www.shinyapps.io/">https://www.shinyapps.io/</a></li>
 <li>Link to RShiny app posted at the bottom of README.md in Github
 repo</li>
 </ol>
+<p><strong>Optional content on SAS:</strong></p>
+<p>Based on the student survey given this week, we will cover predictive
+modeling, classification, and clustering instead of SAS for the next two
+weeks. If you would still like to explore SAS, we have a SAS On Demand
+course set up for you where you can practice with SAS. Here are some
+additional resources:</p>
+<p><em>Accessing SAS:</em></p>
+<ul>
+<li>SAS registration info: See D2L announcement!</li>
+<li><a href="https://welcome.oda.sas.com/login">SAS login link</a></li>
+</ul>
+<p><em>SAS video resources:</em></p>
+<ul>
+<li><a
+href="https://video.sas.com/detail/video/4567854444001/sas-ondemand-for-academics:-profile-creation-student-edition">Create
+a SAS Profile</a></li>
+<li><a
+href="https://video.sas.com/detail/video/4567828824001/sas-ondemand-for-academics:-enrollment-link-student-edition">Enrolling
+in SAS Course</a></li>
+</ul>
+<p><em>Dr. Hoegh’s SAS videos and slides:</em></p>
+<ul>
+<li><a href="https://montana.techsmithrelay.com/4U3a">Overview of SAS
+video, Part I</a> (Dr. Hoegh) - sign in to Techsmith with your
+montana.edu email, which will take you to a NetID login.
+<ul>
+<li><a href="https://stat408.github.io/Lecture13/">Dr. Hoegh’s slides
+for SAS video Part I</a></li>
+</ul></li>
+<li><a href="https://montana.techsmithrelay.com/kGmd">Overview of SAS
+video, Part II</a>
+<ul>
+<li><a href="https://stat408.github.io/Lecture14/">Dr. Hoegh’s slides
+for SAS video Part II</a></li>
+</ul></li>
+<li><a href="https://montana.techsmithrelay.com/Hc5Q">Overview of SAS
+video, Part III</a>
+<ul>
+<li><a href="https://stat408.github.io/Lecture15/">Dr. Hoegh’s slides
+for SAS video Part III</a></li>
+</ul></li>
+<li><a href="https://montana.techsmithrelay.com/676W">Overview of Proc
+SQL</a>
+<ul>
+<li><a href="https://stat408.github.io/Lecture16/">Dr. Hoegh’s slides
+for Proc SQL video</a></li>
+</ul></li>
+</ul>
 <hr />
 </div>
-<div id="week-14-apr-2529-sas" class="section level2">
-<h2>Week 14 (Apr 25–29): SAS</h2>
+<div
+id="week-14-apr-2529-predictive-modeling-classification-and-clustering"
+class="section level2">
+<h2>Week 14 (Apr 25–29): Predictive Modeling, Classification, and
+Clustering</h2>
 <hr />
 <p><strong>Weekly Overview:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Overview of SAS PROCS</li>
-<li>Introduction to PROC SQL</li>
+<li>Introduce (review) predictive modeling methods</li>
+<li>Explore classification methods (supervised learning)</li>
+<li>Explore clustering methods (unsupervised learning)</li>
 </ol>
 <p><strong>Reading and Online Resources:</strong></p>
+<p>For this week and next, we will use <a
+href="https://mdsr-book.github.io/mdsr2e/"><em>Modern Data Science with
+R</em>, 2nd ed., by Baumer, Kaplan and Horton</a> as our reference. We
+will touch on topics in Chapters 10–12:</p>
+<ul>
+<li><a
+href="https://mdsr-book.github.io/mdsr2e/ch-modeling.html">Chapter 10:
+Predictive modeling</a></li>
+<li><a
+href="https://mdsr-book.github.io/mdsr2e/ch-learningI.html">Chapter 11:
+Supervised learning</a></li>
+<li><a
+href="https://mdsr-book.github.io/mdsr2e/ch-learningII.html">Chapter 12:
+Unsupervised learning</a></li>
+</ul>
 <p><strong>In-class Materials:</strong></p>
+<ul>
+<li>Week 14 slides (will post soon)</li>
+</ul>
 <p><strong>In-class Lab:</strong></p>
 <ul>
-<li>Lab 9</li>
+<li>Lab 9 (will post soon) - Due Wednesday, May 4 by 5pm in GitHub</li>
 </ul>
 <p><strong>Homework:</strong></p>
 <ul>
-<li>Homework 9</li>
+<li>Homework 9 (will post soon) - Due Wednesday, May 4 by 11pm in
+D2L</li>
 </ul>
 <p><strong>Project:</strong></p>
 <p>By April 29th at 11:00 p.m., the following must be completed:</p>
 <ol style="list-style-type: decimal">
 <li>Complete RShiny dashboard (including both “Data Summary &amp;
 Visualization” and “Discussions”) R code completed in GitHub</li>
-<li>Link to RShiny app posted in D2L Pojrect Shiny Apps discussion
+<li>Link to RShiny app posted in D2L Project Shiny Apps discussion
 board</li>
 </ol>
 <hr />
 </div>
-<div id="week-15-may-26-sas" class="section level2">
-<h2>Week 15 (May 2–6): SAS</h2>
+<div
+id="week-15-may-26-predictive-modeling-classification-and-clustering"
+class="section level2">
+<h2>Week 15 (May 2–6): Predictive Modeling, Classification, and
+Clustering</h2>
 <hr />
 <p><strong>Weekly Overview:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Graphics in SAS</li>
-<li>Semester review</li>
+<li>Continue exploration of predictive modeling, classification, and
+clustering</li>
+<li>Review for final exam</li>
 </ol>
 <p><strong>Reading and Online Resources:</strong></p>
+<ul>
+<li>Continued from last week</li>
+</ul>
 <p><strong>In-class Materials:</strong></p>
+<ul>
+<li>Week 14 slides (will post soon)</li>
+<li>Review worksheet (will post soon)</li>
+<li>Review worksheet key (will post soon)</li>
+</ul>
 <p><strong>Project:</strong></p>
 <p>By May 6th at 11:00 p.m., the following must be completed:</p>
 <ol style="list-style-type: decimal">
@@ -995,8 +1064,16 @@ research questions does the analysis inspire?).</li>
 <div id="final-exam" class="section level2">
 <h2>Final Exam</h2>
 <hr />
+<p><strong>Take Home portion (optional):</strong> Released Friday, May
+6th at 8:00am. Due Monday, May 9 by 11:00pm</p>
 <p><strong>In Class portion:</strong> Tuesday, May 10 12:00–1:50pm</p>
-<p><strong>Take Home portion:</strong> Due Monday, May 9 by 5:00pm</p>
+<p>Your final exam grade will be the <em>higher</em> of the following
+scores:</p>
+<ol style="list-style-type: decimal">
+<li>In-class final exam score.</li>
+<li>Weighted average of your take-home and in-class final exam scores,
+weighted as 40% in-class, 60% take-home.</li>
+</ol>
 </div>
 
 
