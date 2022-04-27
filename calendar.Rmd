@@ -507,7 +507,11 @@ For this week and next, we will use [_Modern Data Science with R_, 2nd ed., by B
 
 __In-class Materials:__
 
-- Week 14 slides (will post soon)
+Videos:
+
+- [Predictive modeling](https://montana.techsmithrelay.com/1mc5)
+- [Classification](https://montana.techsmithrelay.com/TQ6l)
+- [Clustering](https://montana.techsmithrelay.com/Y3Pi)
 
 __In-class Lab:__
 
