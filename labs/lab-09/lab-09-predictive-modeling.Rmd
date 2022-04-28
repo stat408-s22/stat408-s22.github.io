@@ -213,6 +213,11 @@ kable(summary(glm.age)$coefficients)
 
 9. Use the training dataset to fit another predictive model for determining whether a patient will miss the medical appointment. Then evaluate your model by making predictions on the test dataset. Repeat this process several times, tracking the classification error and log-loss for each model, until you arrive at a "final model". Summarize your findings and discuss the accuracy of your predictive approach. Why did you choose this model over alternatives?
 
+```{marginfigure}
+_Modern Data Science with R_ uses the **tidymodels** R package for fitting, evaluating, and visualizing predictive models.
+```
+
+
 10. **Extra Credit**. Generate a graphical representation of the prediction accuracy of your chosen model. Write a few sentences describing what this visualization tells us about the model. Hint: See Figures [10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#fig:autoplot-null-confusion) and [10.3](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#fig:roc-log) in _Modern Data Science with R_. Or come up with your own!
 
 
