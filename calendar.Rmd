@@ -515,7 +515,7 @@ Videos:
 
 __In-class Lab:__
 
-- Lab 9 (will post soon) - Due Wednesday, May 4 by 5pm in GitHub
+- [Lab 9](labs/lab-09/lab-09-predictive-modeling.html) - Due Wednesday, May 4 by 5pm in GitHub
  
 __Homework:__
 

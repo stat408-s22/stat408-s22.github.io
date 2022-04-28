@@ -1,5 +1,5 @@
 ---
-title: "Lab 08 - Predictive modeling"
+title: "Lab 09 - Predictive modeling"
 output: 
   tufte::tufte_html:
     tufte_variant: "envisioned"
@@ -23,13 +23,18 @@ Why do 30% of patients miss their scheduled appointments? What variables could h
 
 # Getting started
 
+```{marginfigure}
+Since your lab submission will involve the use of LaTeX code for mathematical equations, this lab's .Rmd file should be knit to a .pdf file.
+```
+
+
 Each member of the team should:
 
 - Go to the course GitHub organization (or your team page) and locate your lab repo, which should be named `lab-09-predictive-modeling-YOUR_TEAM_NAME`.
 - Grab the URL of the repo, and clone it in RStudio by creating a new project from Version Control with Git.
 - Open the R Markdown document `lab-09.Rmd` and Knit it.
 Make sure it compiles without errors.
-The output will be in the file markdown `.md` file with the same name.
+The output will be in `.pdf` file with the same name.
 
 
 ## Warm up
@@ -51,13 +56,19 @@ library(tidyverse)
 
 ## Data
 
-For this lab we will be using a subset of a dataset collected in Brazil relating to whether patients show up for a scheduled medical appointment. More information about the dataset is available at: [https://www.kaggle.com/joniarroba/noshowappointments](https://www.kaggle.com/joniarroba/noshowappointments).
+For this lab we will be using a subset of a dataset collected in Brazil relating to whether patients miss a scheduled medical appointment. More information about the dataset is available at: [https://www.kaggle.com/joniarroba/noshowappointments](https://www.kaggle.com/joniarroba/noshowappointments).
+
+
+# Exercises
+
+1.  Look at the Data Dictionary and dataset description at [https://www.kaggle.com/joniarroba/noshowappointments](https://www.kaggle.com/joniarroba/noshowappointments). Before fitting a model, discuss which variables you think might be related to missing a medical appointment. Specifically, what relationship do you expect between these variables and missing a medical appointment, and why?
+
 
 ```{marginfigure}
 Why shouldn't you evaluate a predictive model using the same data set on which it was fit?
 ```
 
-Since our goal is prediction, we will fit the model on a *training set* and evaluate the model on a *testing set*. These have been created for you, and can be read in using the following code.
+The overall goal is to find a model that accurately predicts whether a patient will miss a scheduled medical appointment based on the variables in the data set. Since our goal is prediction, we will fit the model on a *training set*, then evaluate the model on a *testing set*. These have been created for you, and can be read in using the following code. Note that we recode our outcome variable from `Yes`/`No` to `1`/`0` in order to fit the predictive models below.
 
 
 ```{r, eval=TRUE}
@@ -73,24 +84,25 @@ test.appts$No.show <- as.numeric(test.appts$No.show == "Yes")
 
 
 
-# Exercises
-
-1.  Look at the Data Dictionary and dataset description at [https://www.kaggle.com/joniarroba/noshowappointments](https://www.kaggle.com/joniarroba/noshowappointments). Before fitting a model, discuss which variables you think might be related to missing a medical appointment. Specifically, what relationship do you expect between these variables and missing a medical appointment, and why?
-
-2. Note that in predictive modeling, a fair amount of data wrangling is necessary to create relevant variables to use for prediction. Examples in this setting include: appointment delay (time between scheduling having appointment), whether the user has missed an appointment before (the user ID has been removed from the data base), the day of week of the appointment.
+2. In predictive modeling, a fair amount of data wrangling is necessary to create relevant variables to use for prediction. Examples in this setting include: appointment delay (time between scheduling having appointment), whether the user has missed an appointment before (the user ID has been removed from the data base), the day of week of the appointment.
 You don’t need to do this, but explain how you would create a variable that had the day of week for the appointment.
 
-3. What proportion of the training data set were no-shows? That is, what proportion of the observations in the `train.appts` data frame has a value of `1` for the `No.show` variable?
+3. What proportion of the training data set were no-shows? That is, what proportion of the observations in the `train.appts` data frame have a value of `1` for the `No.show` variable?
 
-For our models, we will use classification error and another criteria called log-loss. Log-loss is useful to evaluate a case when a prediction is made as a probability (prob missed appointment = .3) and the result is a binary outcome (missed appointment or not). The goal is to have a lower value for log-loss. Mathematically log-loss can be written as,
+For our models, we will use classification error and another criteria called log-loss. Classification error is the proportion of observations that are mis-classified by the model. Log-loss is useful to evaluate a case when a prediction is made as a probability (prob missed appointment = .3) and the result is a binary outcome (missed appointment or not). The goal is to have a lower value for log-loss. Mathematically log-loss can be written as,
 
 $$
-loss=−y \times log(p)−(1−y)\times log(1−p)
+\mbox{log-loss}=−y \times log(p)−(1−y)\times log(1−p)
 $$
 
-where $y$ is the observed outcome (0 = "failure", 1 = "success"), and $p$ is the predicted probability of a "success" (which means that $1-p$ is the predicted probability of a "failure").
+where $y$ is the observed outcome (0 = "failure", 1 = "success"), and $p$ is the predicted probability of a "success" (which means that $1-p$ is the predicted probability of a "failure"). In a dataset, we calculate this loss value for each observation, and then take the mean:
 
-Your final model should show an improved classification error and log loss over the baseline model below. The baseline model uses the observed proportion of no-shows in the data set as the predicted probability of a no-show for every individual.
+$$
+\frac{1}{n}\sum_{i=1}^n \left[-y_i \log(\hat{y}_i) - (1-y_i)\log(1 - \hat{y}_i)\right],
+$$
+where $y_i$ and $\hat{y}_i$ are the observed outcome and predicted probability for the $i$th observation, respectively.
+
+Your final model should show an improved classification error and log-loss over the baseline model below. The baseline model uses the observed proportion of no-shows in the data set as the predicted probability of a no-show for every individual.
 
 ```{r}
 # Fit baseline logistic regression
@@ -105,24 +117,32 @@ head(predict(glm.baseline, type = "response"))
 ```
 
 
-Now, let's calculate the classification error and log-loss for the baseline model:
+```{marginfigure}
+In order to calculate classification error, we need to convert the predicted _probability_ to a predicted _Yes/No outcome_ by choosing a cutoff value $c$: the model will predict the patient misses their appointment if their predicted probability is greater than $c$. A logical choice for $c$ is 0.5, but this cutoff won't work well if the sample proportion is far from 0.5. For example, if only 10% of people miss appointments, a good model should predict missed appointments 10% of the time. Thus, often the sample proportion is used for $c$.
+```
+
+
+Now, let's calculate the classification error and log-loss for the baseline model. 
 ```{r}
-# Calculate Classification Error
+# Observed outcome in test dataset
+y <- test.appts$No.show
+
+# Calculate vector of predicted probabilities for test dataset
+pred_probs <- predict(glm.baseline, test.appts, type = "response")
+
+# Calculate classification error
 CE <- mean(
-  (test.appts$No.show == 1) != 
-    (round(predict(glm.baseline, test.appts, type = "response")))
+  (y == 1) != (pred_probs > 0.215)
   )
 
-# Calculate Log-Loss
+# Calculate log-loss
 log.loss <- mean(
-  -as.numeric(test.appts$No.show == 1) * 
-    log(predict(glm.baseline, test.appts, type = "response")) - 
-  as.numeric(test.appts$No.show == 0) * 
-    log(1 - predict(glm.baseline, test.appts, type = "response"))
+  -as.numeric(y == 1) * log(pred_probs) - 
+  as.numeric(y == 0) * log(1 - pred_probs)
   )
 ```
 
-5. Copy and paste the code above into your `lab-09.Rmd` file, then add annotations describing what each line of code is doing. 
+5. Examine the code above. Explain how this code calculates classification error and log-loss. That is, explain what `mean((y == 1) != (pred_probs > 0.215))` and `mean(-as.numeric(y == 1) * log(pred_probs) - as.numeric(y == 0) * log(1 - pred_probs))` are doing.
 
 6. What are the values of the classification error and log-loss for the baseline model?
 
@@ -130,7 +150,12 @@ log.loss <- mean(
 
 **Logistic regression** models are appropriate for modeling a _binary_ response variable. Generically, we refer to the two outcomes of a binary variable as "success" and "failure", where a "success" is coded as 1, and a "failure" as 0. A logistic regression model is a special case of a **generalized linear model**.
 
-In a **linear model**, we assume the response variable $Y$, has a normal distribution with mean $\mu = E(Y)$ and variance $\sigma^2$. We then model the mean response as a linear function of predictor variables:
+```{marginfigure}
+Technically, the term "linear model" comes from the fact that the linear predictor is linear in the _coefficients_ $\beta_0, \beta_1,\ldots, \beta_k$, not the predictors $x_1,\ldots, x_k$. That is why a model such as $\mu = \beta_0 + \beta_1 x + \beta_2 x^2$ is still considered a "linear model".
+```
+
+
+In a **linear model**, we assume the response variable $Y$, has a normal distribution with mean $\mu = E(Y)$ and variance $\sigma^2$. We then model the mean response as a linear function of $k$ predictor variables $x_1, \ldots, x_k$:
 
 $$
 \mu = \beta_0 + \beta_1 x_1 + \cdots \beta_k x_k.
@@ -146,7 +171,7 @@ When $Y$ is binary, taking on values 0 or 1, $E(Y) = Pr(Y = 1) = p$, and the lin
 $$
 \log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 x_1 + \cdots \beta_k x_k.
 $$
-Solving for $p$ yields a logistic curve:
+Solving for $p$ yields a **logistic curve**:
 $$
 p = \frac{\exp(\beta_0 + \beta_1 x_1 + \cdots \beta_k x_k)}{1 + \exp(\beta_0 + \beta_1 x_1 + \cdots \beta_k x_k)}
 $$
@@ -155,7 +180,12 @@ $$
 p = \frac{\exp(\beta_0 + \beta_1 x)}{1 + \exp(\beta_0 + \beta_1x)}.
 $$
 
-Now we can use the `glm` function to fit a logistic regression model using `Age` as a predictor.
+```{marginfigure}
+See [Figure 10.1](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#fig:log-cap-gains) in _Modern Data Science with R_ for a more typical example of a fitted logistic curve.
+```
+
+
+For example, the code below fits a logistic regression model using `Age` as a predictor.
 ```{r, eval=TRUE, message =FALSE}
 glm.age <- glm(No.show ~ Age, family = binomial, 
                data = train.appts)
@@ -176,12 +206,14 @@ kable(summary(glm.age)$coefficients)
 ```
 
 
-7. Using the model summary above, write out the fitted model equation by filling in the blanks in the LaTeX code included in your `.Rmd` file.
+7. Using the model summary above, write out the fitted model equations by filling in the blanks in the LaTeX code included in your `.Rmd` file.
 
 
-8. Calculate the classification error and log-loss for the logistic regression model using `Age` as the only predictor (`glm.age`). Compare these values to the classification error and log-loss of the baseline model.
+8. Calculate the classification error and log-loss for the logistic regression model using `Age` as the only predictor (`glm.age`). Compare these values to the classification error and log-loss of the baseline model. Which model give better predictions?
 
-9. Use the training dataset to fit another predictive model for determining whether a patient will miss the medical appointment. Then use your model to make predictions on the test dataset in order to evaluate the model. Repeat this process several times, tracking the classification error and log-loss for each model, until you arrive at a "final model". Summarize your findings and discuss the accuracy of your predictive approach. Why did you choose this model over alternatives?
+9. Use the training dataset to fit another predictive model for determining whether a patient will miss the medical appointment. Then evaluate your model by making predictions on the test dataset. Repeat this process several times, tracking the classification error and log-loss for each model, until you arrive at a "final model". Summarize your findings and discuss the accuracy of your predictive approach. Why did you choose this model over alternatives?
+
+10. **Extra Credit**. Generate a graphical representation of the prediction accuracy of your chosen model. Write a few sentences describing what this visualization tells us about the model. Hint: See Figures [10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#fig:autoplot-null-confusion) and [10.3](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#fig:roc-log) in _Modern Data Science with R_. Or come up with your own!
 
 
 
