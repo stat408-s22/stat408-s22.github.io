@@ -1,0 +1,620 @@
+---
+title: 'STAT 408: Weeks 14--15'
+subtitle: Predictive Modeling, Classification, and Clustering
+date: "5/3/2022"
+output:
+  ioslides_presentation:
+    css: https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css
+    widescreen: yes
+  beamer_presentation:
+    theme: Berkeley
+    colortheme: seahorse
+    slide_level: 2
+  revealjs::revealjs_presentation:
+    transition: none
+    incremental: no
+  slidy_presentation:
+    incremental: no
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(randomForest)
+library(maps)
+library(plotrix)
+library(mnormt)
+library(rpart)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, error=FALSE, message=FALSE)
+```
+
+## Coming Up
+
+**This week**:
+
+* Wednesday (May 4): Lab 9 due in GitHub (by 5pm); Homework 9 due in D2L (by 11pm)
+* Friday (May 6) by 11pm: 
+    - Take-home final exam (optional) released at 8:00am in D2L
+    - Post comments on at least two of your classmate's RShiny app D2L discussion posts
+    - Complete D2L team evaluation survey
+    
+
+## Coming Up
+
+**Finals week**:
+
+* Take-home final exam (optional) due in Gradescope by 11:00pm Monday May 9
+* In-class final exam Tuesday May 10 at 12:00-1:50pm in our usual classroom
+
+Your final exam grade will be the higher of the following scores:
+
+1. In-class final exam score.
+2. Weighted average of your take-home and in-class final exam scores, weighted as 40% in-class, 60% take-home.
+
+# Statistical Learning Overview
+
+## Statistical Learning
+
+Here are a few questions to consider:
+
+- What does statistical learning mean to you?
+- Is statistical learning different from statistics as a whole?
+- What about terms like: data science, data mining, data analytics, machine learning, predictive analytics, how are these different from statistics and statistical learning?
+ 
+
+## Statistical Learning Definition
+
+> Statistical learning refers to a set of tools for modeling and understanding complex datasets. It is a recently developed area in statistics and blends with parallel developments in computer science and, in particular, machine learning. The field encompasses many methods such as the lasso and sparse regression, classification and regression trees, and boosting and support vector machines. 
+
+Courtesy of *An Introduction to Statistical Learning: with Applications in R*, by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Note: a free e-version of this textbook can be obtained through the MSU Library.
+
+
+## Some Vocabulary
+
+- **Features** - what statisticians typically call "variables" or "predictors"
+- **Training vs testing data** - Use training data to _fit_ the model; use testing data to _evaluate_ the model (e.g., goodness-of-fit, predictive)
+- **Supervised learning** - Outcome variable values ("labels") are known for your training data, e.g., linear regression, logistic regression, classification
+- **Unsupervised learning** - No clear outcome variable or outcome variable values unknown for training data, e.g., clustering, dimension reduction
+
+
+# Predictive Modeling
+
+## Predictive Modeling
+
+"The basic goal of predictive modeling is to find a _function_ that accurately describes how different measured explanatory variables can be combined to make a prediction about a response variable."
+
+- Baumer, Kaplan and Horton (Section 10.1)
+
+## Predictive Modeling
+
+
+Recall the Seattle housing data set, how would you:
+
+- Build a model to predict housing prices in King County
+- Determine if your model was good or useful?
+
+```{r, echo=F, eval=T}
+Seattle <- read.csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/SeattleHousing.csv')
+kable(head(Seattle[,-c(8,9,11,12,13,14)],10))
+```
+
+
+## Loss functions
+
+A loss function is a principled way to compare a set of predictive models.
+
+Squared Error: $$ (Price_{pred} - Price_{actual}) ^ 2$$
+
+Zero-One Loss (binary setting):
+\[
+    f(x)= 
+\begin{cases}
+    1,& \text{if } y_{pred} \neq y_{actual}\\
+    0,              & y_{pred} = y_{actual}
+\end{cases}
+\]
+
+## Model Evaluation
+Suppose we fit a model using all of the Seattle housing data --- can that model be used to predict prices for homes in that data set?
+
+```{r, echo=F}
+usa <- map_data("state")
+wash <- subset(usa, region %in% c("washington"))
+
+wash.map <- ggplot() + geom_polygon(data = wash, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3)
+wash.map + geom_point(data = Seattle, aes(x = long, y = lat, color=price), size=.5) + scale_colour_gradient(trans='log', low='white',high='blue')
+```
+
+
+## Model Evaluation
+
+We cannot assess the predictive performance by fitting a model to data and then evaluating the model using the same data.
+
+```{r, echo=F, message=F}
+sqft.plot <- ggplot(data=Seattle, aes(sqft_living,price)) + geom_point(alpha=.5) + geom_smooth(method='loess') + labs( title='King County Housing Sales', xlab='Living Space (sqft)',ylab='Closing Price ($)')
+sqft.plot
+```
+
+## Test / Training and Cross-Validation
+
+There are two common options to give valid estimates of model performance:
+
+- **Test / Training approach**. Generally 70% of the data is used to fit the model and the other 30% is held out for prediction.
+
+- **Cross-Validation**. Cross validation breaks your data into *k* groups, or folds. Then a model is fit on the data on the *k-1* groups and then used to make predictions on data in the held out *k*$^{th}$ group. This process continues until all groups have been held out once.
+
+## Constructing a test and training set 
+
+```{r}
+set.seed(11142017)
+num.houses <- nrow(Seattle)
+Seattle$zipcode <- as.factor(Seattle$zipcode)
+test.ids <- base::sample(1:num.houses, size=round(num.houses*.3))
+test.set <- Seattle[test.ids,]
+train.set <- Seattle[(1:num.houses)[!(1:num.houses) %in% 
+  test.ids],]
+dim(Seattle)
+dim(test.set)
+dim(train.set)
+```
+
+
+## Linear Regression
+```{r, eval=FALSE}
+lm.1 <- lm(price ~ bedrooms + bathrooms + sqft_living + 
+                   zipcode + waterfront, 
+           data=train.set)
+summary(lm.1)
+```
+
+## Linear Regression {.smaller}
+```{r, eval=TRUE, echo=FALSE}
+lm.1 <- lm(price ~ bedrooms + bathrooms + sqft_living + 
+                   zipcode + waterfront, 
+           data=train.set)
+summary(lm.1)
+```
+
+## Linear Regression
+
+```{r}
+mad.lm1 <- mean(abs(test.set$price - predict(lm.1, test.set)))
+```
+
+The mean absolute deviation in housing price predictions using the linear model is \$$`r round(mad.lm1)`$
+
+## Polynomial Regression
+Now include squared terms for square foot of living space, too.
+```{r, eval=FALSE}
+train.set$sqft_living2 <- train.set$sqft_living^2
+test.set$sqft_living2 <- test.set$sqft_living^2
+
+lm.2 <- lm(price ~ bedrooms + bathrooms + sqft_living + sqft_living2 + 
+                   zipcode + waterfront, 
+           data=train.set)
+summary(lm.2)
+```
+
+## Polynomial Regression {.smaller}
+```{r, echo=FALSE, eval=TRUE}
+train.set$sqft_living2 <- train.set$sqft_living^2
+test.set$sqft_living2 <- test.set$sqft_living^2
+
+lm.2 <- lm(price ~ bedrooms + bathrooms + sqft_living + sqft_living2 + 
+                   zipcode + waterfront, 
+           data=train.set)
+summary(lm.2)
+```
+
+
+## Polynomial Regression
+
+```{r}
+mad.lm2 <- mean(abs(test.set$price - predict(lm.2,test.set)))
+```
+Including this squared term lowers our predictive error from \$$`r round(mad.lm1)`$ in the first case to \$$`r round(mad.lm2)`$.
+
+## Decision Trees
+
+```{r, echo=F}
+tree1 <- rpart(price ~ bedrooms + bathrooms + sqft_living + sqft_living2 + 
+              waterfront + zipcode, data=train.set, method = 'anova')
+plot(tree1)
+text(tree1)
+```
+
+## Decision Trees
+
+```{r}
+rmse.tree1 <- sqrt(mean((test.set$price - predict(tree1,test.set))^2)) 
+mad.tree1 <- mean(abs(test.set$price - predict(tree1,test.set)))
+mad.tree1
+mad.lm1
+mad.lm2
+```
+The predictive error for this tree, \$$`r round(mad.tree1)`$ is similar to the first linear model \$$`r round(mad.lm1)`$ and not quite as good as our second linear model \$$`r round(mad.lm2)`$.
+
+## Ensemble Methods - Random Forest
+
+Ensemble methods combine a large set of predictive models into a single framework. One example is a random forest, which combines a large number of trees.
+
+While these methods are very effective in a predictive setting, it is often difficult to directly assess the impact of particular variables in the model.
+
+## Random Forest
+One specific kind of ensemble method is known as a random forest, which combines several decision trees.
+```{r}
+rf1 <- randomForest(price ~ ., data = Seattle)
+
+mad.rf <- mean(abs(test.set$price - predict(rf1,test.set)))
+```
+
+The prediction error for the random forest is substantially better than the other models we have identified \$$`r round(mad.rf)`$.
+
+## Exercise: Prediction for Capital Bike Share
+
+```{r}
+bikes <- read.csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/Bike.csv')
+set.seed(11142017)
+num.obs <- nrow(bikes)
+test.ids <- base::sample(1:num.obs, size=round(num.obs*.3))
+test.bikes <- bikes[test.ids,]
+train.bikes <- bikes[(1:num.obs)[!(1:num.obs) %in% 
+  test.ids],]
+dim(bikes)
+dim(test.bikes)
+dim(train.bikes)
+```
+
+## Exercise: Prediction for Capital Bike Share
+```{r}
+lm.bikes <- lm(count ~ holiday + atemp,
+               data=train.bikes)
+lm.mad <- mean(abs(test.bikes$count - predict(lm.bikes,test.bikes)))
+```
+Create another predictive model and compare the results to the MAD of the linear model above ($`r round(lm.mad)`$). However, don't use both `casual` and `registered` in your model as those two will sum to the total count.
+
+## A Solution -- Prediction for Capital Bike Share
+```{r, mysize=TRUE, size='\\footnotesize'}
+rf.bikes <- randomForest(count ~ holiday + atemp +
+     humidity + season + workingday + weather,
+                data=train.bikes)
+tree.mad <- mean(abs(test.bikes$count - predict(rf.bikes,test.bikes)))
+```
+The random forest has a prediction error of $`r round(tree.mad)`$.
+
+# Classification Methods
+
+## Classification - Given new points (*) how do we classify them?
+
+```{r,  echo=F,fig.align='center'}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.03)
+combined <- rbind(cluster1,cluster2,cluster3)
+plot(rbind(cluster1,cluster2,cluster3),type='n',axes=F,xlab='', ylab='')
+points(cluster1,pch='1',col='dodgerblue')
+points(cluster2,pch='1',col='dodgerblue')
+points(cluster3,pch='0',col='firebrick4')
+box()
+#pred.points <- cbind(c(.2,.9,.48,.45),c(.7,.4,.3,.35))
+pred.points <- cbind(c(.2,.45,.48,.9),c(.7,.35,.3,.4))
+
+colnames(pred.points) <- c('x','y')
+points(pred.points, pch='*', cex=2.5)
+```
+
+
+## Logistic Regression {.smaller}
+
+
+```{r, echo=F}
+labels <- (rep(c(1,0),each=50))
+supervised <- as.data.frame(cbind(labels, combined))
+colnames(supervised)[2:3] <- c('x','y')
+logistic <- glm(labels ~ x + y, data = supervised, family='binomial')
+summary(logistic)
+```
+
+## Logistic Regression
+
+```{r, echo=F}
+kable(cbind(pred.points,round(predict(logistic,as.data.frame(pred.points), type='response'),3)),col.names=c('x','y','Prob[Val = 1]'))
+```
+
+## Decision Trees
+
+```{r,echo=F}
+tree1 <- rpart(labels ~., data=supervised, method = 'class')
+plot(tree1, margin = 1)
+text(tree1, fancy = TRUE)
+```
+
+## Decision Trees - code
+
+```{r,eval=F}
+kable(cbind(pred.points,
+    round(predict(tree1,as.data.frame(pred.points))[,2],3)),
+    col.names=c('x','y','Prob[Val = 1]'))
+
+tree1 <- rpart(labels ~., data=supervised, method = 'class')
+plot(tree1, margin = 1)
+text(tree1, fancy = TRUE)
+```
+
+## Decision Trees - Boundary
+```{r, echo=F}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.03)
+plot(rbind(cluster1,cluster2,cluster3),type='n',axes=F,xlab='', ylab='')
+points(cluster1,pch='1',col='dodgerblue')
+points(cluster2,pch='1',col='dodgerblue')
+points(cluster3,pch='0',col='firebrick4')
+box()
+#pred.points <- cbind(c(.2,.9,.48,.45),c(.7,.4,.3,.35))
+pred.points <- cbind(c(.2,.45,.48,.9),c(.7,.35,.3,.4))
+
+colnames(pred.points) <- c('x','y')
+points(pred.points, pch='*', cex=2.5)
+abline(v=.4849,lwd=3)
+```
+
+## Exercise: Predict Titanic Survival {.smaller}
+```{r}
+titanic <- read.csv(
+  'http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/titanic.csv')
+set.seed(11142017)
+titanic <- titanic %>% filter(!is.na(Age))
+num.pass <- nrow(titanic)
+test.ids <- base::sample(1:num.pass, size=round(num.pass*.3))
+test.titanic <- titanic[test.ids,]
+train.titanic <- titanic[(1:num.pass)[!(1:num.pass) %in% 
+  test.ids],]
+dim(titanic)
+dim(test.titanic)
+dim(train.titanic)
+```
+
+## Exercise: Predict Titanic Survival
+See if you can improve the classification error from the model below.
+```{r}
+glm.titanic <- glm(Survived ~ Age, data=train.titanic, family='binomial')
+Class.Error <- mean(test.titanic$Survived != round(predict(glm.titanic, test.titanic, type='response')))
+```
+The logistic regression model only using age is wrong $`r round(Class.Error,2)* 100`$% of the time.
+
+# Unsupervised Learning
+
+## Supervised vs. Unsupervised Learning
+
+```{r, echo=F,fig.align='center'}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.023)
+plot(rbind(cluster1,cluster2,cluster3),pch=16,col=rgb(175,175,175,150,max=255),axes=F,xlab='', ylab='',cex=1.4)
+box()
+```
+
+## Supervised 
+
+```{r,  echo=F,fig.align='center'}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.03)
+plot(rbind(cluster1,cluster2,cluster3),type='n',axes=F,xlab='', ylab='')
+points(cluster1,pch='1',col='dodgerblue')
+points(cluster2,pch='1',col='dodgerblue')
+points(cluster3,pch='0',col='firebrick4')
+box()
+```
+
+## Unsupervised - How many clusters?
+```{r, echo=F,fig.align='center'}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.023)
+plot(rbind(cluster1,cluster2,cluster3),pch=16,col=rgb(175,175,175,150,max=255),axes=F,xlab='', ylab='',cex=1.4)
+box()
+```
+
+## Unsupervised 
+
+```{r, echo=F,fig.align='center'}
+set.seed(10)
+cluster1 <- rmnorm(n=25,mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25,mean=c(.15,.75),varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6),varcov=diag(2)*.03)
+combined <- rbind(cluster1,cluster2,cluster3)
+plot(combined,type='n',axes=F,xlab='', ylab='')
+points(cluster1,pch=16,col='dodgerblue')
+points(cluster2,pch=16,col='forestgreen')
+points(cluster3,pch=16,col='firebrick4')
+box()
+```
+
+
+
+## k-means clustering
+
+```{r,echo=FALSE}
+km <- kmeans(combined, 3)
+plot(combined,type='n',axes=F, xlab='',ylab='')
+box()
+points(combined,pch=as.character(km$cluster), col=c(rep('dodgerblue',25),rep('forestgreen',25),rep('firebrick4',50)))
+draw.circle(.31,-0.1,.335, border='dodgerblue')
+draw.circle(.79,.65,.3, border='firebrick4')
+draw.circle(.14,1.05,.3, border='forestgreen')
+```
+
+
+## k-means clustering {.smaller}
+
+```{r, mysize=TRUE, size='\\scriptsize',echo=F}
+km
+```
+
+## k-means clustering - code
+
+```{r,eval=FALSE}
+km <- kmeans(combined, 3)
+plot(combined,type='n',axes=F, xlab='',ylab='')
+box()
+points(combined,pch=as.character(km$cluster),
+       col=c(rep('dodgerblue',25),
+             rep('forestgreen',25),
+             rep('firebrick4',50)))
+draw.circle(.31,-0.1,.335, border='dodgerblue')
+draw.circle(.79,.65,.3, border='firebrick4')
+draw.circle(.14,1.05,.3, border='forestgreen')
+```
+
+
+## Hierarchical clustering
+
+```{r,fig.align='center',echo=F}
+hc <- hclust(dist(combined))
+plot(hc, hang=-1)
+```
+
+## Hierarchical clustering - with 3 clusters
+
+```{r, echo=F}
+hc <- hclust(dist(combined))
+plot(combined,type='n',axes=F, xlab='',ylab='')
+box()
+points(combined,pch=as.character(cutree(hc,3)), col=c(rep('dodgerblue',25),rep('forestgreen',25),rep('firebrick4',50)))
+```
+
+## Hierarchical clustering - with 4 clusters
+
+```{r, echo=F}
+hc <- hclust(dist(combined))
+plot(combined,type='n',axes=F, xlab='',ylab='')
+box()
+points(combined,pch=as.character(cutree(hc,4)), col=c(rep('dodgerblue',25),rep('forestgreen',25),rep('firebrick4',50)))
+```
+
+## Hierarchical clustering - code
+
+```{r, eval=F}
+hc <- hclust(dist(combined))
+plot(hc, hang=-1)
+plot(combined,type='n',axes=F, xlab='',ylab='')
+box()
+points(combined,pch=as.character(cutree(hc,4)),
+       col=c(rep('dodgerblue',25),
+             rep('forestgreen',25),
+             rep('firebrick4',50)))
+```
+
+## How to choose the number of clusters?
+
+Given these plots that we have seen, how do we choose the \emph{appropriate} number of clusters?
+
+## How to choose the number of clusters? - Scree plot
+
+```{r, echo = F}
+wss <- rep(0,15)
+for (i in 1:15) wss[i] <- sum(kmeans(combined,centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
+```
+
+## Scree plot - code
+
+```{r, eval=F}
+wss <- rep(0,15)
+for (i in 1:15) {
+  wss[i] <- sum(kmeans(combined,centers=i)$withinss)
+}
+plot(1:15, wss, type="b", xlab="Number of Clusters", 
+     ylab="Within groups sum of squares")
+```
+
+## Data with more than 2 dimensions
+
+```{r, echo=F, mysize=TRUE, size='\\scriptsize'}
+animals <- cluster::animals
+
+colnames(animals) <- c("warm-blooded", 
+                       "can fly",
+                       "vertebrate",
+                       "endangered",
+                       "live in groups",
+                       "have hair")
+animals.cluster <- animals[,-(5)]
+animals.cluster <- animals.cluster[-c(4,5,12,16,18),]
+animals.cluster[10,4] <- 2
+animals.cluster[14,4] <- 1
+
+animals.cluster.char <- animals.cluster
+animals.cluster.char[animals.cluster.char ==1] <- 'No'
+animals.cluster.char[animals.cluster.char ==2] <- 'Yes'
+
+kable(animals.cluster.char)
+```
+
+## Multidimensional Scaling 
+```{r, echo=F}
+d <- dist(animals.cluster) # euclidean distances between the rows
+fit <- cmdscale(d, k=2) # k is the number of dim
+fit.jitter <- fit + runif(nrow(fit*2),-.15,.15)
+# plot solution 
+plot(fit.jitter[,1], fit.jitter[,2], xlab="", ylab="",   main="",	type="n",axes=F)
+box()
+text(fit.jitter[,1], fit.jitter[,2], labels = row.names(animals.cluster), cex=1.3)
+```
+
+## MDS - Code {.smaller}
+
+```{r, echo=T, mysize=TRUE, size='\\scriptsize',eval=F}
+animals <- cluster::animals
+
+colnames(animals) <- c("warm-blooded", 
+                       "can fly",
+                       "vertebrate",
+                       "endangered",
+                       "live in groups",
+                       "have hair")
+animals.cluster <- animals[,-(5)]
+animals.cluster <- animals.cluster[-c(4,5,12,16,18),]
+animals.cluster[10,4] <- 2
+animals.cluster[14,4] <- 1
+
+d <- dist(animals.cluster) 
+fit <- cmdscale(d, k=2) 
+fit.jitter <- fit + runif(nrow(fit*2),-.15,.15)
+plot(fit.jitter[,1], fit.jitter[,2], xlab="", ylab="",   main="",	type="n",axes=F)
+box()
+text(fit.jitter[,1], fit.jitter[,2], labels = row.names(animals.cluster), cex=1.3)
+```
+
+ 
+## Hierarchical Clustering of Animals
+```{r, echo=F}
+hc <- hclust(dist(animals.cluster))
+plot(hc, hang=-1)
+```
+
+
+## Exercise: Clustering Zoo Animals
+
+Use the dataset create below for the following questions.
+
+```{r, echo=T, eval=F}
+zoo.data <- read.csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/ZooClean.csv')
+rownames(zoo.data) <- zoo.data[,1]
+zoo.data <- zoo.data[,-1]
+```
+
+- Use multidimensional scaling to visualize the data in two dimensions. What are two animals that are very similar and two that are very different?
+
+- Create a hierachical clustering object for this dataset. Why are a leopard and raccoon clustered together for any cluster size?
+
+- Now add colors corresponding to four different clusters to your MDS plot. Interpret what each of the four clusters correspond to.

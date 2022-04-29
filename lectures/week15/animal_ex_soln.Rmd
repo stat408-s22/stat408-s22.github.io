@@ -1,0 +1,70 @@
+---
+title: |
+    | STAT 408 - Statistical Learning
+    | Clustering
+date: "December 7, 2017"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(randomForest)
+library(maps)
+library(plotrix)
+library(mnormt)
+library(rpart)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+```
+
+
+## Lab Exercise: Clustering Zoo Animals
+
+Use the dataset create below for the following questions.
+
+```{r}
+zoo.data <- read.csv('http://www.math.montana.edu/ahoegh/teaching/stat408/datasets/ZooClean.csv')
+rownames(zoo.data) <- zoo.data[,1]
+zoo.data <- zoo.data[,-1]
+```
+
+### a. MDS viz
+Use multidimensional scaling to visualize the data in two dimensions.
+```{r}
+d <- dist(zoo.data) # euclidean distances between the rows
+fit <- cmdscale(d, k=2) # k is the number of dim
+fit.jitter <- fit + runif(nrow(fit*2),-.25,.25)
+# plot solution 
+plot(fit.jitter[,1], fit.jitter[,2], xlab="", ylab="",   main="",	type="n",axes=F)
+box()
+text(fit.jitter[,1], fit.jitter[,2], labels = rownames(zoo.data), cex=.8)
+```
+
+### b. MDS interpretation
+What are two animals that are very similar and two that are very different?
+
+### c. Hierarchical Clustering
+Create a hierachical clustering object for this dataset.
+```{r}
+hc <- hclust(dist(zoo.data))
+plot(hc, hang=-1)
+```
+
+Why are a leopard and raccoon clustered together for any cluster size?
+
+### d. Cluster Viz
+Now add colors corresponding to four different clusters to your MDS plot.
+
+```{r}
+plot(fit.jitter[,1], fit.jitter[,2], xlab="", ylab="",   main="",	type="n",axes=F)
+box()
+text(fit.jitter[,1], fit.jitter[,2], labels = rownames(zoo.data), col=cutree(hc,4), cex=.8)
+```
+
+Interpret what each of the four clusters correspond to.

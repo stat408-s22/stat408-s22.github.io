@@ -519,7 +519,7 @@ __In-class Lab:__
  
 __Homework:__
 
-- Homework 9 (will post soon) - Due Wednesday, May 4 by 11pm in D2L
+- [Homework 9](homework/hw-09/hw-09.pdf) ([Rmd](homework/hw-09/hw-09.Rmd)) - Due Wednesday, May 4 by 11pm in D2L
 
 __Project:__
 
@@ -547,7 +547,7 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
-- Week 14 slides (will post soon)
+- [Week 15 slides](lectures/week15/week15-slides.html) ([Rmd](lectures/week15/week15-slides.Rmd))
 - Review worksheet (will post soon)
 - Review worksheet key (will post soon)
 
