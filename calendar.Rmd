@@ -509,9 +509,9 @@ __In-class Materials:__
 
 Videos:
 
-- [Predictive modeling](https://montana.techsmithrelay.com/1mc5)
-- [Classification](https://montana.techsmithrelay.com/TQ6l)
-- [Clustering](https://montana.techsmithrelay.com/Y3Pi)
+- [Predictive modeling](https://montana.techsmithrelay.com/1mc5)  ([Prediction R script](lectures/week14/Prediction.R))
+- [Classification](https://montana.techsmithrelay.com/TQ6l) ([Classification R script](lectures/week14/Classification.R))
+- [Clustering](https://montana.techsmithrelay.com/Y3Pi)  ([Clustering R script](lectures/week14/Clustering.R))
 
 __In-class Lab:__
 
