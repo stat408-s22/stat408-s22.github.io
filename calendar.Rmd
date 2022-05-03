@@ -547,9 +547,15 @@ __Reading and Online Resources:__
 
 __In-class Materials:__
 
+
 - [Week 15 slides](lectures/week15/week15-slides.html) ([Rmd](lectures/week15/week15-slides.Rmd))
-- Review worksheet (will post soon)
-- Review worksheet key (will post soon)
+- R examples:
+    * [Prediction](lectures/week14/Prediction.html) ([Rmd](lectures/week14/Prediction.Rmd))
+    * [Classification](lectures/week14/Classification.html) ([Rmd](lectures/week14/Classification.Rmd))
+    * [Clustering](lectures/week14/Clustering.html) ([Rmd](lectures/week14/Clustering.Rmd))
+    * [Linear discriminant analysis](lectures/week15/LDA.html) ([Rmd](lectures/week15/LDA.Rmd))
+- Thursday review worksheet (will post soon)
+- Thursday review worksheet key (will post soon)
 
 
 __Project:__

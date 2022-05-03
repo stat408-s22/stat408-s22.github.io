@@ -1,0 +1,192 @@
+---
+title: "Introduction to Predictive Modeling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr) # kable
+library(tidyverse)
+library(skimr) # skim
+library(rpart) # decision tree
+library(randomForest) # random forest
+```
+
+This example will demonstrate predictive modeling of a quantitative outcome variable using the following methods:
+
+- linear regression
+- decision tree
+- random forest
+
+## Load data
+
+Seattle Housing Data (King County)
+
+```{r}
+Seattle <- read.csv('https://math.montana.edu/shancock/data/SeattleHousing.csv')
+head(Seattle)
+skim(Seattle)
+```
+
+## Create training and testing data set
+
+```{r}
+set.seed(05032022)
+num.houses <- nrow(Seattle)
+# need zipcode to be factor for modeling and clustering
+Seattle$zipcode <- as.factor(Seattle$zipcode)
+test.ids <- base::sample(1:num.houses, size=round(num.houses*.3))
+test.set <- Seattle[test.ids,]
+train.set <- Seattle[(1:num.houses)[!(1:num.houses) %in% 
+                                      test.ids],]
+```
+
+## Fit linear regression model on training data set 
+
+Predict price using all available predictors in the data set.
+
+```{r}
+lm.1 <- lm(price ~ ., data=train.set)
+summary(lm.1)
+```
+
+Why would the model be giving us `NA`s for the `sqft_basement` coefficients? Let's investigate...
+
+```{r}
+alias(lm.1)
+```
+
+The variables `sqft_basement` is linearly dependent on the other variables.
+
+```{r}
+lin.comb <- Seattle$sqft_living - Seattle$sqft_above
+cor(Seattle$sqft_basement, lin.comb)
+```
+
+Let's remove the redundant `sqft_basement` variable:
+```{r}
+lm.2 <- update(lm.1, . ~ . - sqft_basement)
+summary(lm.2)
+```
+
+There are a few predictors that are highly correlated, but since our goal is prediction, it doesn't hurt to keep them in the model as long as the coefficient estimates are stable.
+
+```{r}
+cor(Seattle[,c(2:8)])
+```
+For example, the correlation between `sqrt_living` and `sqft_above` is `r round(cor(Seattle$sqft_living, Seattle$sqft_above),4)`.
+
+## Evaluate predictive power of regression model on test set
+
+There are many ways to measure prediction error. One common way is the "root mean squared error" --- the square root of the mean of the squared differences between the actual outcome value and the predicted value. Alternatively, one could use the "mean absolute error", which is the mean of the absolute value of the differences between observed and predicted prices. The key is that we are measuring prediction error using the _testing_ data set (why?).
+
+```{r}
+rmse.lm2 <- sqrt(mean((test.set$price - predict(lm.2, test.set))^2))
+rmse.lm2
+mad.lm2 <- mean(abs(test.set$price - predict(lm.2, test.set)))
+mad.lm2
+```
+
+Since the outcome variable is not standardized, there is no inherent meaning to these values. Instead, we use them to compare models.
+
+Note that some of the predicted values are negative. This is one limitation to linear regression --- there is no restriction on the range of predicted values, even though selling price can never be negative.
+
+```{r}
+summary(predict(lm.2, test.set))
+```
+
+
+## Polynomial regression model
+
+Had we done some exploratory data analysis with the data set prior to fitting prediction models (which is always recommended!), we would have noticed that not all relationships between quantitative predictors and the outcome `price` appear linear. In particular, the relationship between `sqft_living` and `price` looks quadratic:
+
+```{r}
+sqft.plot <- ggplot(data=Seattle, aes(x = sqft_living, y = price)) + 
+  geom_point(alpha=.5) + 
+  geom_smooth(method='loess') + 
+  labs(title='King County Housing Sales', 
+       xlab='Living Space (sqft)',
+       ylab='Closing Price ($)')
+sqft.plot
+```
+Let's add a squared `sqft_living` term to the data set and use that as one of our predictors:
+
+```{r}
+train.set$sqft_living2 <- train.set$sqft_living^2
+test.set$sqft_living2 <- test.set$sqft_living^2
+
+lm.3 <- lm(price ~ . - sqft_basement, data=train.set)
+summary(lm.3)
+
+rmse.lm3 <- sqrt(mean((test.set$price - predict(lm.3, test.set))^2)) 
+rmse.lm2
+rmse.lm3
+mad.lm3 <- mean(abs(test.set$price - predict(lm.3, test.set)))
+mad.lm2
+mad.lm3
+```
+
+
+## Decision tree
+
+```{r}
+tree1 <- rpart(price ~ ., data = train.set, method = 'anova')
+plot(tree1)
+text(tree1)
+print(tree1)
+```
+
+To view what output is displayed when printing a tree object in R, type
+`?print.rpart` in the console:
+
+> "A semi-graphical layout of the contents of x$frame is printed. Indentation is used to convey the tree topology. Information for each node includes the node number, split, size, deviance, and fitted value. For the "`class`" method, the class probabilities are also printed."
+
+- node number = level of the tree
+- split = criteria
+- size = how many elements are under each criteria
+- deviance = generic metric of differences
+- fitted value = predicted price for that branch
+
+```{r}
+rmse.tree1 <- sqrt(mean((test.set$price - predict(tree1, test.set))^2)) 
+rmse.tree1
+rmse.lm3
+
+mad.tree1 <- mean(abs(test.set$price - predict(tree1, test.set)))
+mad.tree1
+mad.lm3
+```
+
+The decision tree does quite a bit worse than the polynomial regression. The polynomial regression gave a RMSE of `r `rmse.lm3` and a MAD of `r `mad.lm3`, whereas the decision tree produced a RMSE of `r `rmse.tree1` and a MAD of `r `mad.tree1`.
+
+## Random forest
+
+Each time it creates a tree, it selects a subset of the predictor variables and a subset of the observations to use. Thus, it uses uncertainty to get different results for each tree, then averages across all trees.
+
+```{r}
+rf1 <- randomForest(price ~ ., data = Seattle)
+plot(rf1)
+rmse.rf1 <- sqrt(mean((test.set$price - predict(rf1, test.set))^2)) 
+rmse.rf1
+rmse.lm2
+mad.rf1 <- mean(abs(test.set$price - predict(rf1, test.set)))
+mad.rf1
+mad.lm2
+```
+
+## Comparison across all three methods
+
+```{r}
+rslts <- tibble(
+  Method = c("Polynomial regression", "Decision tree", "Random forest"),
+  RMSE = c(rmse.lm3, rmse.tree1, rmse.rf1),
+  MAD = c(mad.lm3, mad.tree1, mad.rf1)
+)
+kable(rslts)
+```
+
+
+
+## Attribution
+
+Example adapted from Dr. Hoegh's STAT 408 notes.

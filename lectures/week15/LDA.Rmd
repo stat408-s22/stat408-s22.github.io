@@ -1,0 +1,125 @@
+---
+title: "Linear Discriminant Analysis"
+subtitle: "Fisher's Iris Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+Goal: Find the linear combination of original variables 
+      that provide the best possible separation between groups.
+
+- Developed by R. A. Fisher in 1936 (hence, the appropriateness of his Iris data as an example)
+- Dimension reduction method
+- Optimal when explanatory variables have normal distribution.
+
+## Load libraries
+
+```{r, message=FALSE}
+library(tidyverse)
+library(skimr) # skim
+library(psych) # pairs.panels
+library(MASS)  # lda
+```
+
+
+## Data
+
+```{r}
+data(iris)  # data set built into base R
+head(iris)
+skim(iris)
+```
+
+Type `?iris` in the console to view description.
+
+```{r}
+pairs.panels(iris[1:4],
+             gap = 0,
+             bg = c("red", "green", "blue")[iris$Species],
+             pch = 21)
+```
+
+
+## Create training (70%) and testing (30%) data
+
+```{r}
+set.seed(123)
+ind <- sample(2, nrow(iris),
+              replace = TRUE,
+              prob = c(0.7, 0.3))
+training <- iris[ind==1,]
+testing <- iris[ind==2,]
+```
+
+## Linear discriminant analysis
+
+Using `.` for the right side of the model formula tells R to use all available explanatory variables in the data set.
+
+```{r}
+linear <- lda(Species ~ ., training)
+linear
+```
+
+The "prior probabilities of groups" are just the sample proportions:
+```{r}
+training %>% group_by(Species) %>% summarize(sample_proportion = n()/length(training[,1]))
+```
+
+## Group separation
+
+The entries in `LD1` and `LD2` are the coefficients of the linear combinations of explanatory variables that achieve maximum separation of the data between groups. The linear discriminant functions are scaled to have mean 0 and variance 1 in the training data set. 
+
+```{r, include=FALSE}
+perc_trace <- round(linear$svd^2/(sum(linear$svd^2)), 4)*100
+```
+
+The percentage separation achieved by the first discriminant function is `r perc_trace[1]`% and second is `r perc_trace[2]`%
+
+We can plot stacked histograms of the values of the first discriminant function for the training data set and visualize the degree of separation.
+
+```{r}
+p <- predict(linear, training)
+ldahist(data = p$x[,1], g = training$Species)
+```
+The second discriminant function does not separate the groups well.
+```{r}
+ldahist(data = p$x[,2], g = training$Species)
+```
+
+To view the separation in two dimensions:
+```{r}
+# Create data frame with species, LDA1, LDA2 values in training data set
+newdata <- data.frame(Species = training[,5], lda = p$x)
+ggplot(newdata) + 
+  geom_point(aes(x = lda.LD1, y = lda.LD2, colour = Species), size = 2.5) +
+  labs(x = "LDA1", y = "LDA2")
+```
+
+
+## Prediction accuracy
+
+Compare actual group to predicted group on training data:
+```{r}
+p1 <- predict(linear, training)$class
+tab1 <- table(Predicted = p1, Actual = training$Species)
+tab1
+```
+
+The number correctly classified in the training data set is `r sum(diag(tab1))`, which gives a classification error rate of `r (1 - sum(diag(tab1))/sum(tab1))`.
+
+Now for the testing data:
+```{r}
+p2 <- predict(linear, testing)$class
+tab2 <- table(Predicted = p2, Actual = testing$Species)
+```
+
+The number correctly classified in the training data set is `r sum(diag(tab2))`, which gives a classification error rate of `r (1 - sum(diag(tab2))/sum(tab2))`.
+
+## References
+
+Example taken from "Linear Discriminant Analysis in R" by finnstats in R bloggers: https://www.r-bloggers.com/2021/05/linear-discriminant-analysis-in-r/.

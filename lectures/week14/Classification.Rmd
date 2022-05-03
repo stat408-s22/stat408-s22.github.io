@@ -1,0 +1,190 @@
+---
+title: "Classification and Cross-validation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(mnormt) # rmnorm
+library(rpart)
+```
+
+Classification methods are an example of supervised statistical learning. Familiar methods such as logistic regression can be used as a classification method. Dimension reduction methods, such as linear discriminant analysis, can also be used in this context. In classification, the outcome variable is typically binary, coded as `1` or `0`, but could also have more than two levels. It just needs to be categorical. The goal of a classification model is to 
+take a new point and determine if that point should be classified as a `1` or a `0`.
+
+## Simulate data with three clusters from multivariate normal distribution
+
+```{r}
+set.seed(10)
+# Generate three clusters of size 25, 25 and 50 from three different
+# multivariate normal distributions
+cluster1 <- rmnorm(n=25, mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25, mean=c(.15,.75), varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6), varcov=diag(2)*.03)
+# Set up plot window
+plot(rbind(cluster1, cluster2, cluster3), 
+     type='n', axes=F, xlab='', ylab='')
+# Add different colored points for each cluster
+points(cluster1, pch='1',col='dodgerblue')
+points(cluster2, pch='2',col='darkgreen')
+points(cluster3, pch='3',col='firebrick4')
+# Draw a box around the plot
+box()
+```
+
+## Logistic regression
+
+Logistic regression is a type of generalize linear model that models binary or binomial data. Thus, to use this method, our outcome variable can take on only two possible values, call these `1` and `0`. Logistic regression will produce a predicted probability of a `1` outcome, which can be converted into a predicted classification into a cluster.
+
+We will then use our model to classify new points at (.2, .7), (.45, .35), (.48, .3), and (.9, .4).
+```{r}
+pred.points <- data.frame(
+  x = c(.2,.45,.48,.9), 
+  y = c(.7,.35,.3,.4)
+  )
+
+# To demonstrate logistic regression,
+# treat clusters 1 and 2 as if they're the same cluster
+plot(rbind(cluster1,cluster2,cluster3),type='n',axes=F,xlab='', ylab='')
+points(cluster1,pch='1',col='dodgerblue')
+points(cluster2,pch='1',col='dodgerblue')
+points(cluster3,pch='0',col='firebrick4')
+# Add new data points
+points(pred.points, pch='*', cex=2.5)
+box()
+
+labels <- (rep(c(1, 0), each = 50))
+combined <- rbind(cluster1, cluster2, cluster3)
+supervised <- as.data.frame(cbind(labels, combined))
+colnames(supervised)[2:3] <- c('x','y')
+head(supervised)
+```
+
+The `glm` function will fit a logistic regression model. The `family = 'binomial'` argument tells R to fit logistic regression. By default, `family = 'gaussian'`, and `glm` will fit a usual linear model.
+```{r}
+logistic <- glm(labels ~ x + y, data = supervised, family='binomial')
+summary(logistic)
+```
+
+
+Use model to classify new points at (.2, .7), (.45, .35), (.48, .3), and (.9, .4). When calculating predictions, we need to specify that we want the predicted probabilities with the `type = 'response`` argument. (Otherwise, the calculated predictions are reported on a different scale.)
+```{r}
+kable(
+  cbind(
+    pred.points,
+    round(predict(logistic, pred.points, type='response'), 3)
+  ),
+  col.names = c('x', 'y', 'Prob[Val = 1]')
+  )
+```
+
+# Decision tree
+
+```{r}
+tree1 <- rpart(labels ~., data = supervised, method = 'class')
+print(tree1)
+plot(tree1)
+text(tree1)
+```
+
+Compare tree predictions to logistic regression predictions:
+```{r, echo=FALSE}
+kable(
+  cbind(
+    pred.points,
+    round(predict(logistic, pred.points, type='response'), 3),
+    round(predict(tree1, pred.points)[,2], 3)
+  ),
+  col.names = c('x', 'y', 'Logistic Pred', 'Tree Pred')
+  )
+```
+
+
+
+## Cross-validation to assess predictive power
+
+Note that, rather than first splitting our data into training and testing sets, we used the entire data set to fit the model. Thus, we need to use a method such as cross-validation to assess how well the model predicts new data points.
+
+```{r}
+# Set parameters
+num.folds <- 3 # Number of folds
+num.obs <- nrow(supervised) # Sample size
+pred.vector <- rep(0, num.obs) # Vector to store predictions
+
+# Create folds by
+# assigning a fold index (1, 2, or 3) to each observation
+set.seed(052022)
+fold.ids <- sample(num.folds, num.obs, replace = TRUE)
+
+# For each fold, fit the model on data not in the fold,
+# then test predictions on fold
+for(i in 1:num.folds){
+  train <- supervised[fold.ids != i,]
+  test <- supervised[fold.ids == i,]
+  mod <- glm(labels ~ x + y, data = train, family='binomial')
+  pred.vector[fold.ids == i] <- predict(mod, test, type = 'response')
+}
+
+# Calculate classification error = proportion mis-classified
+# Classification created by rounding probability
+# (prob < 0.5 classified as "0"; prob > 0.5 classified as "1")
+CE <- 1 - mean(round(pred.vector) == supervised$labels)
+CE
+```
+
+Note the warnings that were displayed --- since the data exhibit _complete separation_ on the x-y plane, the algorithm that fits a logistic regression will not converge. Essentially, the variables `x` and `y` completely predict whether an observation is classified as `0` or `1` in the data set to which the model is fit. In that case, coefficient estimates may be infinite or may not even exist.
+
+We can do the same for the decision tree model:
+```{r}
+pred2.vector <- rep(0, num.obs) # Vector to store predictions
+
+# For each fold, fit the model on data not in the fold,
+# then test predictions on fold
+for(i in 1:num.folds){
+  train <- supervised[fold.ids != i,]
+  test <- supervised[fold.ids == i,]
+  mod2 <- rpart(labels ~., data = train, method = 'class')
+  pred2.vector[fold.ids == i] <- predict(mod2, test)[,2]
+}
+
+# Calculate classification error = proportion mis-classified
+# Classification created by rounding probability
+# (prob < 0.5 classified as "0"; prob > 0.5 classified as "1")
+CE2 <- 1 - mean(round(pred.vector) == supervised$labels)
+CE2
+```
+
+
+## Cross-validation with Seattle housing data set
+
+Let's try this on the Seattle housing data set where we convert the quantitative outcome variable `price` to a `1` if the price is greater than $1,000,000, `0` otherwise.
+```{r}
+Seattle <- read.csv('https://math.montana.edu/shancock/data/SeattleHousing.csv')
+Seattle$million <- as.numeric(Seattle$price > 1000000)
+num.folds <- 3
+num.houses <- nrow(Seattle)
+pred.vector <- rep(0, num.houses)
+
+fold.ids <- sample(num.folds, num.houses, replace=TRUE)
+
+for (i in 1:num.folds){
+  train <- Seattle[fold.ids != i,]
+  test <- Seattle[fold.ids == i,]
+  mod3 <- glm(million ~ bedrooms + bathrooms + sqft_living + 
+                    sqft_lot + waterfront + floors, 
+                  data = train, family='binomial')
+  pred.vector[fold.ids == i] <- predict(mod3, test, type='response')
+}
+
+CE3 <- 1 - mean(round(pred.vector) == Seattle$million)
+CE3
+```
+
+Thus, the classification error for this model using cross-validation with three folds is `r round(CE, 4)`. That is, the model misclassified `r round(CE,4)*100`% of the observations.
+
+
+
+## Attribution
+
+Example adapted from Dr. Hoegh's STAT 408 notes.

@@ -1,0 +1,137 @@
+---
+title: "Clustering"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(mnormt) # rmnorm
+```
+
+Clustering methods are a type of unsupervised statistical learning. These methods are also under the umbrella of "multivariate analysis". In this case, there is no clear outcome variable. 
+Instead, we use a set of variables to "cluster" the data into similar groups.
+
+
+## Simulate data from three clusters
+
+```{r}
+set.seed(10)
+cluster1 <- rmnorm(n=25, mean=c(.3,.2), varcov=diag(2)*.025)
+cluster2 <- rmnorm(n=25, mean=c(.15,.75), varcov=diag(2)*.025)
+cluster3 <- rmnorm(n=50, mean=c(.75,.6), varcov=diag(2)*.03)
+combined <- rbind(cluster1, cluster2, cluster3)
+plot(combined, type='n', axes=F, xlab='', ylab='')
+points(cluster1, pch=16, col='dodgerblue')
+points(cluster2, pch=16, col='forestgreen')
+points(cluster3, pch=16, col='firebrick4')
+```
+
+Imagine that we don't know the colors, and we would like to use the x-variable and y-variable to "cluster" the data into a given number of groups. The purpose of simulating data in this case is to be able to see how well each method works by comparing the cluster assignments from the model to the actual clusters we know from the simulation. 
+
+## k-means clustering
+
+K-means clustering is an algorithm that
+
+1. starts with _k_ randomly selected means,
+2. assigns each observation to the cluster whose corresponding mean is closest,
+3. computes the new means of the clusters by taking averages in each cluster, and
+4. repeating steps 2 and 3 until the clusters do not change.
+
+Type `?kmeans` into the console to view the help file. 
+
+```{r}
+km <- kmeans(combined, 3)
+km
+
+# Create plot to compare clusters produced by k-means algorithm
+plot(combined, type='n', axes=F, xlab='', ylab='')
+box()
+# Plot points: color is from simulated cluster (truth) and number
+#              is assigned cluster.
+points(combined, pch = as.character(km$cluster),
+       col = c(rep('dodgerblue',25),
+               rep('forestgreen',25),
+               rep('firebrick4',50))
+       )
+```
+
+The extent of discrimination among the clusters is measured by comparing the "within cluster sum of squares" to the "total sum of squares". The total sum of squares ($SST$) is the sum of squared distances from each observation to the overall mean ( or overall centroid) of the points. If we call this _SST_, it can be partitioned into a sum of "within" and "between" cluster sums of squares:
+
+$$
+SST = SSW + SSB
+$$
+where $SSW$ is the sum of squared distances of each observation to its respective cluster mean, and $SSB$ is the sum of squared distances of the cluster means to the overall mean. The fraction $SSB/SST$ (or $1 - SSW/SST$) then gives the proportion of variability in the data that is reduced by clustering.
+
+This is analogous to the concept of $R^2$ in regression, where the total variability in the response variable can be partitioned into the residual sum of squares plus the sum of squared distances from the predicted values to the mean response:
+$$
+\sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n(y_i - \hat{y}_i)^2 + \sum_{i=1}^n(\hat{y}_i - \bar{y})^2
+$$
+
+Note that the labels are arbitrary. If you ran the algorithm again, you might get the same clusters with different labels.
+
+With this algorithm, you need to specify "k", the number of clusters. If this isn't known in advance (or a reasonable guess is not available), then typically researchers try several values of "k" and then examine a _scree plot_ to determine an appropriate number of clusters for the observed data. The scree plot plots the within group sum of squares versus the number of clusters.
+
+```{r}
+# Scree plot
+## Evaluate within cluster sum of squares for 1 to 15 clusters
+wss <- rep(0,15)
+for (i in 1:15) {
+  wss[i] <- sum(kmeans(combined, centers=i)$withinss)
+} 
+plot(1:15, wss, type="b", 
+     xlab="Number of Clusters", 
+     ylab="Within groups sum of squares")
+```
+
+
+## Multidimensional scaling and hierarchical clustering
+
+Clustering is much harder to visualize when we have more than two variables. In the case of multi-dimensional data, we can use a method such as multidimensional scaling, which is similar to principal components analysis. The goal is to take multi-dimensional data and visualize it in a 2-dimensional space where the distance between points in 2-dimensions represents a kind of "multivariate" distance between the points in the higher dimensional space.
+
+The data set we'll use in this section is a built-in data set called `animals` in the `cluster` library. It considers six binary attributes for 20 animals. The original data set contained a few errors, and the code below corrects those errors.
+
+```{r}
+animals <- cluster::animals
+colnames(animals) <- c("warm-blooded", 
+                       "can fly",
+                       "vertebrate",
+                       "endangered",
+                       "live in groups",
+                       "have hair")
+# Delete a few variables and clean up data
+animals.cluster <- animals[,-(5)]
+animals.cluster <- animals.cluster[-c(4,5,12,16,18),]
+animals.cluster[10,4] <- 2
+animals.cluster[14,4] <- 1
+```
+
+We can use the `dist` function to calculate Euclidian distances between all pairs of animals in the data set.
+
+```{r}
+d <- dist(animals.cluster) 
+d
+```
+
+The `cmdscale` function uses multidimensional scaling (or principal coordinates analysis) on the distance matrix to reduce the dimensionality of the data and visualize distances in a lower dimension (typically 2).
+
+```{r}
+fit <- cmdscale(d, k = 2) 
+
+plot(fit[,1], fit[,2], xlab="", ylab="",   main="",	type="n",axes=F)
+box()
+text(fit[,1], fit[,2], labels = row.names(animals.cluster), cex=1)
+```
+
+Then, `hclust` will perform hierarchical clustering on the distance matrix, which is an algorithm that starts with $n$ clusters (each observation is its own cluster), and then iteratively joins the two most similar clusters until a single cluster remains. This can be visualized in a _dendogram_.
+
+```{r}
+# complete: maximum difference between elements in clusters
+# single: minimum difference
+hc <- hclust(dist(animals.cluster))
+plot(hc, hang=-1)
+
+# obtaining cluster assignments
+cutree(hc, 4)
+```
+
