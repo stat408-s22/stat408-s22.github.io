@@ -37,8 +37,7 @@ num.houses <- nrow(Seattle)
 Seattle$zipcode <- as.factor(Seattle$zipcode)
 test.ids <- base::sample(1:num.houses, size=round(num.houses*.3))
 test.set <- Seattle[test.ids,]
-train.set <- Seattle[(1:num.houses)[!(1:num.houses) %in% 
-                                      test.ids],]
+train.set <- Seattle[(1:num.houses)[!(1:num.houses) %in% test.ids],]
 ```
 
 ## Fit linear regression model on training data set 

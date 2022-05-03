@@ -563,6 +563,7 @@ __Project:__
 By May 6th at 11:00 p.m., the following must be completed:
 
 1. Post comments on at least **two** RShiny app discussion posts. Each of your posts should include (a) at least one feature you think works well, (b) at least one feature that you might have done differently, and (c) how you could extend the study (e.g., what other research questions does the analysis inspire?).
+2. Complete project group evaluation in D2L.
 
 ---
 
