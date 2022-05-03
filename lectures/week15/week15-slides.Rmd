@@ -84,7 +84,7 @@ Courtesy of *An Introduction to Statistical Learning: with Applications in R*, b
 
 "The basic goal of predictive modeling is to find a _function_ that accurately describes how different measured explanatory variables can be combined to make a prediction about a response variable."
 
-- Baumer, Kaplan and Horton (Section 10.1)
+- [Baumer, Kaplan and Horton (Section 10.1)](https://mdsr-book.github.io/mdsr2e/ch-modeling.html#predictive-modeling)
 
 ## Predictive Modeling
 
