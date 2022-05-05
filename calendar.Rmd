@@ -554,8 +554,8 @@ __In-class Materials:__
     * [Classification](lectures/week14/Classification.html) ([Rmd](lectures/week14/Classification.Rmd))
     * [Clustering](lectures/week14/Clustering.html) ([Rmd](lectures/week14/Clustering.Rmd))
     * [Linear discriminant analysis](lectures/week15/LDA.html) ([Rmd](lectures/week15/LDA.Rmd))
-- Thursday review worksheet (will post soon)
-- Thursday review worksheet key (will post soon)
+- [Thursday review worksheet](lectures/week15/final-review.pdf)
+- Thursday review worksheet key (will post at the end of class)
 
 
 __Project:__
